@@ -1,0 +1,592 @@
+/* Global Resets & Poolsuite Base */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Helvetica Neue', 'Arial', sans-serif; /* Cleaner sans-serif */
+    font-size: 14px; /* Slightly larger base for readability */
+    background-color: #F5F5DC; /* Beige/Cream - Classic Poolsuite background */
+    color: #000000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.desktop-background {
+    /* You could add a subtle texture here later via background-image */
+    /* e.g., background-image: url('path/to/subtle-beige-texture.png'); */
+}
+
+/* Menubar */
+.menubar {
+    background-color: #E0DCD3; /* Slightly darker beige for menubar */
+    border-bottom: 1px solid #000000;
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 25px; /* Consistent height */
+}
+
+.menubar .menu-item {
+    padding: 2px 8px;
+    margin-right: 10px;
+    cursor: default;
+    white-space: nowrap;
+}
+
+.menubar .logo-text {
+    font-weight: bold; /* Placeholder for actual script logo */
+    font-style: italic; /* Giving it a slight script feel */
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.menubar .menu-item.dropdown {
+    position: relative;
+}
+.menubar .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #E0DCD3;
+    border: 1px solid #000000;
+    min-width: 160px;
+    box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
+    z-index: 1001; /* Above menubar items */
+    top: 100%;
+    left: 0;
+}
+.menubar .dropdown:hover .dropdown-content {
+    display: block;
+}
+.menubar .dropdown-content a {
+    color: black;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    font-size: 12px;
+}
+.menubar .dropdown-content a:hover {
+    background-color: #CEC8BF;
+}
+
+.menubar .menu-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+.menubar .menu-right .menu-item {
+    margin-left: 10px;
+    margin-right: 0;
+}
+.menubar .menu-right .icon-placeholder {
+    font-size: 16px; /* For emoji icons */
+    cursor: pointer;
+}
+#menu-time {
+    font-family: 'Courier New', Courier, monospace; /* Monospaced for time */
+    font-size: 12px;
+}
+
+/* Desktop Area & Icons */
+.desktop-area {
+    padding-top: 60px; /* Increased from 45px to move icons down */
+    height: calc(100vh - 60px); /* Adjusted height to match new padding */
+    position: relative; 
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-end;   
+    padding-left: 20px; /* Keep side padding */
+    padding-right: 20px; /* Keep side padding */
+    padding-bottom: 20px; /* Keep bottom padding */
+    gap: 15px; 
+}
+
+.desktop-icon {
+    width: 70px;
+    text-align: center;
+    cursor: grab; /* Default cursor to indicate draggable */
+    position: relative; /* Allows z-index and prepares for absolute switch */
+    /* transition: opacity 0.2s; Optional: for visual feedback on drag start */
+}
+
+/* NEW: Styles for Emoji Desktop Icons */
+.desktop-emoji-icon {
+    font-size: 40px; /* Adjust size as needed, aiming for ~48px visual size */
+    line-height: 1;
+    margin-bottom: 8px; /* Space between emoji and text label */
+    color: #000000; /* Ensure emojis are black like menubar icons if needed */
+}
+
+.desktop-icon span {
+    display: block;
+    color: #000000;
+    background-color: transparent; /* No background for text */
+    padding: 2px 0;
+    font-size: 11px;
+    white-space: normal; /* Allow text to wrap if needed */
+    line-height: 1.2;
+}
+
+/* Window Styling - Poolsuite Style */
+.window {
+    background-color: #F5F5DC; /* Same as desktop or very close */
+    border: 1px solid #000000;
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.5); /* Retro hard shadow */
+    position: absolute;
+    min-width: 320px;
+    max-width: 520px; /* Reduced from 600px */
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+/* Default positioning for the initially visible window */
+#window-profile {
+    top: 60px;
+    left: 80px;
+    width: 400px; /* Specific width for profile */
+}
+
+#window-welcome {
+    top: 60px;
+    left: 80px;
+    width: 370px; /* Reduced from 400px */
+}
+
+.title-bar {
+    background-color: #E0DCD3; /* Menubar-like color for title bar */
+    color: #000000;
+    padding: 3px 6px;
+    display: flex;
+    align-items: center;
+    height: 22px;
+    border-bottom: 1px solid #000000;
+    cursor: grab;
+}
+
+.title-bar-buttons {
+    display: flex;
+    order: -1; /* Buttons to the left */
+    margin-right: 8px;
+}
+
+.title-bar-buttons .button {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #000000;
+    margin-right: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial Black', Gadget, sans-serif;
+    font-size: 10px;
+    line-height: 1;
+    background-color: #F5F5DC;
+    cursor: pointer;
+}
+.title-bar-buttons .button:active {
+    background-color: #CEC8BF;
+}
+
+.title-bar-buttons .close::before { content: "X"; }
+.title-bar-buttons .maximize::before { content: "↑"; }
+
+.title-bar-text {
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    padding-left: 5px; /* Space after buttons */
+}
+/* The horizontal lines for Poolsuite title bars */
+.title-bar-text::before {
+    content: "≡"; /* Using the actual character */
+    margin-right: 6px;
+    font-weight: normal;
+}
+
+.window-content {
+    padding: 15px;
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #F5F5DC; /* Match window background */
+    line-height: 1.5;
+}
+
+/* Specific content styling */
+.profile-avatar {
+    float: left;
+    width: 70px;
+    height: 70px;
+    border: 1px solid #000000;
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+
+.window-content h2 {
+    font-size: 18px;
+    color: #000000;
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+.window-content h3 {
+    font-size: 16px;
+    color: #000000;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #CEC8BF;
+    padding-bottom: 4px;
+    font-weight: bold;
+}
+.window-content h4 {
+    font-size: 14px;
+    color: #333333;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.window-content ul {
+    list-style: none; /* Remove default list style */
+    padding-left: 0;
+    margin-top: 5px;
+}
+.window-content ul li::before {
+    content: "‣ "; /* Custom bullet */
+    margin-right: 5px;
+}
+.window-content p {
+    margin-bottom: 10px;
+}
+
+/* Folder View */
+.folder-view {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.file-icon {
+    width: 70px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* Updated to style SVG elements within file-icon */
+.file-icon svg {
+    width: 40px;  /* Explicit width */
+    height: 40px; /* Explicit height */
+    /* border: 1px solid #000000; // Border is now in SVG stroke */
+    /* background-color: #E0DCD3; // Fill is now in SVG */
+    margin-bottom: 3px;
+    display: block; /* Ensures proper centering if text-align is used on parent */
+    margin-left: auto; /* Center SVG if .file-icon is wider */
+    margin-right: auto; /* Center SVG if .file-icon is wider */
+}
+
+.file-icon span {
+    display: block;
+    font-size: 10px;
+    word-wrap: break-word;
+    line-height: 1.1;
+}
+
+/* REMOVED .file-icon:hover img { outline: 1px solid #000000; } */
+/* You can add a hover effect for SVGs if desired, e.g.: */
+.file-icon:hover svg rect {
+    fill: #CEC8BF; /* Change fill color on hover */
+}
+
+/* Forms - Poolsuite Style */
+.contact-form label, .add-comment-form label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 3px;
+    font-weight: normal;
+    font-size: 12px;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea,
+.add-comment-form input[type="text"],
+.add-comment-form textarea {
+    width: calc(100% - 12px); /* Account for padding */
+    padding: 5px;
+    border: 1px solid #000000;
+    background-color: #E0DCD3; /* Light input background */
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.action-button, .control-button {
+    background-color: #E0DCD3;
+    border: 1px solid #000000;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    color: #000000;
+    text-transform: uppercase; /* Uppercase buttons often seen in retro UIs */
+}
+.action-button:hover, .control-button:hover {
+    background-color: #CEC8BF;
+}
+.action-button:active, .control-button:active {
+    background-color: #B8B2AA;
+}
+
+.fm-player-controls {
+    margin: 15px 0;
+    display: flex;
+    gap: 10px;
+}
+
+/* Guestbook */
+.comment-entry {
+    border: 1px solid #CEC8BF;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #E0DCD3;
+    font-size: 12px;
+}
+.comment-entry strong {
+    font-weight: bold;
+}
+
+/* Initially hidden windows */
+.window[style*="display: none"] { /* More robust selector for initially hidden */
+    /* display: none !important; done by JS already*/
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .desktop-area {
+        padding: 10px;
+        padding-top: 40px;
+        justify-content: space-around; /* Distribute icons more evenly */
+    }
+    .desktop-icon {
+        width: 60px;
+        margin: 5px;
+    }
+    .desktop-icon img {
+        width: 40px;
+        height: 40px;
+    }
+    .desktop-emoji-icon {
+        font-size: 36px; /* Slightly smaller for mobile */
+    }
+    .window {
+        min-width: calc(100% - 20px); /* Full width minus padding */
+        max-width: calc(100% - 20px);
+        left: 10px !important;
+        top: 50px !important;
+        margin-bottom: 10px;
+        box-shadow: 3px 3px 0px rgba(0,0,0,0.4);
+    }
+    #window-profile {
+        width: auto; /* Let it be full width */
+        position: relative; /* Flow in document */
+        margin: 0 auto 10px auto;
+        left: auto !important;
+        top: auto !important;
+    }
+    .menubar .menu-item strong, .menubar .dropdown span {
+        font-size: 11px;
+    }
+    .menubar .menu-right {
+        font-size: 11px;
+    }
+    #menu-time {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 13px;
+    }
+    .menubar {
+        padding: 3px 8px;
+        height: auto; /* Allow wrapping if needed */
+        flex-wrap: wrap;
+    }
+    .menubar .menu-item {
+        margin-right: 5px;
+        padding: 2px 4px;
+    }
+    .menubar .menu-right {
+        width: 100%;
+        justify-content: flex-end;
+        padding-top: 3px;
+    }
+    .title-bar-text {
+        font-size: 11px;
+    }
+    .window-content {
+        padding: 10px;
+    }
+    .window-content h2 { font-size: 16px; }
+    .window-content h3 { font-size: 14px; }
+    .desktop-emoji-icon {
+        font-size: 32px; /* Even smaller for very small screens */
+    }
+}
+
+/* Amy's Earbuds Player Specific Styles */
+.earbuds-player {
+    width: 280px; /* Kept as is, already narrow */
+    min-width: 260px;
+    max-width: 320px;
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.5); /* Slightly less shadow for this smaller window? */
+}
+
+.earbuds-content {
+    padding: 10px; /* Reduced padding for compact player */
+    background-color: #F5F5DC; /* Main beige color */
+    position: relative; /* For positioning stippled border if needed */
+}
+
+.visualizer-area {
+    background-color: #000000;
+    height: 60px;
+    margin-bottom: 10px;
+    border: 1px solid #333;
+    /* Simple repeating gradient to mimic bars */
+    background-image: repeating-linear-gradient(
+        to right,
+        #555555,
+        #555555 2px,
+        #000000 2px,
+        #000000 4px
+    );
+}
+
+.channel-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    padding: 0 5px; /* Slight padding */
+}
+
+.channel-info .dropdown-arrow {
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.player-divider {
+    border: none;
+    border-top: 1px solid #000000;
+    margin: 8px 0;
+}
+
+.track-details {
+    text-align: left;
+    margin-bottom: 12px;
+    padding: 0 5px;
+}
+
+.track-details .time-info {
+    font-size: 11px;
+    color: #333333;
+    margin-bottom: 2px;
+}
+
+.track-details .song-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-details .artist-name {
+    font-size: 12px;
+    color: #333333;
+}
+
+.player-controls-group {
+    display: flex;
+    justify-content: space-between; /* Distribute buttons */
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.player-btn {
+    background-color: #F5F5DC; /* Beige background */
+    border: 1px solid #000000;
+    color: #000000;
+    font-size: 14px; /* Adjust for symbol clarity */
+    font-weight: bold; /* For thicker symbols */
+    padding: 6px 0; /* Vertical padding, horizontal will be from flex distribution */
+    width: 38px; /* Fixed width for square-ish buttons */
+    height: 30px; /* Fixed height */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1; /* For better symbol alignment */
+}
+
+.player-btn.heart-btn, .player-btn.share-btn {
+    margin-left: 10px; /* Space out the rightmost buttons */
+}
+
+.player-btn:hover {
+    background-color: #E0DCD3; /* Darker beige on hover */
+}
+.player-btn:active {
+    background-color: #CEC8BF; /* Even darker on active */
+}
+
+.playlist-section {
+    font-size: 11px;
+    margin-top: 10px;
+}
+.playlist-section h4 {
+    font-size: 11px;
+    color: #555;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+.playlist-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 60px; /* Limit height and allow scroll if needed */
+    overflow-y: auto;
+}
+.playlist-section li {
+    padding: 2px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Stippled border effect at the bottom of the player window */
+.stippled-bottom-player {
+    height: 10px; /* Height of the stippled area */
+    background-image: repeating-linear-gradient(to right, #000, #000 1px, transparent 1px, transparent 3px); /* Creates a dotted line */
+    background-size: 3px 1px; /* Control dot size and spacing */
+    background-repeat: repeat-x;
+    border-top: 1px solid black; /* Line above the stipples */
+    margin: 0; /* Ensure it sits flush */
+} 

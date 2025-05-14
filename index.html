@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio FM - Amy Lima</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="desktop-background">
+
+    <div class="menubar">
+        <div class="menu-item logo-text">Ps</div>
+        <div class="menu-item"><strong>The Portfolio</strong></div>
+        <div class="menu-item dropdown">
+            <span>Session ▼</span>
+            <div class="dropdown-content">
+                <a href="#">Sign In</a>
+                <a href="#">Preferences</a>
+                <a href="#">About Portfolio FM</a>
+            </div>
+        </div>
+        <div class="menu-right">
+            <div class="menu-item icon-placeholder">🔊</div>
+            <div class="menu-item icon-placeholder">📺</div>
+            <div class="menu-item" id="menu-time">15:08 WED 14 MAY 1997</div>
+        </div>
+    </div>
+
+    <div class="desktop-area">
+        <!-- Desktop Icons -->
+        <div class="desktop-icon" id="icon-welcome">
+            <div class="desktop-emoji-icon">👤</div>
+            <span>welcome.friend</span>
+        </div>
+        <div class="desktop-icon" id="icon-projects">
+            <div class="desktop-emoji-icon">📁</div>
+            <span>Work.dir</span>
+        </div>
+        <div class="desktop-icon" id="icon-contact">
+            <div class="desktop-emoji-icon">✉️</div>
+            <span>E-Mail.app</span>
+        </div>
+        <div class="desktop-icon" id="icon-guestbook">
+            <div class="desktop-emoji-icon">📖</div>
+            <span>Guestbook.exe</span>
+        </div>
+        <div class="desktop-icon" id="icon-poolsuitefm">
+            <div class="desktop-emoji-icon">🎵</div>
+            <span>Poolsuite.fm</span>
+        </div>
+        <div class="desktop-icon" id="icon-vacation">
+            <div class="desktop-emoji-icon">🌴</div>
+            <span>Vacation.mode</span>
+        </div>
+        <div class="desktop-icon" id="icon-earbuds">
+            <div class="desktop-emoji-icon">🎧</div>
+            <span>amys.earbuds</span>
+        </div>
+
+        <!-- Window: Welcome Friend (Formerly Profile) -->
+        <div class="window" id="window-welcome">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                    <span class="button maximize"></span>
+                </div>
+                <span class="title-bar-text">≡ welcome.friend</span>
+            </div>
+            <div class="window-content">
+                <!-- <img src="https://via.placeholder.com/100x100.png?text=Amy" alt="Amy Lima" class="profile-avatar"> -->
+                <h2>Amy Lima</h2>
+                <p><em>Product Designer, Dreamer</em></p>
+                <p>Hey, you. I'm Amy. I've always been obsessed with the "why" behind how people connect—with each other, with ideas, with the world around them.</p>
+                <p>I see design as a way to support human connection; tools that don't just serve users, but celebrate who they are and how they show up for each other.</p>
+                <p>I'm very grateful you showed up here, and I hope you have fun :)</p>
+            </div>
+        </div>
+
+        <!-- Window: Projects -->
+        <div class="window" id="window-projects" style="display: none;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                    <span class="button maximize"></span>
+                </div>
+                <span class="title-bar-text">≡ Work.dir</span>
+            </div>
+            <div class="window-content folder-view">
+                <div class="file-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="#E0DCD3" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" stroke="#000000" stroke-width="1"/></svg>
+                    <span>Project_Alpha.pdf</span>
+                </div>
+                <div class="file-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="#E0DCD3" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" stroke="#000000" stroke-width="1"/></svg>
+                    <span>App_Launch_Strategy.doc</span>
+                </div>
+                 <div class="file-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="#E0DCD3" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" stroke="#000000" stroke-width="1"/></svg>
+                    <span>Portfolio_Site_v3.url</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Window: Contact / E-Mail -->
+        <div class="window" id="window-contact" style="display: none;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                    <span class="button maximize"></span>
+                </div>
+                <span class="title-bar-text">≡ E-Mail.app</span>
+            </div>
+            <div class="window-content">
+                <h3>Direct Line:</h3>
+                <p>Send a wire, or use the form below.</p>
+                <form class="contact-form">
+                    <label for="recipient">To:</label>
+                    <input type="text" id="recipient" name="recipient" value="Amy Lima" readonly>
+                    <label for="subject">Subject:</label>
+                    <input type="text" id="subject" name="subject">
+                    <label for="message">Message (ASCII only):</label>
+                    <textarea id="message" name="message" rows="5"></textarea>
+                    <button type="submit" class="action-button">Send Transmission</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Window: Guestbook -->
+        <div class="window" id="window-guestbook" style="display: none;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                    <span class="button maximize"></span>
+                </div>
+                <span class="title-bar-text">≡ Guestbook.exe</span>
+            </div>
+            <div class="window-content">
+                <h3>Leave Your Mark:</h3>
+                <div class="comment-entry">
+                    <p><strong>VIP_User (1988-07-15):</strong> Excellent! This interface is top-tier. A++ would compute again.</p>
+                </div>
+                <div class="comment-entry">
+                    <p><strong>PowerUser97 (1992-11-30):</strong> Loving the retro vibes. Keep up the good work!</p>
+                </div>
+                <form class="add-comment-form">
+                    <label for="guest-name">Handle:</label>
+                    <input type="text" id="guest-name" name="guest-name">
+                    <label for="guest-comment">Remarks:</label>
+                    <textarea id="guest-comment" name="guest-comment" rows="3"></textarea>
+                    <button type="submit" class="action-button">Log Entry</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Window: Poolsuite.fm (Placeholder) -->
+        <div class="window" id="window-poolsuitefm" style="display: none;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                    <span class="button maximize"></span>
+                </div>
+                <span class="title-bar-text">≡ Poolsuite.fm</span>
+            </div>
+            <div class="window-content">
+                <h3>Now Vibing:</h3>
+                <p><em>[Track Title] - [Artist Name]</em></p>
+                <div class="fm-player-controls">
+                    <button class="control-button">◀◀</button>
+                    <button class="control-button">►</button>
+                    <button class="control-button">▶▶</button>
+                    <button class="control-button">♡</button>
+                </div>
+                <p>Channel: Executive Jams</p>
+                <p>(Actual music player functionality not implemented in this prototype.)</p>
+            </div>
+        </div>
+
+        <!-- Window: Vacation.mode (Placeholder) -->
+        <div class="window" id="window-vacation" style="display: none;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                    <span class="button maximize"></span>
+                </div>
+                <span class="title-bar-text">≡ Vacation.mode</span>
+            </div>
+            <div class="window-content">
+                <h3>Currently: out of office, but ready to return 👀</h3>
+                <!-- <img src="https://via.placeholder.com/300x200.png?text=Beach+View" alt="Vacation Mode" style="width:100%; margin-bottom:10px;"> -->
+                <p>After intentional time recharging and investing in personal growth, I'm ready to bring my enhanced emotional intelligence, resilience, empathy, and energy into a new role.</p>
+                <p>Working on something exciting? Let's chat!</p>
+            </div>
+        </div>
+
+        <!-- Window: Amy's Earbuds -->
+        <div class="window earbuds-player" id="window-earbuds" style="display: none;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                    <span class="button maximize"></span>
+                </div>
+                <span class="title-bar-text">≡ amys.earbuds</span>
+            </div>
+            <div class="window-content earbuds-content">
+                <div class="visualizer-area">
+                    <!-- Visualizer bars will be styled with CSS background -->
+                </div>
+                <div class="channel-info">
+                    <span>Channel: Amy's Faves</span>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+                <hr class="player-divider">
+                <div class="track-details">
+                    <div class="time-info">... / 03:52</div>
+                    <div class="song-title">Free Mind</div>
+                    <div class="artist-name">Tems</div>
+                </div>
+                <div class="player-controls-group">
+                    <button class="player-btn prev-btn">❙◀</button>
+                    <button class="player-btn play-btn">►</button>
+                    <button class="player-btn next-btn">▶❙</button>
+                    <button class="player-btn heart-btn">♡</button>
+                    <button class="player-btn share-btn">↦</button>
+                </div>
+                <div class="playlist-section">
+                    <h4>Up Next:</h4>
+                    <ul>
+                        <li>Kids - Sleigh Bells</li>
+                        <li>Julia - Super Mama Djombo</li>
+                        <li>Black Tame - Topaz Jones</li>
+                        <li>Tailler la route - Grand Corps Malade, Ben Mazué, Gaël Faye</li>
+                        <!-- Add more tracks as desired -->
+                    </ul>
+                </div>
+            </div>
+            <div class="stippled-bottom-player"></div>
+        </div>
+
+    </div> <!-- end desktop-area -->
+
+    <script src="script.js"></script>
+</body>
+</html> 
