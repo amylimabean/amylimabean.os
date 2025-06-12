@@ -2184,7 +2184,7 @@ textarea {
 }
 
 #window-vacation {
-    height: 385px; /* 10% taller than 350px */
+    height: 385px !important; /* 10% taller than 350px, !important to override other styles */
 }
 
 

@@ -164,6 +164,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const titleBar = win.querySelector('.title-bar');
         const closeButton = win.querySelector('.title-bar-buttons .close');
 
+        // Bring to front on any click within the window
+        win.addEventListener('mousedown', () => {
+            bringToFront(win);
+        });
+
         if (closeButton) {
             closeButton.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -195,11 +200,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (titleBar) {
-            win.addEventListener('mousedown', (e) => {
-                bringToFront(win);
-
-                const nonDraggableTags = ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'];
-                if (nonDraggableTags.includes(e.target.tagName) || e.target.closest('button, a, input, select, textarea, [contenteditable="true"]')) {
+            // Only allow dragging from the title bar
+            titleBar.addEventListener('mousedown', (e) => {
+                // Check that the click is not on a button in the title bar
+                if (e.target.closest('.title-bar-buttons')) {
                     return;
                 }
 
