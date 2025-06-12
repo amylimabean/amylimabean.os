@@ -2060,5 +2060,114 @@ textarea {
     margin: 0 5px;
 }
 
+/* --- AIM Away Message Window --- */
+.aim-away-message-content {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0; /* Classic AIM-like background */
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.aim-message-display {
+    flex-grow: 1;
+    border: 1px solid #999;
+    padding: 15px;
+    background-color: #FFFF00; /* Default yellow */
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aim-away-text {
+    margin: 0;
+}
+
+.edit-mode {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.edit-title {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+    box-sizing: border-box;
+    border: 1px solid #999;
+}
+
+.edit-toolbar {
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 5px;
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.edit-toolbar .format-btn,
+.edit-toolbar .color-select,
+.edit-toolbar .bg-color-select {
+    padding: 3px 6px;
+    border: 1px solid #999;
+    background-color: #e0e0e0;
+}
+
+.edit-textarea {
+    flex-grow: 1;
+    border: 1px solid #999;
+    padding: 15px;
+    overflow-y: auto;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.admin-controls {
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+    margin-top: auto; /* Pushes to the bottom */
+    background-color: #f0f0f0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.code-output-container {
+    padding: 15px;
+    border: 2px dashed #008000;
+    margin-top: 15px;
+    background-color: #f0fff0;
+}
+.code-output-container h3 {
+    margin-top: 0;
+    color: #008000;
+}
+.code-output-container textarea {
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+    font-family: monospace;
+    font-size: 12px;
+    padding: 5px;
+    box-sizing: border-box;
+    white-space: pre;
+    word-wrap: normal;
+    overflow-x: scroll;
+}
+
+
+.aim-select {
+    padding: 4px;
+}
+
 
 

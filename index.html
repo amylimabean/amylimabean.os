@@ -136,67 +136,41 @@
                 <span class="title-bar-text">Away Message</span>
             </div>
             <div class="window-content aim-away-message-content">
-                <!-- Admin Edit Controls (Hidden by default) -->
-                <div class="admin-controls" style="display: none;">
-                    <button class="admin-edit-btn">Edit Message</button>
-                    <button class="admin-save-btn" style="display: none;">Save Changes</button>
+                <div class="view-mode">
+                    <div class="aim-message-display" style="background-color: #FFFF00;">
+                        <p class="aim-away-text">Be right back!</p>
+                    </div>
                 </div>
-
-                <!-- Edit Mode (Hidden by default) -->
                 <div class="edit-mode" style="display: none;">
-                    <div class="format-toolbar">
-                        <button class="format-btn" data-format="bold">B</button>
-                        <button class="format-btn" data-format="italic">I</button>
-                        <button class="format-btn" data-format="underline">U</button>
+                    <input type="text" class="edit-title" value="Be Right Back">
+                    <div class="edit-toolbar">
+                        <button class="format-btn" data-format="bold"><b>B</b></button>
+                        <button class="format-btn" data-format="italic"><i>I</i></button>
+                        <button class="format-btn" data-format="underline"><u>U</u></button>
                         <select class="color-select">
-                            <option value="">Text Color</option>
-                            <option value="#0000FF">Blue</option>
-                            <option value="#FF0000">Red</option>
-                            <option value="#00FF00">Green</option>
-                            <option value="#FF00FF">Pink</option>
-                            <option value="#800080">Purple</option>
-                            <option value="#FFFF00">Yellow</option>
+                            <option value="">Color</option>
+                            <option value="#FF0000" style="color:#FF0000;">Red</option>
+                            <option value="#0000FF" style="color:#0000FF;">Blue</option>
+                            <option value="#008000" style="color:#008000;">Green</option>
                         </select>
                         <select class="bg-color-select">
-                            <option value="">Background Color</option>
+                            <option value="">BG</option>
                             <option value="#FFFF00">Yellow</option>
+                            <option value="#E0DCD3">Gray</option>
                             <option value="#FFFFFF">White</option>
-                            <option value="#FFE4E1">Misty Rose</option>
-                            <option value="#E0FFFF">Light Cyan</option>
-                            <option value="#FF69B4">Bright Pink</option>
-                            <option value="#000000">Black</option>
                         </select>
-                        <button class="format-btn" data-format="justifyLeft">☰</button>
-                        <button class="format-btn" data-format="justifyCenter">＝</button>
-                        <button class="format-btn" data-format="justifyRight">⇤</button>
                     </div>
-                    <div class="edit-area">
-                        <input type="text" class="edit-title" placeholder="Enter message title">
-                        <div class="edit-textarea" contenteditable="true"></div>
-                    </div>
+                    <div class="edit-textarea" contenteditable="true" style="background-color: #FFFF00;">Be right back!</div>
                 </div>
-
-                <!-- View Mode (Always visible to users) -->
-                <div class="view-mode">
-                    <div class="aim-message-selector">
-                        <label for="away-message-select">Select Message:</label>
-                        <select id="away-message-select" class="aim-select">
-                            <option value="brb">*~*brb*~*</option>
-                            <option value="afk">wutever.</option>
-                            <option value="sleep">just got layed off</option>
-                            <option value="busy">touching grass</option>
-                        </select>
-                    </div>
-                    <div class="aim-message-display custom-message">
-                        <p class="aim-away-text">
-                            I'm not a {perfect person}<br>
-                            There's many things I wish<br>
-                            ~*~*~I didn't do~*~*~<br><br>
-                            and the reason<br>
-                            ~*~*~is you~*~*~<br><br>
-                            <//3
-                        </p>
-                    </div>
+                <div class="admin-controls" style="display: none;">
+                    <select id="away-message-select" class="aim-select">
+                        <option value="brb" selected>Be Right Back</option>
+                        <option value="afk">Away From Keyboard</option>
+                        <option value="sleep">Sleeping</option>
+                        <option value="busy">Busy</option>
+                    </select>
+                    <button class="admin-edit-btn">Edit</button>
+                    <button class="admin-save-btn" style="display: none;">Save</button>
                 </div>
             </div>
         </div>

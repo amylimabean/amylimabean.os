@@ -1,5 +1,6 @@
-// Check if user is admin (you can modify this check based on your needs)
-const isAdmin = true; // Set this to true for you, false for regular users
+// Check if user is admin based on URL query parameter
+const urlParams = new URLSearchParams(window.location.search);
+const isAdmin = urlParams.get('edit') === 'true';
 
 document.addEventListener('DOMContentLoaded', () => {
     const adminControls = document.querySelector('.admin-controls');
@@ -16,6 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const awayText = document.querySelector('.aim-away-text');
     const messageSelect = document.querySelector('#away-message-select');
     const titleBarText = document.querySelector('#window-vacation .title-bar-text');
+    const codeOutputContainer = document.createElement('div');
+    codeOutputContainer.className = 'code-output-container';
+    codeOutputContainer.style.display = 'none';
+    const vacationWindowContent = document.querySelector('#window-vacation .window-content');
+    if (vacationWindowContent) {
+        vacationWindowContent.appendChild(codeOutputContainer);
+    }
 
     // Show admin controls only for admin
     if (isAdmin) {
@@ -104,13 +112,15 @@ document.addEventListener('DOMContentLoaded', () => {
     saveBtn.addEventListener('click', () => {
         const messageType = messageSelect.value;
         const newTitle = editTitle.value.trim() || titleBarText.textContent;
+        const newContentHTML = editTextarea.innerHTML;
+        const newBgColor = editTextarea.style.backgroundColor;
         
-        // Save the custom message
+        // Save the custom message to localStorage for instant preview
         saveCustomMessage(
             messageType,
             newTitle,
-            editTextarea.innerHTML,
-            editTextarea.style.backgroundColor
+            newContentHTML,
+            newBgColor
         );
 
         // Update the display
@@ -122,6 +132,59 @@ document.addEventListener('DOMContentLoaded', () => {
         viewMode.style.display = 'block';
         editBtn.style.display = 'inline-block';
         saveBtn.style.display = 'none';
+
+        // --- Generate and show the code to copy ---
+        const codeToCopy = `
+<!-- Start of Away Message Content -->
+<div class="window-content aim-away-message-content">
+    <div class="view-mode">
+        <div class="aim-message-display" style="background-color: ${newBgColor};">
+            <p class="aim-away-text">${newContentHTML}</p>
+        </div>
+    </div>
+    <div class="edit-mode" style="display: none;">
+        <!-- Edit controls remain for admin view -->
+        <input type="text" class="edit-title" value="${newTitle}">
+        <div class="edit-toolbar">
+            <button class="format-btn" data-format="bold"><b>B</b></button>
+            <button class="format-btn" data-format="italic"><i>I</i></button>
+            <button class="format-btn" data-format="underline"><u>U</u></button>
+            <select class="color-select">
+                <option value="">Color</option>
+                <option value="#FF0000" style="color:#FF0000;">Red</option>
+                <option value="#0000FF" style="color:#0000FF;">Blue</option>
+                <option value="#008000" style="color:#008000;">Green</option>
+            </select>
+            <select class="bg-color-select">
+                <option value="">BG</option>
+                <option value="#FFFF00">Yellow</option>
+                <option value="#E0DCD3">Gray</option>
+                <option value="#FFFFFF">White</option>
+            </select>
+        </div>
+        <div class="edit-textarea" contenteditable="true" style="background-color: ${newBgColor};">${newContentHTML}</div>
+    </div>
+    <div class="admin-controls" style="display: block;">
+        <select id="away-message-select" class="aim-select">
+            <option value="brb" ${messageType === 'brb' ? 'selected' : ''}>Be Right Back</option>
+            <option value="afk" ${messageType === 'afk' ? 'selected' : ''}>Away From Keyboard</option>
+            <option value="sleep" ${messageType === 'sleep' ? 'selected' : ''}>Sleeping</option>
+            <option value="busy" ${messageType === 'busy' ? 'selected' : ''}>Busy</option>
+        </select>
+        <button class="admin-edit-btn">Edit</button>
+        <button class="admin-save-btn" style="display: none;">Save</button>
+    </div>
+</div>
+<!-- End of Away Message Content -->
+        `;
+        
+        codeOutputContainer.innerHTML = `
+            <h3>Update successful!</h3>
+            <p>Your message is saved for you to preview. To make it live for everyone, copy the code below and send it to me:</p>
+            <textarea readonly>${codeToCopy.trim()}</textarea>
+        `;
+        codeOutputContainer.style.display = 'block';
+
     });
 
     // Message select change handler
