@@ -1749,8 +1749,15 @@ textarea {
 
 /* Admin Controls */
 .admin-controls {
-    margin-bottom: 15px;
-    text-align: right;
+    padding-top: 10px;
+    border-top: 1px solid #ccc;
+    margin-top: 0; /* Removed margin-top: auto */
+    flex-shrink: 0; /* Prevent admin controls from shrinking */
+    background-color: #f0f0f0;
+    display: flex;
+    gap: 5px; /* Tighter gap for more buttons */
+    align-items: center;
+    flex-wrap: wrap; /* Allows buttons to wrap on smaller windows */
 }
 
 .admin-edit-btn,
@@ -2069,6 +2076,7 @@ textarea {
     height: 100%;
     box-sizing: border-box;
     gap: 10px; /* Adds space between elements */
+    overflow: hidden; /* Prevent parent from scrolling */
 }
 
 .aim-message-display {
@@ -2084,6 +2092,7 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 100px; /* Ensure it doesn't collapse */
 }
 
 .aim-away-text {
@@ -2135,7 +2144,8 @@ textarea {
 .admin-controls {
     padding-top: 10px;
     border-top: 1px solid #ccc;
-    margin-top: auto; /* Pushes to the bottom */
+    margin-top: 0; /* Removed margin-top: auto */
+    flex-shrink: 0; /* Prevent admin controls from shrinking */
     background-color: #f0f0f0;
     display: flex;
     gap: 5px; /* Tighter gap for more buttons */
@@ -2146,8 +2156,10 @@ textarea {
 .code-output-container {
     padding: 15px;
     border: 2px dashed #008000;
-    margin-top: 15px;
+    margin-top: 10px; /* Use margin instead of gap for this element */
     background-color: #f0fff0;
+    overflow-y: auto; /* Allow this container to scroll if needed */
+    flex-shrink: 0;
 }
 .code-output-container h3 {
     margin-top: 0;
