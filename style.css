@@ -276,6 +276,7 @@ body {
     flex-direction: column;
     z-index: 100;
     cursor: default;
+    display: none; /* Initially hidden */
 }
 
 /* Default positioning for the initially visible window */
@@ -1533,538 +1534,7 @@ textarea {
 
 /* AIM Away Message Window Styles */
 #window-vacation {
-    width: 380px !important;
-    height: 500px !important;
-    min-height: 500px !important;
-    max-height: 500px !important;
-    position: fixed;
-    top: 120px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    overflow: hidden !important;
-    background-color: #E0E0E0;
-    border: 1px solid #000;
-    box-sizing: border-box;
-}
-
-#window-vacation .window-content {
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    background-color: #E0E0E0;
-    padding: 20px;
-    font-size: 18px;
-    color: #000;
-    height: calc(100% - 40px);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden !important;
-}
-
-#window-vacation .aim-message-display {
-    height: 300px !important;
-    min-height: 300px !important;
-    max-height: 300px !important;
-    background-color: #FFFF00;
-    padding: 16px;
-    border: 1px solid #000;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden !important;
-}
-
-#window-vacation .aim-message-display .aim-away-text {
-    text-align: center;
-    font-family: "Comic Sans MS", cursive;
-    font-size: 18px;
-    line-height: 1.6;
-    margin: 0;
-    width: 100%;
-    overflow: hidden !important;
-}
-
-#window-vacation .aim-section {
-    margin-bottom: 10px;
-    padding: 8px;
-    border: 1px solid #B0B0B0;
-    background-color: #FFFFFF; /* White background for sections */
-}
-
-#window-vacation .aim-section label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: normal;
-}
-
-#window-vacation #aim-label-input {
-    width: calc(100% - 10px);
-    padding: 3px;
-    border: 1px solid #7F9DB9; /* Classic Windows input border */
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 18px;
-}
-
-#window-vacation .aim-toolbar {
-    margin-bottom: 5px;
-    padding: 3px;
-    background-color: #D4D0C8; /* Slightly darker grey for toolbar */
-    border: 1px solid #808080;
-    display: flex; /* Added to align buttons */
-    gap: 2px; /* Added for spacing */
-}
-#window-vacation .aim-toolbar button {
-    font-family: "Arial", sans-serif; /* Toolbar buttons often used standard fonts */
-    font-size: 18px;
-    padding: 1px 5px;
-    border: 1px solid #7F9DB9;
-    background-color: #ECE9D8;
-    min-width: 20px; /* Ensure buttons have some width */
-}
-#window-vacation .aim-toolbar button:nth-child(1) { font-weight: bold; color: blue; } /* A */
-#window-vacation .aim-toolbar button:nth-child(2) { font-weight: bold; color: blue; text-decoration: underline;} /* A underline */
-#window-vacation .aim-toolbar button:nth-child(3) { font-weight: bold; } /* B */
-#window-vacation .aim-toolbar button:nth-child(4) { font-style: italic; } /* I */
-#window-vacation .aim-toolbar button:nth-child(5) { text-decoration: underline; } /* U */
-#window-vacation .aim-toolbar button:nth-child(6) { color: blue; text-decoration: underline; } /* link */
-#window-vacation .aim-toolbar button:nth-child(7) { border: none; background: none; font-size: 18px;} /* emoji */
-
-#window-vacation .aim-message-display .aim-label-preview {
-    font-weight: bold;
-    color: #FF00FF;
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-#window-vacation .aim-special-chars {
-    font-size: 18px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-#window-vacation .aim-special-chars p {
-    margin: 2px 0;
-}
-
-#window-vacation .aim-buttons {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin-top: 15px;
-    padding-top: 10px;
-    border-top: 1px solid #B0B0B0;
-}
-
-#window-vacation .aim-action-button {
-    padding: 5px 15px;
-    margin-left: 10px;
-    border: 1px solid #7F9DB9;
-    background-color: #ECE9D8;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 18px;
-    cursor: pointer;
-}
-#window-vacation .aim-action-button:hover {
-    background-color: #d4d0c8;
-}
-
-
-#window-vacation .aim-save-later {
-    margin-right: auto; /* Pushes buttons to the right */
-    display: flex;
-    align-items: center;
-    font-size: 18px;
-}
-#window-vacation .aim-save-later input[type="checkbox"] {
-    margin-right: 5px;
-}
-
-/* Ensure title bar text for this specific window is also Comic Sans */
-#window-vacation .title-bar .title-bar-text {
-    font-family: 'Chicago', sans-serif !important;
-    font-size: 18px;
-}
-
-#window-vacation .aim-message-selector {
-    margin-bottom: 15px;
-    padding: 10px;
-    background-color: #FFFFFF;
-    border: 1px solid #7F9DB9;
-    border-radius: 5px;
-}
-
-#window-vacation .aim-message-selector label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #000000;
-    font-size: 18px;
-}
-
-#window-vacation .aim-select {
-    width: 100%;
-    padding: 5px;
-    border: 1px solid #7F9DB9;
-    background-color: #FFFFFF;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 18px;
-    color: #000000;
-    cursor: pointer;
-}
-
-#window-vacation .aim-select:focus {
-    outline: none;
-    border-color: #0000FF;
-}
-
-#window-vacation .aim-select option {
-    padding: 5px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 18px;
-}
-
-#window-vacation .aim-message-display.custom-message {
-    background-color: #FFFF00;
-    border: 1px solid #7F9DB9;
-    padding: 15px;
-    line-height: 1.4;
-    border-radius: 5px;
-}
-
-#window-vacation .aim-message-display.custom-message .aim-label-preview {
-    color: #0000FF;
-    font-weight: bold;
-    text-align: center;
-    font-size: 18px;
-    margin-bottom: 15px;
-}
-
-#window-vacation .aim-message-display.custom-message .aim-away-text {
-    color: #0000FF;
-    font-size: 18px;
-    text-align: center;
-    line-height: 1.6;
-}
-
-/* Admin Controls */
-.admin-controls {
-    padding-top: 10px;
-    border-top: 1px solid #ccc;
-    margin-top: 0; /* Removed margin-top: auto */
-    flex-shrink: 0; /* Prevent admin controls from shrinking */
-    background-color: #f0f0f0;
-    display: flex;
-    gap: 5px; /* Tighter gap for more buttons */
-    align-items: center;
-    flex-wrap: wrap; /* Allows buttons to wrap on smaller windows */
-}
-
-.admin-edit-btn,
-.admin-save-btn {
-    background-color: #0000FF;
-    color: #FFFFFF;
-    border: 1px solid #000000;
-    padding: 5px 10px;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 18px;
-    cursor: pointer;
-    margin-left: 5px;
-}
-
-.admin-edit-btn:hover,
-.admin-save-btn:hover {
-    background-color: #0000CC;
-}
-
-/* Edit Mode Styles */
-.edit-mode {
-    background-color: #FFFFFF;
-    border: 1px solid #7F9DB9;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 15px;
-    height: 500px; /* Increased from 400px */
-    display: flex;
-    flex-direction: column;
-}
-
-.edit-preview {
-    display: none;
-}
-
-.edit-textarea {
-    width: 100%;
-    height: 300px !important;
-    min-height: 300px !important;
-    max-height: 300px !important;
-    padding: 10px;
-    border: 1px solid #000;
-    font-family: "Comic Sans MS", cursive;
-    background-color: #FFFF00;
-    color: #0000FF;
-    box-sizing: border-box;
-    overflow: hidden !important;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    text-align: center;
-    font-size: 18px;
-    line-height: 1.6;
-    margin: 0;
-}
-
-#window-vacation .edit-textarea[style*="background-color: rgb(0, 0, 0)"],
-#window-vacation .edit-textarea[style*="background-color: #000000"] {
-    color: #FFFFFF; /* White text for black background */
-}
-
-#window-vacation .edit-textarea:focus {
-    outline: none;
-    border-color: #0000FF;
-}
-
-.format-toolbar {
-    display: flex;
-    gap: 8px;
-    padding: 8px;
-    background-color: #E0E0E0;
-    border-bottom: 1px solid #000;
-    flex-wrap: wrap;
-    margin: 0 0 16px 0;
-    overflow: hidden !important;
-}
-
-.format-btn {
-    padding: 4px 8px;
-    border: 1px solid #000;
-    background-color: #E0E0E0;
-    cursor: pointer;
-    font-family: "Comic Sans MS", cursive;
-    font-size: 18px;
-    min-width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.format-btn:hover {
-    background-color: #D0D0D0;
-}
-
-.format-btn[data-format="justifyLeft"],
-.format-btn[data-format="justifyCenter"],
-.format-btn[data-format="justifyRight"] {
-    font-size: 18px;
-    padding: 0 8px;
-}
-
-.color-select,
-.bg-color-select {
-    padding: 3px;
-    border: 1px solid #7F9DB9;
-    font-family: "Comic Sans MS", "Comic Sans", cursive;
-    font-size: 18px;
-}
-
-.edit-area {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin: 0;
-    padding-bottom: 32px !important;
-}
-
-.edit-title {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #000;
-    font-family: "Comic Sans MS", cursive;
-    font-size: 18px;
-    margin: 0;
-}
-
-.edit-label {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #000;
-    font-family: "Comic Sans MS", cursive;
-    font-size: 18px;
-    margin: 0;
-}
-
-.edit-message {
-    width: 100%;
-    height: 300px !important;
-    min-height: 300px !important;
-    max-height: 300px !important;
-    padding: 10px;
-    border: 1px solid #000;
-    font-family: "Comic Sans MS", cursive;
-    font-size: 18px;
-    line-height: 1.6;
-    margin: 0;
-    overflow: hidden !important;
-}
-
-/* View Mode Styles */
-.view-mode {
-    height: 500px; /* Increased from 400px */
-    display: flex;
-    flex-direction: column;
-}
-
-/* Add a spacer element that matches the window styling */
-#window-vacation .window-content::before {
-    content: '';
-    display: block;
-    height: 32px;
-    width: 100%;
-    flex-shrink: 0;
-    order: 999;
-    background-color: #E0E0E0;
-    border-top: 1px solid #000;
-    box-sizing: border-box;
-}
-
-/* Ensure the window content has enough space */
-#window-vacation {
-    padding-bottom: 32px !important;
-    box-sizing: border-box;
-}
-
-/* Trivia Window Styles */
-#window-trivia {
-    width: 400px;
-    min-height: 260px;
-}
-.trivia-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px 10px 10px 10px;
-}
-.trivia-content h3 {
-    font-size: 18px;
-    margin-bottom: 18px;
-    text-align: center;
-}
-.trivia-answers {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    max-width: 320px;
-}
-.trivia-answer {
-    padding: 10px 0;
-    font-size: 18px;
-    border: 1px solid #000;
-    background: #E0DCD3;
-    color: #000;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: bold;
-    transition: background 0.2s, color 0.2s;
-}
-.trivia-answer:hover {
-    background-color: #d0caca;
-}
-
-/* --- Post Secret Window --- */
-.post-secret-content {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 10px;
-    background-color: #FDF5E6; /* Old paper/postcard color */
-    font-family: 'Courier New', Courier, monospace;
-}
-
-.postcard-view {
-    position: relative;
-    flex-grow: 1;
-    border: 1px dashed #aaa;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-}
-
-.postcard-stamp {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    width: 50px;
-    height: 60px;
-    border: 1px solid #000;
-    background-image: url('assets/images/bean-stamp.png'); /* You'll need to create this image */
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.postcard-address {
-    border-left: 2px solid #ccc;
-    padding-left: 10px;
-    margin-left: 55%;
-    font-size: 14px;
-    color: #555;
-}
-
-.postcard-message {
-    flex-grow: 1;
-    width: 50%;
-    margin-top: -40px; /* Overlap with address area */
-    background: none;
-    border: none;
-    resize: none;
-    font-family: 'Give You Glory', cursive;
-    font-size: 20px;
-    line-height: 1.5;
-    color: #333;
-    padding: 5px;
-}
-
-.postcard-message:focus {
-    outline: none;
-}
-
-.submit-secret-btn {
-    align-self: flex-end;
-    margin-top: 10px;
-    font-family: 'Chicago', sans-serif;
-}
-
-.secrets-feed-view {
-    flex-grow: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 10px;
-}
-
-.secret-entry {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 15px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-    font-family: 'Give You Glory', cursive;
-    font-size: 18px;
-    transform: rotate(calc(var(--random-rotation, 0) * 1deg)); /* JS will set this */
-}
-
-.post-secret-toggles {
-    padding-top: 5px;
-    border-top: 1px solid #ccc;
-    text-align: center;
-}
-
-.post-secret-toggles button {
-    font-family: 'Chicago', sans-serif;
-    margin: 0 5px;
+    min-height: 250px; /* Ensure enough space for controls */
 }
 
 /* --- AIM Away Message Window --- */
@@ -2076,7 +1546,7 @@ textarea {
     height: 100%;
     box-sizing: border-box;
     gap: 10px; /* Adds space between elements */
-    overflow-y: auto; /* Allow this container to scroll if content overflows */
+    overflow: hidden; /* Prevent content from spilling out */
 }
 
 .aim-message-display {
@@ -2088,63 +1558,22 @@ textarea {
     font-size: 16px;
     line-height: 1.6;
     text-align: center;
+    overflow-y: auto; /* Add scroll if content is too long */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100px; /* Ensure it doesn't collapse */
 }
 
 .aim-away-text {
     margin: 0;
 }
 
-.edit-mode {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.edit-title {
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 5px;
-    box-sizing: border-box;
-    border: 1px solid #999;
-}
-
-.edit-toolbar {
-    padding: 5px 0;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 5px;
-    display: flex;
-    gap: 5px;
-    flex-wrap: wrap;
-}
-
-.edit-toolbar .format-btn,
-.edit-toolbar .color-select,
-.edit-toolbar .bg-color-select {
-    padding: 3px 6px;
-    border: 1px solid #999;
-    background-color: #e0e0e0;
-}
-
-.edit-textarea {
-    flex-grow: 1;
-    border: 1px solid #999;
-    padding: 15px;
-    overflow-y: auto;
-    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-    font-size: 16px;
-    line-height: 1.6;
-    text-align: center;
-}
-
+/* Admin Controls */
 .admin-controls {
     padding-top: 10px;
     border-top: 1px solid #ccc;
-    margin-top: 0; /* Removed margin-top: auto */
-    flex-shrink: 0; /* Prevent admin controls from shrinking */
+    margin-top: 0; /* Remove margin-top: auto */
+    flex-shrink: 0; /* Prevent this container from shrinking */
     background-color: #f0f0f0;
     display: flex;
     gap: 5px; /* Tighter gap for more buttons */
@@ -2155,9 +1584,8 @@ textarea {
 .code-output-container {
     padding: 15px;
     border: 2px dashed #008000;
-    margin-top: 10px; /* Use margin instead of gap for this element */
+    margin-top: 15px;
     background-color: #f0fff0;
-    flex-shrink: 0;
 }
 .code-output-container h3 {
     margin-top: 0;
@@ -2176,15 +1604,10 @@ textarea {
     overflow-x: scroll;
 }
 
-
 .aim-select {
     padding: 4px;
     width: 100%; /* Make dropdown take full width */
     box-sizing: border-box;
-}
-
-#window-vacation {
-    height: 450px !important; /* Significantly taller to ensure controls fit */
 }
 
 
