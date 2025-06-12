@@ -2068,6 +2068,7 @@ textarea {
     background-color: #f0f0f0; /* Classic AIM-like background */
     height: 100%;
     box-sizing: border-box;
+    gap: 10px; /* Adds space between elements */
 }
 
 .aim-message-display {
@@ -2137,8 +2138,9 @@ textarea {
     margin-top: auto; /* Pushes to the bottom */
     background-color: #f0f0f0;
     display: flex;
-    gap: 10px;
+    gap: 5px; /* Tighter gap for more buttons */
     align-items: center;
+    flex-wrap: wrap; /* Allows buttons to wrap on smaller windows */
 }
 
 .code-output-container {
@@ -2167,6 +2169,8 @@ textarea {
 
 .aim-select {
     padding: 4px;
+    width: 100%; /* Make dropdown take full width */
+    box-sizing: border-box;
 }
 
 

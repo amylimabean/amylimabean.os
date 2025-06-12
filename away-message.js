@@ -1,13 +1,15 @@
-// Check if user is admin based on URL query parameter
 const urlParams = new URLSearchParams(window.location.search);
 const isAdmin = urlParams.get('edit') === 'true';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // --- Element Selectors ---
     const adminControls = document.querySelector('.admin-controls');
     const editMode = document.querySelector('.edit-mode');
     const viewMode = document.querySelector('.view-mode');
     const editBtn = document.querySelector('.admin-edit-btn');
     const saveBtn = document.querySelector('.admin-save-btn');
+    const newBtn = document.querySelector('.admin-new-btn');
+    const deleteBtn = document.querySelector('.admin-delete-btn');
     const formatBtns = document.querySelectorAll('.format-btn');
     const colorSelect = document.querySelector('.color-select');
     const bgColorSelect = document.querySelector('.bg-color-select');
@@ -17,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const awayText = document.querySelector('.aim-away-text');
     const messageSelect = document.querySelector('#away-message-select');
     const titleBarText = document.querySelector('#window-vacation .title-bar-text');
+    
     const codeOutputContainer = document.createElement('div');
     codeOutputContainer.className = 'code-output-container';
     codeOutputContainer.style.display = 'none';
@@ -24,175 +27,213 @@ document.addEventListener('DOMContentLoaded', () => {
     if (vacationWindowContent) {
         vacationWindowContent.appendChild(codeOutputContainer);
     }
+    
+    // --- Initial State and Data ---
+    let awayMessages = {
+        brb: { title: 'Be Right Back', content: 'Be right back!', bgColor: '#FFFF00' },
+        afk: { title: 'Away From Keyboard', content: 'Away from keyboard', bgColor: '#FFFF00' },
+        sleep: { title: 'Sleeping', content: 'Sleeping...', bgColor: '#FFFF00' },
+        busy: { title: 'Busy', content: 'Busy, will respond later', bgColor: '#FFFF00' }
+    };
 
-    // Show admin controls only for admin
-    if (isAdmin) {
-        adminControls.style.display = 'block';
+    function loadMessages() {
+        const storedMessages = localStorage.getItem('customAwayMessages');
+        if (storedMessages) {
+            awayMessages = JSON.parse(storedMessages);
+        }
+    }
+    
+    function saveAllMessages() {
+        localStorage.setItem('customAwayMessages', JSON.stringify(awayMessages));
     }
 
-    // Function to save custom message to localStorage
-    function saveCustomMessage(messageType, title, content, bgColor) {
-        const customMessages = JSON.parse(localStorage.getItem('customAwayMessages') || '{}');
-        customMessages[messageType] = {
-            content: content,
-            bgColor: bgColor,
-            title: title
-        };
-        localStorage.setItem('customAwayMessages', JSON.stringify(customMessages));
+    // --- Core Functions ---
+    function populateDropdown() {
+        const selectedValue = messageSelect.value;
+        messageSelect.innerHTML = '';
+        for (const key in awayMessages) {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = awayMessages[key].title;
+            messageSelect.appendChild(option);
+        }
+        messageSelect.value = selectedValue && awayMessages[selectedValue] ? selectedValue : Object.keys(awayMessages)[0];
+        updateMessageDisplay();
     }
 
-    // Function to load custom message from localStorage
-    function loadCustomMessage(messageType) {
-        const customMessages = JSON.parse(localStorage.getItem('customAwayMessages') || '{}');
-        return customMessages[messageType];
-    }
-
-    // Function to update message display
-    function updateMessageDisplay(messageType) {
-        const customMessage = loadCustomMessage(messageType);
-        if (customMessage) {
-            awayText.innerHTML = customMessage.content;
-            messageDisplay.style.backgroundColor = customMessage.bgColor;
-            titleBarText.textContent = customMessage.title;
+    function updateMessageDisplay() {
+        const selectedKey = messageSelect.value;
+        const message = awayMessages[selectedKey];
+        if (message) {
+            awayText.innerHTML = message.content;
+            messageDisplay.style.backgroundColor = message.bgColor;
+            titleBarText.textContent = `Away Message - ${message.title}`;
+        } else if (Object.keys(awayMessages).length > 0) {
+            // If selected key is invalid, show first message
+            messageSelect.value = Object.keys(awayMessages)[0];
+            updateMessageDisplay();
         } else {
-            // Default messages
-            switch(messageType) {
-                case 'brb':
-                    awayText.innerHTML = 'Be right back!';
-                    messageDisplay.style.backgroundColor = '#FFFF00';
-                    titleBarText.textContent = 'Be Right Back';
-                    break;
-                case 'afk':
-                    awayText.innerHTML = 'Away from keyboard';
-                    messageDisplay.style.backgroundColor = '#FFFF00';
-                    titleBarText.textContent = 'Away From Keyboard';
-                    break;
-                case 'sleep':
-                    awayText.innerHTML = 'Sleeping...';
-                    messageDisplay.style.backgroundColor = '#FFFF00';
-                    titleBarText.textContent = 'Sleeping';
-                    break;
-                case 'busy':
-                    awayText.innerHTML = 'Busy, will respond later';
-                    messageDisplay.style.backgroundColor = '#FFFF00';
-                    titleBarText.textContent = 'Busy';
-                    break;
-            }
+            // No messages exist
+            awayText.innerHTML = 'No messages available.';
+            messageDisplay.style.backgroundColor = '#E0E0E0';
+            titleBarText.textContent = 'Away Message';
         }
     }
 
-    // Edit button click handler
+    // --- Admin Mode Setup ---
+    if (isAdmin) {
+        adminControls.style.display = 'flex';
+    }
+
+    // --- Event Listeners ---
     editBtn.addEventListener('click', () => {
-        editMode.style.display = 'block';
+        const selectedKey = messageSelect.value;
+        const message = awayMessages[selectedKey];
+        if (!message) return;
+
+        editMode.style.display = 'flex';
         viewMode.style.display = 'none';
         editBtn.style.display = 'none';
         saveBtn.style.display = 'inline-block';
         
-        // Populate edit fields with current content
-        const currentMessageType = messageSelect.value;
-        const customMessage = loadCustomMessage(currentMessageType);
-        
-        editTitle.value = customMessage?.title || titleBarText.textContent;
-        editTextarea.innerHTML = awayText.innerHTML;
-        
-        // Set the background color in edit mode to match the current display
-        const currentBgColor = messageDisplay.style.backgroundColor || '#FFFF00';
-        editTextarea.style.backgroundColor = currentBgColor;
-        messageDisplay.style.backgroundColor = currentBgColor;
+        editTitle.value = message.title;
+        editTextarea.innerHTML = message.content;
+        editTextarea.style.backgroundColor = message.bgColor;
+        messageDisplay.style.backgroundColor = message.bgColor; // Keep bg color consistent
 
-        // Make textarea contentEditable and style it
-        editTextarea.contentEditable = true;
-        editTextarea.style.fontFamily = '"Comic Sans MS", "Comic Sans", cursive';
-        editTextarea.style.fontSize = '16px';
-        editTextarea.style.lineHeight = '1.6';
-        editTextarea.style.textAlign = 'center';
+        codeOutputContainer.style.display = 'none';
     });
 
-    // Save button click handler
     saveBtn.addEventListener('click', () => {
-        const messageType = messageSelect.value;
-        const newTitle = editTitle.value.trim() || titleBarText.textContent;
+        const selectedKey = messageSelect.value;
+        if (!awayMessages[selectedKey]) return;
+
+        const newTitle = editTitle.value.trim();
         const newContentHTML = editTextarea.innerHTML;
         const newBgColor = editTextarea.style.backgroundColor;
-        
-        // Save the custom message to localStorage for instant preview
-        saveCustomMessage(
-            messageType,
-            newTitle,
-            newContentHTML,
-            newBgColor
-        );
 
-        // Update the display
-        titleBarText.textContent = newTitle;
-        updateMessageDisplay(messageType);
+        // Update the message object
+        awayMessages[selectedKey] = {
+            title: newTitle,
+            content: newContentHTML,
+            bgColor: newBgColor
+        };
         
-        // Switch back to view mode
+        saveAllMessages();
+        populateDropdown(); // Repopulate to reflect title change
+        updateMessageDisplay();
+        
         editMode.style.display = 'none';
         viewMode.style.display = 'block';
         editBtn.style.display = 'inline-block';
         saveBtn.style.display = 'none';
+        
+        generateCodeForCopying();
+    });
+    
+    newBtn.addEventListener('click', () => {
+        const newKey = prompt("Enter a short, one-word key for the new message (e.g., 'lunch'):");
+        if (newKey && !awayMessages[newKey]) {
+            const key = newKey.trim().toLowerCase().replace(/\s+/g, '-');
+            awayMessages[key] = { title: 'New Message', content: '...', bgColor: '#FFFFFF' };
+            saveAllMessages();
+            populateDropdown();
+            messageSelect.value = key; // Select the new message
+            updateMessageDisplay();
+            editBtn.click(); // Immediately go into edit mode
+        } else if (awayMessages[newKey]) {
+            alert('A message with this key already exists.');
+        }
+    });
 
-        // --- Generate and show the code to copy ---
+    deleteBtn.addEventListener('click', () => {
+        const selectedKey = messageSelect.value;
+        if (Object.keys(awayMessages).length <= 1) {
+            alert("You can't delete the last message!");
+            return;
+        }
+        if (confirm(`Are you sure you want to delete the "${awayMessages[selectedKey].title}" message?`)) {
+            delete awayMessages[selectedKey];
+            saveAllMessages();
+            populateDropdown();
+            updateMessageDisplay();
+            generateCodeForCopying();
+        }
+    });
+
+    messageSelect.addEventListener('change', updateMessageDisplay);
+
+    function generateCodeForCopying() {
+        let optionsHTML = '';
+        for (const key in awayMessages) {
+            const msg = awayMessages[key];
+            optionsHTML += `<option value="${key}">${msg.title}</option>`;
+        }
+        
+        const firstMessageKey = Object.keys(awayMessages)[0];
+        const firstMessage = awayMessages[firstMessageKey];
+
         const codeToCopy = `
 <!-- Start of Away Message Content -->
 <div class="window-content aim-away-message-content">
+    <select id="away-message-select" class="aim-select">
+        ${optionsHTML.trim()}
+    </select>
     <div class="view-mode">
-        <div class="aim-message-display" style="background-color: ${newBgColor};">
-            <p class="aim-away-text">${newContentHTML}</p>
+        <div class="aim-message-display" style="background-color: ${firstMessage.bgColor};">
+            <p class="aim-away-text">${firstMessage.content}</p>
         </div>
     </div>
     <div class="edit-mode" style="display: none;">
-        <!-- Edit controls remain for admin view -->
-        <input type="text" class="edit-title" value="${newTitle}">
-        <div class="edit-toolbar">
-            <button class="format-btn" data-format="bold"><b>B</b></button>
-            <button class="format-btn" data-format="italic"><i>I</i></button>
-            <button class="format-btn" data-format="underline"><u>U</u></button>
-            <select class="color-select">
-                <option value="">Color</option>
-                <option value="#FF0000" style="color:#FF0000;">Red</option>
-                <option value="#0000FF" style="color:#0000FF;">Blue</option>
-                <option value="#008000" style="color:#008000;">Green</option>
-            </select>
-            <select class="bg-color-select">
-                <option value="">BG</option>
-                <option value="#FFFF00">Yellow</option>
-                <option value="#E0DCD3">Gray</option>
-                <option value="#FFFFFF">White</option>
-            </select>
-        </div>
-        <div class="edit-textarea" contenteditable="true" style="background-color: ${newBgColor};">${newContentHTML}</div>
+        <!-- ... Full edit controls structure ... -->
     </div>
-    <div class="admin-controls" style="display: block;">
-        <select id="away-message-select" class="aim-select">
-            <option value="brb" ${messageType === 'brb' ? 'selected' : ''}>Be Right Back</option>
-            <option value="afk" ${messageType === 'afk' ? 'selected' : ''}>Away From Keyboard</option>
-            <option value="sleep" ${messageType === 'sleep' ? 'selected' : ''}>Sleeping</option>
-            <option value="busy" ${messageType === 'busy' ? 'selected' : ''}>Busy</option>
-        </select>
+    <div class="admin-controls" style="display: none;">
         <button class="admin-edit-btn">Edit</button>
         <button class="admin-save-btn" style="display: none;">Save</button>
+        <button class="admin-new-btn">New</button>
+        <button class="admin-delete-btn">Delete</button>
     </div>
 </div>
+<script>
+    // This inline script is now required to handle the initial state
+    document.addEventListener('DOMContentLoaded', () => {
+        const awayMessagesData = ${JSON.stringify(awayMessages, null, 2)};
+        const messageSelect = document.querySelector('#away-message-select');
+        const awayText = document.querySelector('.aim-away-text');
+        const messageDisplay = document.querySelector('.aim-message-display');
+        const titleBarText = document.querySelector('#window-vacation .title-bar-text');
+
+        messageSelect.addEventListener('change', () => {
+            const selectedKey = messageSelect.value;
+            const message = awayMessagesData[selectedKey];
+            if (message) {
+                awayText.innerHTML = message.content;
+                messageDisplay.style.backgroundColor = message.bgColor;
+                titleBarText.textContent = 'Away Message - ' + message.title;
+            }
+        });
+        
+        // Set initial state
+        const initialKey = messageSelect.value;
+        if (awayMessagesData[initialKey]) {
+            awayText.innerHTML = awayMessagesData[initialKey].content;
+            messageDisplay.style.backgroundColor = awayMessagesData[initialKey].bgColor;
+            titleBarText.textContent = 'Away Message - ' + awayMessagesData[initialKey].title;
+        }
+    });
+<\/script>
 <!-- End of Away Message Content -->
         `;
         
         codeOutputContainer.innerHTML = `
             <h3>Update successful!</h3>
-            <p>Your message is saved for you to preview. To make it live for everyone, copy the code below and send it to me:</p>
+            <p>To make this live for everyone, copy ALL the code below and send it to me. This will replace the entire away message window.</p>
             <textarea readonly>${codeToCopy.trim()}</textarea>
         `;
         codeOutputContainer.style.display = 'block';
+    }
 
-    });
-
-    // Message select change handler
-    messageSelect.addEventListener('change', () => {
-        updateMessageDisplay(messageSelect.value);
-    });
-
-    // Format button click handlers
+    // --- Rich Text Editor Logic (unchanged) ---
     formatBtns.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -202,7 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Color select handler
     colorSelect.addEventListener('change', (e) => {
         e.preventDefault();
         if (colorSelect.value) {
@@ -211,7 +251,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Background color select handler
     bgColorSelect.addEventListener('change', () => {
         if (bgColorSelect.value) {
             const newColor = bgColorSelect.value;
@@ -220,26 +259,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Add keyboard shortcuts for formatting
     editTextarea.addEventListener('keydown', (e) => {
         if (e.ctrlKey || e.metaKey) {
             switch (e.key.toLowerCase()) {
-                case 'b':
-                    e.preventDefault();
-                    document.execCommand('bold', false, null);
-                    break;
-                case 'i':
-                    e.preventDefault();
-                    document.execCommand('italic', false, null);
-                    break;
-                case 'u':
-                    e.preventDefault();
-                    document.execCommand('underline', false, null);
-                    break;
+                case 'b': e.preventDefault(); document.execCommand('bold'); break;
+                case 'i': e.preventDefault(); document.execCommand('italic'); break;
+                case 'u': e.preventDefault(); document.execCommand('underline'); break;
             }
         }
     });
 
-    // Initialize with the current selection
-    updateMessageDisplay(messageSelect.value);
+    // --- Initial Load ---
+    loadMessages();
+    populateDropdown();
+    updateMessageDisplay();
 }); 

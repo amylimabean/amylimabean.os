@@ -136,6 +136,9 @@
                 <span class="title-bar-text">Away Message</span>
             </div>
             <div class="window-content aim-away-message-content">
+                <select id="away-message-select" class="aim-select">
+                    <!-- Options will be dynamically populated by script.js -->
+                </select>
                 <div class="view-mode">
                     <div class="aim-message-display" style="background-color: #FFFF00;">
                         <p class="aim-away-text">Be right back!</p>
@@ -163,14 +166,10 @@
                     <div class="edit-textarea" contenteditable="true" style="background-color: #FFFF00;">Be right back!</div>
                 </div>
                 <div class="admin-controls" style="display: none;">
-                    <select id="away-message-select" class="aim-select">
-                        <option value="brb" selected>Be Right Back</option>
-                        <option value="afk">Away From Keyboard</option>
-                        <option value="sleep">Sleeping</option>
-                        <option value="busy">Busy</option>
-                    </select>
                     <button class="admin-edit-btn">Edit</button>
                     <button class="admin-save-btn" style="display: none;">Save</button>
+                    <button class="admin-new-btn">New</button>
+                    <button class="admin-delete-btn">Delete</button>
                 </div>
             </div>
         </div>
