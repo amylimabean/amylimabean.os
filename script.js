@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 bringToFront(win);
 
                 const nonDraggableTags = ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'];
-                if (nonDraggableTags.includes(e.target.tagName) || e.target.closest('button, a, input, select, textarea')) {
+                if (nonDraggableTags.includes(e.target.tagName) || e.target.closest('button, a, input, select, textarea, [contenteditable="true"]')) {
                     return;
                 }
 
