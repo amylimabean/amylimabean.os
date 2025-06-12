@@ -1,15 +1,60 @@
+@font-face {
+    font-family: 'R95 Sans Serif';
+    src: url('fonts/R95-Sans-serif-main/sources/18pt/R95 Sans serif 18pt.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Chicago';
+    src: url('fonts/chicago font/chicago-12-1.otf') format('opentype');
+}
+
+@font-face {
+    font-family: 'Give You Glory';
+    src: url('fonts/GiveYouGlory-Regular.ttf') format('truetype');
+}
+
 /* Global Resets & Poolsuite Base */
-body, html {
+:root {
+    --border-dark: #000000;
+    --window-bg: #fafafa; /* UPDATED from F5F5DC */
+    --header-bg: #F5F5F5; /* UPDATED for nav bars */
+    --button-bg: #E0DCD3; /* Keeping this for now, can be changed to a #fafafa variant if needed */
+    --button-text: #000000;
+    --border-gray: #000000; /* Defaulting to black like other borders */
+}
+
+#background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1; /* Behind body content, above html background */
+}
+
+html {
+    height: 100%;
+    background-color: #fafafa; /* UPDATED - Fallback page background */
+    font-family: 'R95 Sans Serif', monospace; /* Assuming these were intended for html too */
+    font-size: 18px;
+    color: #000000;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
     margin: 0;
     padding: 0;
     height: 100%;
     overflow: hidden;
-    font-family: 'Helvetica Neue', 'Arial', sans-serif; /* Cleaner sans-serif */
-    font-size: 14px; /* Slightly larger base for readability */
-    background-color: #F5F5DC; /* Beige/Cream - Classic Poolsuite background */
+    font-family: 'R95 Sans Serif', monospace; /* Cleaner sans-serif */
+    font-size: 18px; /* Slightly larger base for readability */
     color: #000000;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: transparent; /* Allow video to show through */
+    position: relative; /* Establish stacking context for video z-index */
 }
 
 .desktop-background {
@@ -19,32 +64,37 @@ body, html {
 
 /* Menubar */
 .menubar {
-    background-color: #E0DCD3; /* Slightly darker beige for menubar */
+    background-color: #F5F5F5; /* UPDATED */
     border-bottom: 1px solid #000000;
-    padding: 5px 15px;
+    padding: 0 15px;
     display: flex;
     align-items: center;
-    font-size: 13px;
+    font-size: 16px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 1000;
     height: 25px; /* Consistent height */
+    font-family: 'Chicago', sans-serif;
 }
 
 .menubar .menu-item {
-    padding: 2px 8px;
-    margin-right: 10px;
+    padding: 2px 4px;    /* REDUCED horizontal padding */
+    margin-right: 4px;   /* REDUCED from 8px */
     cursor: default;
     white-space: nowrap;
+    display: flex; /* Added for vertical alignment of text and arrow */
+    align-items: center; /* Added for vertical alignment */
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .menubar .logo-text {
-    font-weight: bold; /* Placeholder for actual script logo */
-    font-style: italic; /* Giving it a slight script feel */
+    font-weight: bold; 
+    font-style: italic; 
     font-size: 16px;
-    margin-right: 5px;
+    font-family: 'Chicago', sans-serif;
 }
 
 .menubar .menu-item.dropdown {
@@ -53,7 +103,7 @@ body, html {
 .menubar .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #E0DCD3;
+    background-color: #F5F5F5; /* UPDATED to match menubar */
     border: 1px solid #000000;
     min-width: 160px;
     box-shadow: 0px 3px 5px rgba(0,0,0,0.2);
@@ -69,10 +119,11 @@ body, html {
     padding: 8px 12px;
     text-decoration: none;
     display: block;
-    font-size: 12px;
+    font-size: 16px;
+    font-family: 'Chicago', sans-serif;
 }
 .menubar .dropdown-content a:hover {
-    background-color: #CEC8BF;
+    background-color: #CEC8BF; /* This can be a slightly darker shade of #CECECE if preferred, e.g., #C0C0C0 */
 }
 
 .menubar .menu-right {
@@ -81,7 +132,7 @@ body, html {
     align-items: center;
 }
 .menubar .menu-right .menu-item {
-    margin-left: 10px;
+    margin-left: 5px; /* REDUCED from 10px to bring items closer to date */
     margin-right: 0;
 }
 .menubar .menu-right .icon-placeholder {
@@ -89,63 +140,142 @@ body, html {
     cursor: pointer;
 }
 #menu-time {
-    font-family: 'Courier New', Courier, monospace; /* Monospaced for time */
-    font-size: 12px;
+    font-family: 'Chicago', sans-serif;
+    font-size: 16px;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+#menu-clock {
+    margin-left: 10px;
+}
+
+/* Styles for new navigation links in the menubar */
+.menubar .nav-link {
+    color: black;
+    text-decoration: none;
+    font-family: 'Chicago', sans-serif;
+}
+
+.menubar .nav-link:hover {
+    color: blue;
+    text-decoration: underline;
 }
 
 /* Desktop Area & Icons */
 .desktop-area {
-    padding-top: 60px; /* Increased from 45px to move icons down */
-    height: calc(100vh - 60px); /* Adjusted height to match new padding */
-    position: relative; 
-    overflow: hidden; 
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    /* pointer-events: none; */
+    pointer-events: auto;
+    z-index: 2;
+    overflow: visible !important;
+}
+.desktop-icons-inner {
+    position: absolute;
+    top: 50px;
+    right: 40px;
     display: flex;
-    flex-direction: column; 
-    align-items: flex-end;   
-    padding-left: 20px; /* Keep side padding */
-    padding-right: 20px; /* Keep side padding */
-    padding-bottom: 20px; /* Keep bottom padding */
-    gap: 15px; 
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 40px;
+    max-height: calc(100vh - 90px);
+    height: calc(6 * (105px + 40px)); /* 6 icons per column, assuming icon height of 70px and gap of 25px */
+    direction: rtl;
 }
-
 .desktop-icon {
-    width: 70px;
+    width: 105px;
     text-align: center;
-    cursor: grab; /* Default cursor to indicate draggable */
-    position: relative; /* Allows z-index and prepares for absolute switch */
-    /* transition: opacity 0.2s; Optional: for visual feedback on drag start */
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    direction: ltr;
 }
 
-/* NEW: Styles for Emoji Desktop Icons */
-.desktop-emoji-icon {
-    font-size: 40px; /* Adjust size as needed, aiming for ~48px visual size */
-    line-height: 1;
-    margin-bottom: 8px; /* Space between emoji and text label */
-    color: #000000; /* Ensure emojis are black like menubar icons if needed */
+/* Windows 95 Style Icons */
+.win95-icon {
+    width: 69px;
+    height: 69px;
+    margin: 0 auto 4px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Larger icons for specific windows */
+#icon-welcome .win95-icon,
+#icon-photobook .win95-icon,
+#icon-affirmations .win95-icon {
+    width: 77px; /* 10% larger than 46px */
+    height: 77px; /* 10% larger than 46px */
+}
+
+#icon-welcome .win95-icon img,
+#icon-photobook .win95-icon img,
+#icon-affirmations .win95-icon img {
+    width: 56px; /* 10% larger than 34px */
+    height: 56px; /* 10% larger than 34px */
+}
+
+/* Smaller icon for work.explorer */
+#icon-projects .win95-icon {
+    width: 66px; /* 5% smaller than 46px */
+    height: 66px; /* 5% smaller than 46px */
+}
+
+#icon-projects .win95-icon img {
+    width: 48px; /* 5% smaller than 34px */
+    height: 48px; /* 5% smaller than 34px */
+}
+
+.win95-icon img {
+    width: 51px;
+    height: 51px;
+    position: relative;
+    z-index: 2;
 }
 
 .desktop-icon span {
-    display: block;
+    display: inline-block;
     color: #000000;
-    background-color: transparent; /* No background for text */
-    padding: 2px 0;
-    font-size: 11px;
-    white-space: normal; /* Allow text to wrap if needed */
+    background-color: #FFFFFF;
+    padding: 2px 4px;
+    font-size: 16px;
+    white-space: normal;
     line-height: 1.2;
+    text-shadow: none;
+    font-family: 'R95 Sans Serif', monospace;
+    font-weight: normal;
+}
+
+/* Remove the old emoji icon styles */
+.desktop-emoji-icon {
+    display: none;
 }
 
 /* Window Styling - Poolsuite Style */
 .window {
-    background-color: #F5F5DC; /* Same as desktop or very close */
+    background-color: var(--window-bg); /* Default window content area */
     border: 1px solid #000000;
-    box-shadow: 5px 5px 0px rgba(0,0,0,0.5); /* Retro hard shadow */
+    box-shadow: 3px 3px 0px rgba(0,0,0,0.7); /* Increased opacity from 0.2 to 0.7 */
     position: absolute;
     min-width: 320px;
-    max-width: 520px; /* Reduced from 600px */
+    max-width: 1200px;
     min-height: 150px;
     display: flex;
     flex-direction: column;
     z-index: 100;
+    cursor: default;
 }
 
 /* Default positioning for the initially visible window */
@@ -153,6 +283,9 @@ body, html {
     top: 60px;
     left: 80px;
     width: 400px; /* Specific width for profile */
+    height: 22px;
+    border-bottom: 1px solid #000000;
+    cursor: grab;
 }
 
 #window-welcome {
@@ -162,7 +295,7 @@ body, html {
 }
 
 .title-bar {
-    background-color: #E0DCD3; /* Menubar-like color for title bar */
+    background-color: var(--header-bg); /* UPDATED - uses variable */
     color: #000000;
     padding: 3px 6px;
     display: flex;
@@ -186,39 +319,43 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 10px;
+    font-family: 'R95 Sans Serif', monospace;
+    font-size: 18px;
     line-height: 1;
-    background-color: #F5F5DC;
+    background-color: #fafafa; /* UPDATED from F5F5DC */
     cursor: pointer;
 }
 .title-bar-buttons .button:active {
-    background-color: #CEC8BF;
+    background-color: #e0e0e0; /* Adjusted for #fafafa base */
 }
 
 .title-bar-buttons .close::before { content: "X"; }
 .title-bar-buttons .maximize::before { content: "↑"; }
 
 .title-bar-text {
-    font-weight: bold;
+    font-weight: normal;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     flex-grow: 1;
     padding-left: 5px; /* Space after buttons */
+    font-family: 'Chicago', sans-serif;
+    font-size: 18px;
 }
 /* The horizontal lines for Poolsuite title bars */
+/* 
 .title-bar-text::before {
-    content: "≡"; /* Using the actual character */
+    content: "≡"; 
     margin-right: 6px;
     font-weight: normal;
 }
+*/
 
 .window-content {
     padding: 15px;
     flex-grow: 1;
     overflow-y: auto;
-    background-color: #F5F5DC; /* Match window background */
+    background-color: var(--window-bg); /* UPDATED to use variable, default window content */
     line-height: 1.5;
 }
 
@@ -240,7 +377,7 @@ body, html {
     font-weight: bold;
 }
 .window-content h3 {
-    font-size: 16px;
+    font-size: 18px;
     color: #000000;
     margin-top: 15px;
     margin-bottom: 8px;
@@ -249,7 +386,7 @@ body, html {
     font-weight: bold;
 }
 .window-content h4 {
-    font-size: 14px;
+    font-size: 18px;
     color: #333333;
     margin-top: 10px;
     margin-bottom: 5px;
@@ -294,7 +431,7 @@ body, html {
 
 .file-icon span {
     display: block;
-    font-size: 10px;
+    font-size: 18px;
     word-wrap: break-word;
     line-height: 1.1;
 }
@@ -311,7 +448,7 @@ body, html {
     margin-top: 10px;
     margin-bottom: 3px;
     font-weight: normal;
-    font-size: 12px;
+    font-size: 18px;
 }
 .contact-form input[type="text"],
 .contact-form input[type="email"],
@@ -321,9 +458,9 @@ body, html {
     width: calc(100% - 12px); /* Account for padding */
     padding: 5px;
     border: 1px solid #000000;
-    background-color: #E0DCD3; /* Light input background */
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 13px;
+    background-color: #EFEFEF; /* Changed from E0DCD3 to a lighter gray */
+    font-family: 'R95 Sans Serif', monospace;
+    font-size: 18px;
     margin-bottom: 10px;
 }
 textarea {
@@ -332,20 +469,20 @@ textarea {
 }
 
 .action-button, .control-button {
-    background-color: #E0DCD3;
+    background-color: #E0DCD3; /* Keeping original button color for now, or change to #DADADA or #EFEFEF */
     border: 1px solid #000000;
     padding: 6px 12px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 12px;
+    font-size: 18px;
     color: #000000;
     text-transform: uppercase; /* Uppercase buttons often seen in retro UIs */
 }
 .action-button:hover, .control-button:hover {
-    background-color: #CEC8BF;
+    background-color: #CEC8BF; /* Darker shade of original */
 }
 .action-button:active, .control-button:active {
-    background-color: #B8B2AA;
+    background-color: #B8B2AA; /* Even darker shade */
 }
 
 .fm-player-controls {
@@ -359,8 +496,8 @@ textarea {
     border: 1px solid #CEC8BF;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #E0DCD3;
-    font-size: 12px;
+    background-color: #EFEFEF; /* Changed from E0DCD3 to a lighter gray */
+    font-size: 18px;
 }
 .comment-entry strong {
     font-weight: bold;
@@ -417,7 +554,7 @@ textarea {
 
 @media (max-width: 480px) {
     body {
-        font-size: 13px;
+        font-size: 18px;
     }
     .menubar {
         padding: 3px 8px;
@@ -434,15 +571,15 @@ textarea {
         padding-top: 3px;
     }
     .title-bar-text {
-        font-size: 11px;
+        font-size: 18px;
     }
     .window-content {
         padding: 10px;
     }
-    .window-content h2 { font-size: 16px; }
-    .window-content h3 { font-size: 14px; }
+    .window-content h2 { font-size: 18px; }
+    .window-content h3 { font-size: 18px; }
     .desktop-emoji-icon {
-        font-size: 32px; /* Even smaller for very small screens */
+        font-size: 18px; /* Even smaller for very small screens */
     }
 }
 
@@ -456,37 +593,44 @@ textarea {
 
 .earbuds-content {
     padding: 10px; /* Reduced padding for compact player */
-    background-color: #F5F5DC; /* Main beige color */
+    background-color: var(--window-bg); /* UPDATED to use variable */
     position: relative; /* For positioning stippled border if needed */
 }
 
 .visualizer-area {
-    background-color: #000000;
+    background-color: #000000; /* Black background for visualizer */
     height: 60px;
     margin-bottom: 10px;
     border: 1px solid #333;
-    /* Simple repeating gradient to mimic bars */
-    background-image: repeating-linear-gradient(
+    /* Simple repeating gradient to mimic bars - REMOVED */
+    /* background-image: repeating-linear-gradient(
         to right,
         #555555,
         #555555 2px,
         #000000 2px,
         #000000 4px
-    );
+    ); */
+    overflow: hidden; /* Ensure canvas doesn't spill out */
+}
+
+#myTunes-visualizer-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
 }
 
 .channel-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: bold;
     margin-bottom: 8px;
     padding: 0 5px; /* Slight padding */
 }
 
 .channel-info .dropdown-arrow {
-    font-size: 10px;
+    font-size: 18px;
     cursor: pointer;
 }
 
@@ -503,13 +647,13 @@ textarea {
 }
 
 .track-details .time-info {
-    font-size: 11px;
+    font-size: 18px;
     color: #333333;
     margin-bottom: 2px;
 }
 
 .track-details .song-title {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     color: #000000;
     margin-bottom: 1px;
@@ -519,7 +663,7 @@ textarea {
 }
 
 .track-details .artist-name {
-    font-size: 12px;
+    font-size: 18px;
     color: #333333;
 }
 
@@ -531,10 +675,10 @@ textarea {
 }
 
 .player-btn {
-    background-color: #F5F5DC; /* Beige background */
+    background-color: #fafafa; /* UPDATED from F5F5DC */
     border: 1px solid #000000;
     color: #000000;
-    font-size: 14px; /* Adjust for symbol clarity */
+    font-size: 18px; /* Adjust for symbol clarity */
     font-weight: bold; /* For thicker symbols */
     padding: 6px 0; /* Vertical padding, horizontal will be from flex distribution */
     width: 38px; /* Fixed width for square-ish buttons */
@@ -551,18 +695,18 @@ textarea {
 }
 
 .player-btn:hover {
-    background-color: #E0DCD3; /* Darker beige on hover */
+    background-color: #e9e9e9; /* Adjusted for #fafafa base */
 }
 .player-btn:active {
-    background-color: #CEC8BF; /* Even darker on active */
+    background-color: #dcdcdc; /* Adjusted for #fafafa base */
 }
 
 .playlist-section {
-    font-size: 11px;
+    font-size: 18px;
     margin-top: 10px;
 }
 .playlist-section h4 {
-    font-size: 11px;
+    font-size: 18px;
     color: #555;
     margin-bottom: 5px;
     font-weight: normal;
@@ -583,10 +727,1338 @@ textarea {
 
 /* Stippled border effect at the bottom of the player window */
 .stippled-bottom-player {
-    height: 10px; /* Height of the stippled area */
-    background-image: repeating-linear-gradient(to right, #000, #000 1px, transparent 1px, transparent 3px); /* Creates a dotted line */
-    background-size: 3px 1px; /* Control dot size and spacing */
-    background-repeat: repeat-x;
-    border-top: 1px solid black; /* Line above the stipples */
-    margin: 0; /* Ensure it sits flush */
-} 
+    border-bottom: 2px stippled #000000;
+}
+
+/* Photobook Window Specific Styles */
+#window-photobook {
+    width: 450px; 
+    height: auto;
+}
+
+.photobook-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding-bottom: 50px; /* Space for controls */
+}
+
+.photobook-controls {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.control-button {
+    background-color: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    box-shadow: 1px 1px 0 #000;
+    padding: 5px 15px;
+    font-family: 'W95FA', sans-serif;
+    font-size: 14px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.control-button:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+}
+
+/* --- Trivia Window Styles START --- */
+#window-trivia {
+    /* You can add specific window-level styles here if needed */
+}
+
+#trivia-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.trivia-question {
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.trivia-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.trivia-option {
+    background-color: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    box-shadow: 1px 1px 0 #000;
+    padding: 10px;
+    font-family: 'W95FA', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.trivia-option:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+}
+
+.trivia-option:disabled {
+    cursor: not-allowed;
+    color: #808080;
+}
+
+.trivia-feedback {
+    min-height: 20px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 110%;
+}
+
+.trivia-final-score {
+    text-align: center;
+}
+
+#restart-trivia {
+    background-color: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    box-shadow: 1px 1px 0 #000;
+    padding: 8px 16px;
+    font-family: 'W95FA', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#restart-trivia:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+}
+
+#next-trivia-question {
+    background-color: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    box-shadow: 1px 1px 0 #000;
+    padding: 8px 16px;
+    font-family: 'W95FA', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 15px auto 0;
+    display: block;
+}
+
+#next-trivia-question:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+}
+
+.trivia-control-button {
+    background-color: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    box-shadow: 1px 1px 0 #000;
+    padding: 8px 16px;
+    font-family: 'W95FA', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    margin: 20px auto 0;
+    display: block;
+}
+
+.trivia-control-button:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+}
+
+/* --- Trivia Window Styles END --- */
+
+/* --- Affirmations Window Styles --- */
+.affirmations-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.tarot-card {
+    width: 230px; /* Adjusted width */
+    height: 440px; /* Decreased height */
+    border: 2px solid #000;
+    border-radius: 12px;
+    background-color: #FDF5E6; /* Parchment-like color */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    text-align: center;
+    gap: 15px; /* Handles spacing between art and affirmation */
+}
+
+.tarot-card-art {
+    width: 100%;
+    flex: 0 0 80%; /* Art will take 80% of the card height */
+    background-color: #e0e0e0;
+    border: 1px solid #000;
+    margin-bottom: 0; /* Replaced by gap on parent */
+    background-size: cover; /* Changed from contain to fill container */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image:
+        linear-gradient(45deg, #ccc 25%, transparent 25%),
+        linear-gradient(-45deg, #ccc 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ccc 75%),
+        linear-gradient(-45deg, transparent 75%, #ccc 75%);
+}
+
+.tarot-card-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 0 10px 0;
+    display: none; /* Hide the title element */
+}
+
+.affirmation-text {
+    font-size: 20px;
+    line-height: 24px;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.affirmations-content .next-affirmation {
+    padding: 10px 20px;
+    font-size: 16px;
+    width: 230px; /* Matched to tarot card width */
+    margin-top: 16px; /* Added spacing */
+}
+
+/* Chat Window Specific Styles */
+#window-chat {
+    width: 700px; /* Increased width */
+    height: 500px; /* Increased height */
+    box-shadow: 5px 5px 0px #000000 !important;
+}
+
+.chat-body-grid {
+    display: flex;
+    height: calc(100% - 20px); /* Adjust for title bar */
+}
+
+.chat-sidebar {
+    width: 210px; /* Adjusted width */
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    background-color: #fafafa; /* UPDATED */
+    border-right: 2px solid var(--border-dark);
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    font-family: 'R95 Sans Serif', Arial;
+}
+
+.chat-sidebar-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    /* border-bottom: 1px solid var(--border-dark); */ /* Removed underline */
+    font-size: 1.1em;
+}
+
+.chat-sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.chat-sidebar ul li {
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin-bottom: 5px;
+    font-size: 1.1em;
+    white-space: nowrap; /* Ensure text stays on one line */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis if text overflows */
+}
+
+.chat-sidebar ul li:hover {
+    background-color: #e9e9e9; /* Slightly darker than #fafafa */
+}
+
+.chat-sidebar ul li.active-channel {
+    background-color: var(--border-dark); /* Black background for active channel */
+    color: white;
+    font-weight: bold;
+}
+
+.chat-main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa; /* UPDATED */
+}
+
+.chat-header {
+    padding: 10px;
+    border-bottom: 2px solid var(--border-dark);
+    background-color: #fafafa; /* UPDATED */
+    font-weight: bold;
+    font-family: 'R95 Sans Serif', Arial;
+    font-size: 1.1em;
+}
+
+.chat-content-area {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #fafafa; /* UPDATED */
+    line-height: 1.6;
+}
+
+.chat-content-area p,
+.chat-content-area ul li {
+    margin-bottom: 10px;
+}
+.chat-content-area ul {
+    padding-left: 20px;
+}
+
+
+.chat-input-area {
+    display: flex;
+    padding: 10px;
+    border-top: 2px solid var(--border-dark);
+    background-color: #fafafa; /* UPDATED */
+}
+
+.chat-input-area input[type="text"] {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 8px;
+    border: 1px solid var(--border-gray);
+    border-radius: 3px;
+    background-color: #ffffff; /* Explicitly white for input field background */
+}
+
+.chat-input-area button {
+    padding: 8px 12px;
+    background-color: #E0DCD3;
+    color: #000000;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: 'R95 Sans Serif', Arial;
+    font-size: 18px;
+    box-shadow: 1px 1px 0px #FFFFFF;
+}
+
+/* New styles for individual chat messages */
+.chat-message {
+    margin-bottom: 2px; /* Reduced from 5px */
+    padding: 6px; /* Reduced from 8px */
+    border-radius: 5px;
+    line-height: 1.4;
+}
+
+.user-message {
+    /* background-color: #e1f5fe; */ /* Light blue for user messages - REMOVED */
+    text-align: right;
+    margin-left: auto; /* Push to the right */
+    max-width: 90%; /* Increased from 70% */
+}
+
+.user-message strong {
+    color: #0277bd;
+}
+
+.system-message {
+    /* background-color: #e9e9e9; */ /* Light grey for system messages - REMOVED */
+    max-width: 90%; /* Increased from 70% */
+}
+
+.system-message strong {
+    /* color: #555; */ /* This will be handled by .system-username strong if present */
+}
+
+/* New rule for the styled username */
+.system-username strong {
+  color: #0000FF; /* Changed from #3C58A9 */
+}
+
+/* Ensure the general window styling doesn't conflict too much */
+.window-body {
+    padding: 0; /* Remove padding if chat-body-grid handles it */
+}
+
+.apple-logo {
+    height: 16px;
+    width: 28px;
+    vertical-align: middle;
+}
+
+/* Add to style.css */
+.bean-logo {
+    cursor: pointer;
+    transform: rotate(150deg) scale(0.8); 
+    height: 17px; /* ADDED for uniform size */
+    width: auto;  /* ADDED for uniform size */
+    vertical-align: middle; /* ADDED for better alignment */
+}
+.menu-icon {
+    height: 28px; /* Set to 28px */
+    width: auto;
+    vertical-align: middle;
+    margin-right: 0px; /* Changed from 2px */
+}
+
+#bean-menu-item {
+    position: relative; /* For dropdown positioning */
+}
+
+#bean-menu-item .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px; /* Reduced width */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1001; /* Ensure it's above other menubar items but below windows */
+    border: 1px solid #000000;
+    top: 100%;
+    left: 0;
+    padding: 0; /* Remove padding if anchor tags have their own */
+}
+
+#bean-menu-item .dropdown-content a {
+    color: black;
+    padding: 8px 14px; /* Reduced vertical padding */
+    text-decoration: none;
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+}
+
+#bean-menu-item .dropdown-content a:hover {
+    background-color: #e9e9e9; /* Slightly darker hover */
+}
+
+/* This class will be toggled by JavaScript */
+#bean-menu-item:hover .dropdown-content {
+    display: block;
+}
+
+#modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    display: none;
+}
+
+/* About This Bean Window */
+#window-about-bean {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2001;
+    width: 500px;
+    height: 600px;
+}
+
+#window-about-bean .window-content {
+    padding: 0;
+}
+
+#window-about-bean .about-bean-content {
+    padding: 10px;
+}
+
+#window-about-bean .copyright {
+    margin-top: 12px;
+}
+
+#window-about-bean .window-content::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f0f0f0;
+}
+
+#window-about-bean .window-content::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border: 1px solid #808080;
+}
+
+#window-about-bean .window-content::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
+
+.about-bean-content {
+    font-size: 18px;
+    line-height: 1.4;
+    padding: 15px; /* Increased padding slightly */
+    text-align: center; /* Center image and title */
+}
+
+.beanos-main-image {
+    display: block;
+    margin: 0 auto 15px auto; /* Center and add bottom margin */
+    max-width: 180px; /* Adjust as needed */
+    max-height: 180px; /* Ensure it doesn't get too tall */
+    object-fit: cover;
+    border-radius: 8px; /* Optional: for rounded corners on the image */
+}
+
+.beanos-title { /* This is the H3 */
+    font-size: 20px; /* Slightly larger title */
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: none !important; /* Ensure no border from general h3 styles */
+    padding-bottom: 0;
+    font-weight: bold;
+    text-align: center;
+}
+
+.beanos-description {
+    text-align: left;
+    margin-bottom: 20px; /* Space before the specs list */
+}
+
+.beanos-description p {
+    margin-bottom: 10px;
+    font-size: 18px; /* Consistent font size */
+}
+
+.beanos-description .copyright {
+    font-size: 18px;
+    margin-bottom: 12px;
+    /* text-align: left; This will be handled by a more general .copyright style if moved */
+}
+
+/* New/Adjusted style for copyright if it's moved out of beanos-description */
+.about-bean-content .copyright {
+    font-size: 18px;
+    margin-bottom: 15px; /* Space after copyright before description */
+    text-align: center;
+}
+
+.bean-specs {
+    list-style: none;
+    padding-left: 0;
+    margin: 0 auto 15px auto; /* Center the list block, text inside left-aligned */
+    text-align: left;
+    max-width: 300px; /* Constrain width of the specs list */
+}
+.bean-specs li {
+    margin-bottom: 4px; /* Slightly more spacing */
+    font-size: 18px;
+}
+.bean-specs li::before {
+    content: "";
+    margin-right: 0;
+}
+
+.bean-info-divider {
+    border: none;
+    border-top: 1px solid #000000;
+    margin: 20px 0; /* Increased margin */
+}
+
+.bean-stats {
+    padding-top: 5px;
+    /* max-width: 400px; Remove max-width */
+    /* margin: 0 auto; Remove auto margin for left alignment */
+    text-align: left; /* Ensure text within stats aligns left if needed */
+}
+
+.stat-entry {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Increased spacing */
+    font-size: 18px;
+}
+
+.stat-label {
+    width: 100px; /* Adjusted width */
+    flex-shrink: 0;
+}
+
+.stat-value {
+    width: 60px; /* Adjusted width */
+    margin-left: 5px; /* Space after label */
+    margin-right: 10px;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.stat-bar-container {
+    flex-grow: 1;
+    height: 12px; /* Slightly taller bar */
+    background-color: #e9e9e9; /* Lighter grey background for bar */
+    border: 1px solid #000000;
+    padding: 1px; 
+}
+
+.stat-bar-filled {
+    height: 100%;
+    background-color: #000000;
+}
+
+/* Wallpaper Menu */
+#wallpaper-menu-item {
+    position: relative;
+    height: 100%;
+}
+
+#wallpaper-menu-item .dropdown-content {
+    /* Styles are similar to #bean-dropdown, adjust if needed */
+    display: none; /* Hidden by default */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #f9f9f9;
+    min-width: 120px; /* Reduced width */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 101; 
+    border: 1px solid #000000;
+}
+
+#wallpaper-menu-item .dropdown-content a {
+    color: black;
+    padding: 8px 14px; /* Reduced vertical padding */
+    text-decoration: none;
+    display: block;
+    font-size: 16px;
+}
+
+#wallpaper-menu-item .dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+#wallpaper-menu-item:hover .dropdown-content,
+#wallpaper-menu-item .dropdown-content.show { /* .show class for JS toggle */
+    display: block;
+}
+
+/* Style for the wallpaper menu item itself if needed */
+#wallpaper-menu-item span {
+    cursor: pointer;
+    padding: 0 0px; /* Adjusted padding, was 0 10px. Arrow will have its own margin. */
+    display: flex; /* For aligning text and arrow */
+    align-items: center;
+}
+
+.dropdown-arrow-ws {
+    margin-left: 0px; /* Changed from 4px */
+    font-size: 0.66em; /* Smaller arrow */
+    line-height: 1; /* Ensure it doesn't increase item height */
+}
+
+#window-projects .file-icon img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3px;
+}
+
+/* TextEdit Style Window */
+.text-edit-style-window .window-content {
+    padding: 0; /* Remove default window content padding */
+    display: flex;
+    flex-direction: column;
+}
+
+.text-edit-toolbar {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    background-color: var(--header-bg); /* Match title bar background */
+    border-bottom: 1px solid var(--border-dark);
+    gap: 4px; /* Spacing between toolbar items */
+}
+
+.text-edit-toolbar .tool-button {
+    background-color: transparent;
+    border: 1px solid transparent;
+    font-size: 14px;
+    cursor: default; /* Not functional yet */
+    min-width: 28px; /* Ensure buttons have some width */
+    text-align: center;
+}
+
+.text-edit-toolbar .tool-button:active {
+    background-color: #b0a99f; /* Darker shade for active state */
+}
+
+.text-edit-toolbar .tool-select {
+    padding: 5px;
+    border: 1px solid #7F7F7F;
+    background-color: #FFFFFF;
+    font-family: 'R95 Sans Serif', monospace;
+    font-size: 18px;
+}
+
+.text-edit-main-area {
+    flex-grow: 1;
+    background-color: #FFFFFF;
+    padding: 10px;
+    font-family: 'R95 Sans Serif', monospace;
+    overflow-y: auto;
+    line-height: 1.4;
+}
+
+.text-edit-main-area p {
+    margin: 0 0 1em 0;
+}
+
+/* Guestbook styling */
+.comment-entry {
+    border: 1px solid #CEC8BF;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #EFEFEF; /* Changed from E0DCD3 to a lighter gray */
+    font-size: 18px;
+}
+.comment-entry strong {
+    font-weight: bold;
+}
+
+/* Guestbook Chat Interface Styles */
+.guestbook-chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Make it use the full window content height */
+    padding: 0; /* Remove default window-content padding if this container handles it */
+}
+
+.guestbook-messages-display {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-dark); /* Separator from input area */
+    background-color: #ffffff; /* White background for messages */
+}
+
+.guestbook-message {
+    background-color: #e9e9e9; /* Light grey for messages */
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    max-width: 85%; /* Messages don't take full width */
+    line-height: 1.4;
+}
+
+.guestbook-message p {
+    margin: 0;
+}
+
+.guestbook-input-form {
+    display: flex;
+    align-items: center; /* Align items vertically */
+    padding: 8px;
+    background-color: var(--header-bg); /* Match title bar or a light grey */
+}
+
+.guestbook-input-form .input-group {
+    margin-right: 8px;
+}
+
+.guestbook-input-form .message-input-group {
+    flex-grow: 1; /* Textarea takes remaining space */
+}
+
+.guestbook-input-form input[type="text"],
+.guestbook-input-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #7F7F7F;
+    background-color: #FFFFFF;
+    font-family: 'R95 Sans Serif', monospace;
+    font-size: 18px;
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+.guestbook-input-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.guestbook-send-btn {
+    padding: 6px 12px; /* Adjust padding to match input height if desired */
+    white-space: nowrap;
+}
+
+/* Screen-reader only class for labels */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+/* End Guestbook Chat Interface Styles */
+
+/* AIM Away Message Window Styles */
+#window-vacation {
+    width: 380px !important;
+    height: 500px !important;
+    min-height: 500px !important;
+    max-height: 500px !important;
+    position: fixed;
+    top: 120px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    overflow: hidden !important;
+    background-color: #E0E0E0;
+    border: 1px solid #000;
+    box-sizing: border-box;
+}
+
+#window-vacation .window-content {
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    background-color: #E0E0E0;
+    padding: 20px;
+    font-size: 18px;
+    color: #000;
+    height: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+}
+
+#window-vacation .aim-message-display {
+    height: 300px !important;
+    min-height: 300px !important;
+    max-height: 300px !important;
+    background-color: #FFFF00;
+    padding: 16px;
+    border: 1px solid #000;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden !important;
+}
+
+#window-vacation .aim-message-display .aim-away-text {
+    text-align: center;
+    font-family: "Comic Sans MS", cursive;
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0;
+    width: 100%;
+    overflow: hidden !important;
+}
+
+#window-vacation .aim-section {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #B0B0B0;
+    background-color: #FFFFFF; /* White background for sections */
+}
+
+#window-vacation .aim-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+#window-vacation #aim-label-input {
+    width: calc(100% - 10px);
+    padding: 3px;
+    border: 1px solid #7F9DB9; /* Classic Windows input border */
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 18px;
+}
+
+#window-vacation .aim-toolbar {
+    margin-bottom: 5px;
+    padding: 3px;
+    background-color: #D4D0C8; /* Slightly darker grey for toolbar */
+    border: 1px solid #808080;
+    display: flex; /* Added to align buttons */
+    gap: 2px; /* Added for spacing */
+}
+#window-vacation .aim-toolbar button {
+    font-family: "Arial", sans-serif; /* Toolbar buttons often used standard fonts */
+    font-size: 18px;
+    padding: 1px 5px;
+    border: 1px solid #7F9DB9;
+    background-color: #ECE9D8;
+    min-width: 20px; /* Ensure buttons have some width */
+}
+#window-vacation .aim-toolbar button:nth-child(1) { font-weight: bold; color: blue; } /* A */
+#window-vacation .aim-toolbar button:nth-child(2) { font-weight: bold; color: blue; text-decoration: underline;} /* A underline */
+#window-vacation .aim-toolbar button:nth-child(3) { font-weight: bold; } /* B */
+#window-vacation .aim-toolbar button:nth-child(4) { font-style: italic; } /* I */
+#window-vacation .aim-toolbar button:nth-child(5) { text-decoration: underline; } /* U */
+#window-vacation .aim-toolbar button:nth-child(6) { color: blue; text-decoration: underline; } /* link */
+#window-vacation .aim-toolbar button:nth-child(7) { border: none; background: none; font-size: 18px;} /* emoji */
+
+#window-vacation .aim-message-display .aim-label-preview {
+    font-weight: bold;
+    color: #FF00FF;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+#window-vacation .aim-special-chars {
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+#window-vacation .aim-special-chars p {
+    margin: 2px 0;
+}
+
+#window-vacation .aim-buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #B0B0B0;
+}
+
+#window-vacation .aim-action-button {
+    padding: 5px 15px;
+    margin-left: 10px;
+    border: 1px solid #7F9DB9;
+    background-color: #ECE9D8;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 18px;
+    cursor: pointer;
+}
+#window-vacation .aim-action-button:hover {
+    background-color: #d4d0c8;
+}
+
+
+#window-vacation .aim-save-later {
+    margin-right: auto; /* Pushes buttons to the right */
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+#window-vacation .aim-save-later input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Ensure title bar text for this specific window is also Comic Sans */
+#window-vacation .title-bar .title-bar-text {
+    font-family: 'Chicago', sans-serif !important;
+    font-size: 18px;
+}
+
+#window-vacation .aim-message-selector {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #FFFFFF;
+    border: 1px solid #7F9DB9;
+    border-radius: 5px;
+}
+
+#window-vacation .aim-message-selector label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #000000;
+    font-size: 18px;
+}
+
+#window-vacation .aim-select {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #7F9DB9;
+    background-color: #FFFFFF;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 18px;
+    color: #000000;
+    cursor: pointer;
+}
+
+#window-vacation .aim-select:focus {
+    outline: none;
+    border-color: #0000FF;
+}
+
+#window-vacation .aim-select option {
+    padding: 5px;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 18px;
+}
+
+#window-vacation .aim-message-display.custom-message {
+    background-color: #FFFF00;
+    border: 1px solid #7F9DB9;
+    padding: 15px;
+    line-height: 1.4;
+    border-radius: 5px;
+}
+
+#window-vacation .aim-message-display.custom-message .aim-label-preview {
+    color: #0000FF;
+    font-weight: bold;
+    text-align: center;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+#window-vacation .aim-message-display.custom-message .aim-away-text {
+    color: #0000FF;
+    font-size: 18px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* Admin Controls */
+.admin-controls {
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+.admin-edit-btn,
+.admin-save-btn {
+    background-color: #0000FF;
+    color: #FFFFFF;
+    border: 1px solid #000000;
+    padding: 5px 10px;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.admin-edit-btn:hover,
+.admin-save-btn:hover {
+    background-color: #0000CC;
+}
+
+/* Edit Mode Styles */
+.edit-mode {
+    background-color: #FFFFFF;
+    border: 1px solid #7F9DB9;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    height: 500px; /* Increased from 400px */
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-preview {
+    display: none;
+}
+
+.edit-textarea {
+    width: 100%;
+    height: 300px !important;
+    min-height: 300px !important;
+    max-height: 300px !important;
+    padding: 10px;
+    border: 1px solid #000;
+    font-family: "Comic Sans MS", cursive;
+    background-color: #FFFF00;
+    color: #0000FF;
+    box-sizing: border-box;
+    overflow: hidden !important;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: center;
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+#window-vacation .edit-textarea[style*="background-color: rgb(0, 0, 0)"],
+#window-vacation .edit-textarea[style*="background-color: #000000"] {
+    color: #FFFFFF; /* White text for black background */
+}
+
+#window-vacation .edit-textarea:focus {
+    outline: none;
+    border-color: #0000FF;
+}
+
+.format-toolbar {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    background-color: #E0E0E0;
+    border-bottom: 1px solid #000;
+    flex-wrap: wrap;
+    margin: 0 0 16px 0;
+    overflow: hidden !important;
+}
+
+.format-btn {
+    padding: 4px 8px;
+    border: 1px solid #000;
+    background-color: #E0E0E0;
+    cursor: pointer;
+    font-family: "Comic Sans MS", cursive;
+    font-size: 18px;
+    min-width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.format-btn:hover {
+    background-color: #D0D0D0;
+}
+
+.format-btn[data-format="justifyLeft"],
+.format-btn[data-format="justifyCenter"],
+.format-btn[data-format="justifyRight"] {
+    font-size: 18px;
+    padding: 0 8px;
+}
+
+.color-select,
+.bg-color-select {
+    padding: 3px;
+    border: 1px solid #7F9DB9;
+    font-family: "Comic Sans MS", "Comic Sans", cursive;
+    font-size: 18px;
+}
+
+.edit-area {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding-bottom: 32px !important;
+}
+
+.edit-title {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #000;
+    font-family: "Comic Sans MS", cursive;
+    font-size: 18px;
+    margin: 0;
+}
+
+.edit-label {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #000;
+    font-family: "Comic Sans MS", cursive;
+    font-size: 18px;
+    margin: 0;
+}
+
+.edit-message {
+    width: 100%;
+    height: 300px !important;
+    min-height: 300px !important;
+    max-height: 300px !important;
+    padding: 10px;
+    border: 1px solid #000;
+    font-family: "Comic Sans MS", cursive;
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0;
+    overflow: hidden !important;
+}
+
+/* View Mode Styles */
+.view-mode {
+    height: 500px; /* Increased from 400px */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Add a spacer element that matches the window styling */
+#window-vacation .window-content::before {
+    content: '';
+    display: block;
+    height: 32px;
+    width: 100%;
+    flex-shrink: 0;
+    order: 999;
+    background-color: #E0E0E0;
+    border-top: 1px solid #000;
+    box-sizing: border-box;
+}
+
+/* Ensure the window content has enough space */
+#window-vacation {
+    padding-bottom: 32px !important;
+    box-sizing: border-box;
+}
+
+/* Trivia Window Styles */
+#window-trivia {
+    width: 400px;
+    min-height: 260px;
+}
+.trivia-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px 10px 10px 10px;
+}
+.trivia-content h3 {
+    font-size: 18px;
+    margin-bottom: 18px;
+    text-align: center;
+}
+.trivia-answers {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 320px;
+}
+.trivia-answer {
+    padding: 10px 0;
+    font-size: 18px;
+    border: 1px solid #000;
+    background: #E0DCD3;
+    color: #000;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: bold;
+    transition: background 0.2s, color 0.2s;
+}
+.trivia-answer:hover {
+    background-color: #d0caca;
+}
+
+/* --- Post Secret Window --- */
+.post-secret-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px;
+    background-color: #FDF5E6; /* Old paper/postcard color */
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.postcard-view {
+    position: relative;
+    flex-grow: 1;
+    border: 1px dashed #aaa;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.postcard-stamp {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 50px;
+    height: 60px;
+    border: 1px solid #000;
+    background-image: url('assets/images/bean-stamp.png'); /* You'll need to create this image */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.postcard-address {
+    border-left: 2px solid #ccc;
+    padding-left: 10px;
+    margin-left: 55%;
+    font-size: 14px;
+    color: #555;
+}
+
+.postcard-message {
+    flex-grow: 1;
+    width: 50%;
+    margin-top: -40px; /* Overlap with address area */
+    background: none;
+    border: none;
+    resize: none;
+    font-family: 'Give You Glory', cursive;
+    font-size: 20px;
+    line-height: 1.5;
+    color: #333;
+    padding: 5px;
+}
+
+.postcard-message:focus {
+    outline: none;
+}
+
+.submit-secret-btn {
+    align-self: flex-end;
+    margin-top: 10px;
+    font-family: 'Chicago', sans-serif;
+}
+
+.secrets-feed-view {
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 10px;
+}
+
+.secret-entry {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    font-family: 'Give You Glory', cursive;
+    font-size: 18px;
+    transform: rotate(calc(var(--random-rotation, 0) * 1deg)); /* JS will set this */
+}
+
+.post-secret-toggles {
+    padding-top: 5px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+}
+
+.post-secret-toggles button {
+    font-family: 'Chicago', sans-serif;
+    margin: 0 5px;
+}
+
+
+

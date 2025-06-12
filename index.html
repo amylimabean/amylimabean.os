@@ -8,53 +8,81 @@
 </head>
 <body class="desktop-background">
 
+<video autoplay muted loop id="background-video">
+    <source src="background-video.mp4" type="video/mp4">
+    Your browser does not support HTML5 video.
+</video>
+
     <div class="menubar">
-        <div class="menu-item logo-text">Ps</div>
-        <div class="menu-item"><strong>The Portfolio</strong></div>
-        <div class="menu-item dropdown">
-            <span>Session ▼</span>
-            <div class="dropdown-content">
-                <a href="#">Sign In</a>
-                <a href="#">Preferences</a>
-                <a href="#">About Portfolio FM</a>
+        <div class="menu-item logo-text" id="bean-menu-item">
+            <img src="bean icon.png" alt="Bean Menu" class="bean-logo">
+            <div class="dropdown-content" id="bean-dropdown">
+                <a href="#" id="about-this-bean">About this bean</a>
             </div>
         </div>
+        <div class="menu-item"><a href="mailto:amylima.design@gmail.com" class="nav-link">Contact</a></div>
+        <div class="menu-item"><a href="https://drive.google.com/file/d/1aDtKMLGRVYnTY-cSVUlLZiLjRIf9mxrZ/view" target="_blank" class="nav-link">Resume</a></div>
         <div class="menu-right">
-            <div class="menu-item icon-placeholder">🔊</div>
-            <div class="menu-item icon-placeholder">📺</div>
-            <div class="menu-item" id="menu-time">15:08 WED 14 MAY 1997</div>
+            <div class="menu-item" id="wallpaper-menu-item">
+                <img src="assets/desktop icons/wallpaper.png" alt="Wallpaper" class="menu-icon"> <span class="dropdown-arrow-ws">▼</span>
+                <div class="dropdown-content" id="wallpaper-dropdown">
+                    <!-- Wallpaper options will be added here by JavaScript -->
+                </div>
+            </div>
+            <div class="menu-item" id="menu-time">
+                <span id="menu-date"></span>
+                <span id="menu-clock"></span>
+            </div>
         </div>
     </div>
 
     <div class="desktop-area">
-        <!-- Desktop Icons -->
-        <div class="desktop-icon" id="icon-welcome">
-            <div class="desktop-emoji-icon">👤</div>
-            <span>welcome.friend</span>
-        </div>
-        <div class="desktop-icon" id="icon-projects">
-            <div class="desktop-emoji-icon">📁</div>
-            <span>Work.dir</span>
-        </div>
-        <div class="desktop-icon" id="icon-contact">
-            <div class="desktop-emoji-icon">✉️</div>
-            <span>E-Mail.app</span>
-        </div>
-        <div class="desktop-icon" id="icon-guestbook">
-            <div class="desktop-emoji-icon">📖</div>
-            <span>Guestbook.exe</span>
-        </div>
-        <div class="desktop-icon" id="icon-poolsuitefm">
-            <div class="desktop-emoji-icon">🎵</div>
-            <span>Poolsuite.fm</span>
-        </div>
-        <div class="desktop-icon" id="icon-vacation">
-            <div class="desktop-emoji-icon">🌴</div>
-            <span>Vacation.mode</span>
-        </div>
-        <div class="desktop-icon" id="icon-earbuds">
-            <div class="desktop-emoji-icon">🎧</div>
-            <span>amys.earbuds</span>
+        <video id="background-video" autoplay loop muted>
+            <!-- <source src="assets/backgrounds/Y2K.mp4" type="video/mp4"> -->
+        </video>
+        <div class="desktop-icons-inner">
+            <div class="desktop-icon" id="icon-affirmations">
+                <div class="win95-icon">
+                    <img src="assets/desktop icons/affirmations icon.png" alt="Heart">
+                </div>
+                <span>Affirmations</span>
+            </div>
+            <div class="desktop-icon" id="icon-projects">
+                <div class="win95-icon">
+                    <img src="assets/desktop icons/work explorer icon.png" alt="Folder">
+                </div>
+                <span>Work.explorer</span>
+            </div>
+            <div class="desktop-icon" id="icon-earbuds">
+                <div class="win95-icon">
+                    <img src="assets/desktop icons/my tunes icon.png" alt="Music">
+                </div>
+                <span>MyTunes</span>
+            </div>
+            <div class="desktop-icon" id="icon-photobook">
+                <div class="win95-icon">
+                    <img src="assets/desktop icons/photo.book icon.png" alt="Camera">
+                </div>
+                <span>Photo.book</span>
+            </div>
+            <div class="desktop-icon" id="icon-trivia">
+                <div class="win95-icon">
+                    <img src="assets/desktop icons/spill.the.beans icon.png" alt="Spill the Beans">
+                </div>
+                <span>Spill.the.beans</span>
+            </div>
+            <div class="desktop-icon" id="icon-chat">
+                <div class="win95-icon">
+                    <img src="assets/desktop icons/chat icon.png" alt="Chat">
+                </div>
+                <span>Chat</span>
+            </div>
+            <div class="desktop-icon" id="icon-post-secret">
+                <div class="win95-icon">
+                    <img src="assets/Desktop icons/post.secret.png" alt="Post Secret">
+                </div>
+                <span>post.secret</span>
+            </div>
         </div>
 
         <!-- Window: Welcome Friend (Formerly Profile) -->
@@ -62,15 +90,14 @@
             <div class="title-bar">
                 <div class="title-bar-buttons">
                     <span class="button close"></span>
-                    <span class="button maximize"></span>
                 </div>
-                <span class="title-bar-text">≡ welcome.friend</span>
+                <span class="title-bar-text">welcome</span>
             </div>
             <div class="window-content">
-                <!-- <img src="https://via.placeholder.com/100x100.png?text=Amy" alt="Amy Lima" class="profile-avatar"> -->
+                <!-- <img src="https://placehold.co/100x100.png?text=Amy" alt="Amy Lima" class="profile-avatar"> -->
                 <h2>Amy Lima</h2>
                 <p><em>Product Designer, Dreamer</em></p>
-                <p>Hey, you. I'm Amy. I've always been obsessed with the "why" behind how people connect—with each other, with ideas, with the world around them.</p>
+                <p>Hey, you. I'm <a href="https://www.linkedin.com/in/amylima" target="_blank">Amy</a>. I've always been obsessed with the "why" behind how people connect—with each other, with ideas, with the world around them.</p>
                 <p>I see design as a way to support human connection; tools that don't just serve users, but celebrate who they are and how they show up for each other.</p>
                 <p>I'm very grateful you showed up here, and I hope you have fun :)</p>
             </div>
@@ -81,9 +108,8 @@
             <div class="title-bar">
                 <div class="title-bar-buttons">
                     <span class="button close"></span>
-                    <span class="button maximize"></span>
                 </div>
-                <span class="title-bar-text">≡ Work.dir</span>
+                <span class="title-bar-text">work.explorer</span>
             </div>
             <div class="window-content folder-view">
                 <div class="file-icon">
@@ -101,94 +127,77 @@
             </div>
         </div>
 
-        <!-- Window: Contact / E-Mail -->
-        <div class="window" id="window-contact" style="display: none;">
+        <!-- Window: Away Message -->
+        <div class="window" id="window-vacation" style="display: none; width: 380px; height: auto;">
             <div class="title-bar">
                 <div class="title-bar-buttons">
                     <span class="button close"></span>
-                    <span class="button maximize"></span>
                 </div>
-                <span class="title-bar-text">≡ E-Mail.app</span>
+                <span class="title-bar-text">Away Message</span>
             </div>
-            <div class="window-content">
-                <h3>Direct Line:</h3>
-                <p>Send a wire, or use the form below.</p>
-                <form class="contact-form">
-                    <label for="recipient">To:</label>
-                    <input type="text" id="recipient" name="recipient" value="Amy Lima" readonly>
-                    <label for="subject">Subject:</label>
-                    <input type="text" id="subject" name="subject">
-                    <label for="message">Message (ASCII only):</label>
-                    <textarea id="message" name="message" rows="5"></textarea>
-                    <button type="submit" class="action-button">Send Transmission</button>
-                </form>
-            </div>
-        </div>
+            <div class="window-content aim-away-message-content">
+                <!-- Admin Edit Controls (Hidden by default) -->
+                <div class="admin-controls" style="display: none;">
+                    <button class="admin-edit-btn">Edit Message</button>
+                    <button class="admin-save-btn" style="display: none;">Save Changes</button>
+                </div>
 
-        <!-- Window: Guestbook -->
-        <div class="window" id="window-guestbook" style="display: none;">
-            <div class="title-bar">
-                <div class="title-bar-buttons">
-                    <span class="button close"></span>
-                    <span class="button maximize"></span>
+                <!-- Edit Mode (Hidden by default) -->
+                <div class="edit-mode" style="display: none;">
+                    <div class="format-toolbar">
+                        <button class="format-btn" data-format="bold">B</button>
+                        <button class="format-btn" data-format="italic">I</button>
+                        <button class="format-btn" data-format="underline">U</button>
+                        <select class="color-select">
+                            <option value="">Text Color</option>
+                            <option value="#0000FF">Blue</option>
+                            <option value="#FF0000">Red</option>
+                            <option value="#00FF00">Green</option>
+                            <option value="#FF00FF">Pink</option>
+                            <option value="#800080">Purple</option>
+                            <option value="#FFFF00">Yellow</option>
+                        </select>
+                        <select class="bg-color-select">
+                            <option value="">Background Color</option>
+                            <option value="#FFFF00">Yellow</option>
+                            <option value="#FFFFFF">White</option>
+                            <option value="#FFE4E1">Misty Rose</option>
+                            <option value="#E0FFFF">Light Cyan</option>
+                            <option value="#FF69B4">Bright Pink</option>
+                            <option value="#000000">Black</option>
+                        </select>
+                        <button class="format-btn" data-format="justifyLeft">☰</button>
+                        <button class="format-btn" data-format="justifyCenter">＝</button>
+                        <button class="format-btn" data-format="justifyRight">⇤</button>
+                    </div>
+                    <div class="edit-area">
+                        <input type="text" class="edit-title" placeholder="Enter message title">
+                        <div class="edit-textarea" contenteditable="true"></div>
+                    </div>
                 </div>
-                <span class="title-bar-text">≡ Guestbook.exe</span>
-            </div>
-            <div class="window-content">
-                <h3>Leave Your Mark:</h3>
-                <div class="comment-entry">
-                    <p><strong>VIP_User (1988-07-15):</strong> Excellent! This interface is top-tier. A++ would compute again.</p>
-                </div>
-                <div class="comment-entry">
-                    <p><strong>PowerUser97 (1992-11-30):</strong> Loving the retro vibes. Keep up the good work!</p>
-                </div>
-                <form class="add-comment-form">
-                    <label for="guest-name">Handle:</label>
-                    <input type="text" id="guest-name" name="guest-name">
-                    <label for="guest-comment">Remarks:</label>
-                    <textarea id="guest-comment" name="guest-comment" rows="3"></textarea>
-                    <button type="submit" class="action-button">Log Entry</button>
-                </form>
-            </div>
-        </div>
 
-        <!-- Window: Poolsuite.fm (Placeholder) -->
-        <div class="window" id="window-poolsuitefm" style="display: none;">
-            <div class="title-bar">
-                <div class="title-bar-buttons">
-                    <span class="button close"></span>
-                    <span class="button maximize"></span>
+                <!-- View Mode (Always visible to users) -->
+                <div class="view-mode">
+                    <div class="aim-message-selector">
+                        <label for="away-message-select">Select Message:</label>
+                        <select id="away-message-select" class="aim-select">
+                            <option value="brb">*~*brb*~*</option>
+                            <option value="afk">wutever.</option>
+                            <option value="sleep">just got layed off</option>
+                            <option value="busy">touching grass</option>
+                        </select>
+                    </div>
+                    <div class="aim-message-display custom-message">
+                        <p class="aim-away-text">
+                            I'm not a {perfect person}<br>
+                            There's many things I wish<br>
+                            ~*~*~I didn't do~*~*~<br><br>
+                            and the reason<br>
+                            ~*~*~is you~*~*~<br><br>
+                            <//3
+                        </p>
+                    </div>
                 </div>
-                <span class="title-bar-text">≡ Poolsuite.fm</span>
-            </div>
-            <div class="window-content">
-                <h3>Now Vibing:</h3>
-                <p><em>[Track Title] - [Artist Name]</em></p>
-                <div class="fm-player-controls">
-                    <button class="control-button">◀◀</button>
-                    <button class="control-button">►</button>
-                    <button class="control-button">▶▶</button>
-                    <button class="control-button">♡</button>
-                </div>
-                <p>Channel: Executive Jams</p>
-                <p>(Actual music player functionality not implemented in this prototype.)</p>
-            </div>
-        </div>
-
-        <!-- Window: Vacation.mode (Placeholder) -->
-        <div class="window" id="window-vacation" style="display: none;">
-            <div class="title-bar">
-                <div class="title-bar-buttons">
-                    <span class="button close"></span>
-                    <span class="button maximize"></span>
-                </div>
-                <span class="title-bar-text">≡ Vacation.mode</span>
-            </div>
-            <div class="window-content">
-                <h3>Currently: out of office, but ready to return 👀</h3>
-                <!-- <img src="https://via.placeholder.com/300x200.png?text=Beach+View" alt="Vacation Mode" style="width:100%; margin-bottom:10px;"> -->
-                <p>After intentional time recharging and investing in personal growth, I'm ready to bring my enhanced emotional intelligence, resilience, empathy, and energy into a new role.</p>
-                <p>Working on something exciting? Let's chat!</p>
             </div>
         </div>
 
@@ -197,13 +206,13 @@
             <div class="title-bar">
                 <div class="title-bar-buttons">
                     <span class="button close"></span>
-                    <span class="button maximize"></span>
                 </div>
-                <span class="title-bar-text">≡ amys.earbuds</span>
+                <span class="title-bar-text">myTunes</span>
             </div>
             <div class="window-content earbuds-content">
+                <audio id="myTunes-audio-player" style="display: none;"></audio>
                 <div class="visualizer-area">
-                    <!-- Visualizer bars will be styled with CSS background -->
+                    <canvas id="myTunes-visualizer-canvas"></canvas>
                 </div>
                 <div class="channel-info">
                     <span>Channel: Amy's Faves</span>
@@ -224,20 +233,184 @@
                 </div>
                 <div class="playlist-section">
                     <h4>Up Next:</h4>
-                    <ul>
-                        <li>Kids - Sleigh Bells</li>
-                        <li>Julia - Super Mama Djombo</li>
-                        <li>Black Tame - Topaz Jones</li>
-                        <li>Tailler la route - Grand Corps Malade, Ben Mazué, Gaël Faye</li>
-                        <!-- Add more tracks as desired -->
+                    <ul id="myTunes-playlist">
+                        <!-- Placeholder items removed, will be populated by JS -->
                     </ul>
                 </div>
             </div>
             <div class="stippled-bottom-player"></div>
         </div>
 
+        <!-- Window: Photobook -->
+        <div class="window" id="window-photobook" style="display: none;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                </div>
+                <span class="title-bar-text">Photo.book</span>
+            </div>
+            <div class="window-content photobook-content">
+                <div class="photobook-carousel">
+                    <img src="assets/images/sacred valley.JPG" alt="Sacred Valley" class="carousel-image">
+                    <img src="assets/images/lefkada.JPG" alt="Lefkada" class="carousel-image">
+                    <img src="assets/images/kefalonia.JPG" alt="Kefalonia" class="carousel-image">
+                    <img src="assets/images/zante.JPG" alt="Zante" class="carousel-image">
+                    <img src="assets/images/lovers.JPG" alt="Lovers" class="carousel-image">
+                    <img src="assets/images/parque lage.JPG" alt="Parque Lage" class="carousel-image">
+                    <img src="assets/images/rio.JPG" alt="Rio" class="carousel-image">
+                    <img src="assets/images/santa marta.jpg" alt="Santa Marta" class="carousel-image">
+                    <img src="assets/images/cartagena.jpg" alt="Cartagena" class="carousel-image">
+                    <img src="assets/images/coluna 13.jpg" alt="Coluna 13" class="carousel-image">
+                    <img src="assets/images/christmas sky.jpg" alt="Christmas Sky" class="carousel-image">
+                    <img src="assets/images/baking experiments.jpg" alt="Baking Experiments" class="carousel-image">
+                    <img src="assets/images/first half.jpg" alt="First Half" class="carousel-image">
+                    <img src="assets/images/birthday.jpg" alt="Birthday" class="carousel-image">
+                    <img src="assets/images/naxos.JPG" alt="Naxos" class="carousel-image">
+                    <img src="assets/images/amorgos.JPG" alt="Amorgos" class="carousel-image">
+                    <img src="assets/images/POV.JPG" alt="POV" class="carousel-image">
+                    <img src="assets/images/stage break.jpg" alt="Stage Break" class="carousel-image">
+                    <img src="assets/images/gradients.JPG" alt="Gradients" class="carousel-image">
+                    <img src="assets/images/painting practice.JPG" alt="Painting Practice" class="carousel-image">
+                    <img src="assets/images/sometimes I cry.JPG" alt="Sometimes I Cry" class="carousel-image">
+                    <img src="assets/images/acropolis.JPG" alt="Acropolis" class="carousel-image">
+                    <img src="assets/images/poems i'll never send.JPG" alt="Poems I'll Never Send" class="carousel-image">
+                    <img src="assets/images/not my dog.JPG" alt="Not My Dog" class="carousel-image">
+                    <img src="assets/images/me.JPG" alt="Me" class="carousel-image">
+                    <img src="assets/images/IKTR.JPG" alt="IKTR" class="carousel-image">
+                </div>
+                <div class="photobook-controls">
+                    <button class="control-button prev-photo">◀ Prev</button>
+                    <button class="control-button next-photo">Next ▶</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Window: Spill the Beans Trivia -->
+        <div class="window" id="window-trivia" style="display: none; width: 400px; height: 345px;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                </div>
+                <span class="title-bar-text">Spill the Beans!</span>
+            </div>
+            <div class="window-content" id="trivia-content">
+                
+            </div>
+        </div>
+
+        <!-- Window: Affirmations -->
+        <div class="window" id="window-affirmations" style="display: none;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                </div>
+                <span class="title-bar-text">arcana.affirmations</span>
+            </div>
+            <div class="window-content affirmations-content">
+                <div class="tarot-card">
+                    <div class="tarot-card-art">
+                        <!-- Generative art will go here -->
+                    </div>
+                    <h4 class="tarot-card-title">The Hierophant</h4>
+                    <p class="affirmation-text">You are capable of amazing things!</p>
+                </div>
+                <button class="control-button next-affirmation">Draw a Card</button>
+            </div>
+        </div>
+
+        <!-- Window: Chat -->
+        <div id="window-chat" class="window" style="display: none; width: 600px; height: 400px;">
+            <div class="title-bar">
+                <div class="title-bar-buttons">
+                    <span class="button close"></span>
+                </div>
+                <span class="title-bar-text">chat</span>
+            </div>
+            <div class="window-body chat-body-grid">
+                <div class="chat-sidebar">
+                    <div class="chat-sidebar-header">Channels</div>
+                    <ul>
+                        <li data-channel="about-me" class="active-channel">#about-me</li>
+                        <li data-channel="funfacts">#funfacts</li>
+                        <li data-channel="design-philosophy">#design-philosophy</li>
+                        <li data-channel="life-philosophy">#life-philosophy</li>
+                        <li data-channel="group-chat">#group-chat</li>
+                    </ul>
+                </div>
+                <div class="chat-main">
+                    <div class="chat-header">
+                        <span id="chat-current-channel">#about-me</span>
+                    </div>
+                    <div id="chat-content" class="chat-content-area">
+                        <!-- Content for about-me will go here -->
+                        <p>This is the about-me section. Welcome to my page!</p>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" placeholder="Type a message..." />
+                        <button>Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div> <!-- end desktop-area -->
 
+    <!-- Window: About This Bean -->
+    <div class="window" id="window-about-bean" style="display: none;">
+        <div class="title-bar">
+            <div class="title-bar-buttons">
+                <span class="button close"></span>
+            </div>
+            <span class="title-bar-text">About This Bean</span>
+        </div>
+        <div class="window-content">
+            <div class="about-bean-content">
+                <img src="beanos image.jpg" alt="Amy Lima - Beanos" class="beanos-main-image">
+                <h3 class="beanos-title">BeanOS 1.0</h3>
+                <p class="copyright">© Amy Lima 2025</p>
+                <div class="beanos-description">
+                    <p>This portfolio project is a celebration of the early days of personal computing made me fall in love with the internet in the first place: unpretentious self expression, delightfully simple interactions, and joyful moments of discovery and play.</p>
+                    <p>The intentional blend of retro interfaces with contemporary metaphors serve as an homage to the pioneering patterns that taught us how to click, drag, and navigate our digital world, while honoring the design principles that influence our experiences today.</p>
+                    <p>Importantly, this site is optimized for desktop, like all experiences were when the internet was a place, a room in your house. This digital corner of mine doesn't need to follow you outside of that.</p>
+                    <p>I believe time is the most precious thing we have in this life. I'm deeply honored you're sharing a little bit of it with me, and I hope you enjoy it while you're here.</p>
+                    <p>Created with love, gratitude, nostalgia, and Cursor,<br>Amy Limabean</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Window: Post Secret -->
+    <div class="window" id="window-post-secret" style="display: none; width: 500px; height: 350px;">
+        <div class="title-bar">
+            <div class="title-bar-buttons">
+                <span class="button close"></span>
+            </div>
+            <span class="title-bar-text">post.secret</span>
+        </div>
+        <div class="window-content post-secret-content">
+            <div class="postcard-view">
+                <div class="postcard-stamp"></div>
+                <div class="postcard-address">
+                    <p>To: The Void</p>
+                    <p>From: A Friend</p>
+                </div>
+                <textarea class="postcard-message" placeholder="What's your secret?"></textarea>
+                <button class="submit-secret-btn">Send to the Void</button>
+            </div>
+            <div class="secrets-feed-view" style="display: none;">
+                <!-- Secrets will be loaded here by JS -->
+            </div>
+            <div class="post-secret-toggles">
+                <button id="view-secrets-btn">View Secrets</button>
+                <button id="submit-new-secret-btn" style="display:none;">Submit a Secret</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-overlay" style="display: none;"></div>
+    <audio id="click-sound" src="assets/sounds/New Click.mp3" preload="auto"></audio>
+
     <script src="script.js"></script>
+    <script src="away-message.js"></script>
 </body>
 </html> 
