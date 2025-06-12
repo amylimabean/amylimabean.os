@@ -164,11 +164,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const titleBar = win.querySelector('.title-bar');
         const closeButton = win.querySelector('.title-bar-buttons .close');
 
-        // Bring to front on any click within the window
-        win.addEventListener('mousedown', () => {
-            bringToFront(win);
-        });
-
         if (closeButton) {
             closeButton.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -199,15 +194,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        if (titleBar) {
-            // Only allow dragging from the title bar
-            titleBar.addEventListener('mousedown', (e) => {
-                // Check that the click is not on a button in the title bar
-                if (e.target.closest('.title-bar-buttons')) {
-                    return;
-                }
+        win.addEventListener('mousedown', (e) => {
+            bringToFront(win);
+            
+            // Only start dragging if the mousedown was on the title bar
+            // and NOT on one of the title bar's buttons.
+            const isTitleBarClick = e.target.closest('.title-bar') && !e.target.closest('.title-bar-buttons');
 
-                // If the window is positioned with transform (i.e., our centered modal),
+            if (isTitleBarClick) {
+                 // If the window is positioned with transform (i.e., our centered modal),
                 // we convert its position to pixel-based top/left before starting the drag.
                 if (win.style.transform !== 'none' && win.style.transform !== '') {
                     const rect = win.getBoundingClientRect();
@@ -221,8 +216,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 win.offsetX = e.clientX - win.getBoundingClientRect().left;
                 win.offsetY = e.clientY - win.getBoundingClientRect().top;
                 win.style.cursor = 'grabbing';
-            });
-        }
+
+                // Also apply grabbing cursor to titlebar for visual feedback
+                if(titleBar) titleBar.style.cursor = 'grabbing';
+            }
+        });
     });
 
     // Global mouse move for dragging windows
