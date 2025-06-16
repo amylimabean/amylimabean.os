@@ -149,14 +149,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // A robust function to bring a window to the top layer
     function bringToFront(windowElement) {
-        // The modal window is a special case. Its z-index is managed when it's
-        // opened and should not be changed by the regular window focusing logic.
-        if (windowElement.id === 'window-about-bean') {
-            return;
-        }
-        highestZIndex++;
-        windowElement.style.zIndex = highestZIndex;
+        if (!windowElement) return;
+
+        // Find the highest z-index currently in use by any window.
+        // We start at 100, which is the base z-index set in the CSS.
+        let maxZ = 100;
+        document.querySelectorAll('.window').forEach(win => {
+            const z = parseInt(window.getComputedStyle(win).zIndex, 10);
+            if (!isNaN(z) && z > maxZ) {
+                maxZ = z;
+            }
+        });
+
+        // Set the target window's z-index to be one higher than the max.
+        windowElement.style.zIndex = maxZ + 1;
     }
 
     // --- Window Functionality (Dragging, Closing, Focusing) ---
