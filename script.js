@@ -194,15 +194,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        win.addEventListener('mousedown', (e) => {
-            bringToFront(win);
-            
-            // Only start dragging if the mousedown was on the title bar
-            // and NOT on one of the title bar's buttons.
-            const isTitleBarClick = e.target.closest('.title-bar') && !e.target.closest('.title-bar-buttons');
+        if (titleBar) {
+            win.addEventListener('mousedown', (e) => {
+                bringToFront(win);
 
-            if (isTitleBarClick) {
-                 // If the window is positioned with transform (i.e., our centered modal),
+                const nonDraggableTags = ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'];
+                if (nonDraggableTags.includes(e.target.tagName) || e.target.closest('button, a, input, select, textarea')) {
+                    return;
+                }
+
+                // If the window is positioned with transform (i.e., our centered modal),
                 // we convert its position to pixel-based top/left before starting the drag.
                 if (win.style.transform !== 'none' && win.style.transform !== '') {
                     const rect = win.getBoundingClientRect();
@@ -216,11 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 win.offsetX = e.clientX - win.getBoundingClientRect().left;
                 win.offsetY = e.clientY - win.getBoundingClientRect().top;
                 win.style.cursor = 'grabbing';
-
-                // Also apply grabbing cursor to titlebar for visual feedback
-                if(titleBar) titleBar.style.cursor = 'grabbing';
-            }
-        });
+            });
+        }
     });
 
     // Global mouse move for dragging windows
@@ -697,7 +695,6 @@ document.addEventListener('DOMContentLoaded', () => {
             "about-me": '<p>To know me is to know I\'ve always been obsessed with the "why" behind how people connect-with each other, with ideas, with the world around them.</p><p>As a first-generation American raised by Brazilian parents, I grew up between cultures-never fully of one world or another.</p><p>But this third-culture experience also sparked an early curiosity about belonging and identity, and it\'s shaped everything since. I\'ve traveled to over 60 countries trying to understand how people form meaning and connection across cultures, even moving to Germany to explore what it really means to belong somewhere as an immigrant. That lens—of exploring how people find their people—has been the throughline of my life and career.</p><p>I see design as a way to support human connection—tools that don\'t just serve users, but celebrate who they are and how they show up for each other.</p>',
             "design-philosophy": "<p>I believe in the transformative power of design, both individually and interpersonally. Product Design is not only the tool I use to create a more connected, delightful, and equitable world, but also the one in which I help people feel more seen, empowered, and joyful.</p><p>At my core, I'm driven by a deep fascination and appreciation for human behavior and expression, and I approach every project with the conviction that we should always build the thing that\'s going to elevate and empower people, and it should be beautiful.</p><p>My goal is to design products that reflect the richness of the people they serve, push the boundaries of what\'s possible, and represent a more creative, inclusive, and culture-shifting digital future.</p>",
             "life-philosophy": "<p>I believe life should be playful, whimsical, and at every interaction, rooted in love.</p><p>For me, that means throwing myself into as many new experiences as possible, and moving with kindness, gratitude, and affection for everyone and everything around me.</p><p>I believe there's no hierarchy for compassionate action, and any act of kindness, service, or love, from holding the door open for a stranger to buying yourself a little treat at the end of the day, makes the world a more joyous, life-affirming place.</p><p>I am not here to solve the universe pr take it too seriously.</p><p>I am here to taste it.</p><p>To walk into the woods and not need to find a way out.</p><p>To kiss someone and not know if it will last.</p><p>To experience the great, ordinary courage of being alive.</p>",
-            "funfacts": "<p>This space is for fun facts!</p>", // Placeholder, actual fun facts loaded dynamically
             "group-chat": "<p>Welcome to the group chat! Set your ScreenName below to join the party</p>"
         };
 
@@ -707,16 +704,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             if (chatCurrentChannelDisplay) {
-                 chatCurrentChannelDisplay.textContent = `#${channelName.replace(/-/g, ' ')}`;
+                 chatCurrentChannelDisplay.textContent = `#${channelName}`;
             }
             
             if (chatContentArea) {
                 chatContentArea.innerHTML = ''; // Clear previous content
-                if (channelName === 'funfacts') { // Updated from fun-facts
-                    appendMessage(allFunFacts[0], 'System');
-                    remainingFunFacts = allFunFacts.slice(1); 
-                    shuffleArray(remainingFunFacts);
-                } else if (channelName === 'group-chat') { // Updated from guest-book
+                if (channelName === 'group-chat') { // Updated from guest-book
                     appendMessage(channelContent[channelName], 'System', false, true); 
                 } else {
                     if (channelContent[channelName]) {
@@ -729,24 +722,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (chatInputArea) { // Check if chatInputArea exists
-                if (channelName === 'funfacts' || channelName === 'group-chat') {
+                if (channelName === 'group-chat') { // MODIFIED: was 'funfacts' || 'group-chat'
                     chatInputArea.style.display = 'flex'; // Make sure input area is visible
                     // Existing logic for placeholders and button text for these active channels
                     if (chatInputField && chatSendButton) { // Keep this safety check
-                        if (channelName === 'funfacts') {
-                            chatInputField.placeholder = 'Type "another one" or ask anything!';
-                            chatInputField.value = 'another one';
+                        if (!guestbookScreenName) {
+                            chatInputField.placeholder = "Set your ScreenName to send message";
+                            chatInputField.value = '';
+                            chatSendButton.textContent = 'Set';
+                        } else {
+                            chatInputField.placeholder = "Type a message...";
+                            chatInputField.value = '';
                             chatSendButton.textContent = 'Send';
-                        } else { // Must be 'group-chat'
-                            if (!guestbookScreenName) {
-                                chatInputField.placeholder = "Set your ScreenName to send message";
-                                chatInputField.value = '';
-                                chatSendButton.textContent = 'Set';
-                            } else {
-                                chatInputField.placeholder = "Type a message...";
-                                chatInputField.value = '';
-                                chatSendButton.textContent = 'Send';
-                            }
                         }
                     }
                 } else {
@@ -760,6 +747,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     ch.classList.add('active-channel');
                 }
             });
+
+            // Force repaint using a transform hack for the stubborn shadow bug
+            if (chatWindow) {
+                chatWindow.style.transform = 'scale(1.000001)';
+                setTimeout(() => {
+                    chatWindow.style.transform = 'scale(1)';
+                }, 10);
+            }
         }
 
         if (chatChannels.length > 0 && chatCurrentChannelDisplay && chatContentArea) {
@@ -789,20 +784,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const currentChannel = activeChannelElement ? activeChannelElement.dataset.channel : null;
                 const userMessage = chatInputField.value.trim();
 
-                if (currentChannel === 'funfacts') { // Updated from fun-facts
-                    if (userMessage) { 
-                        appendMessage(userMessage, 'You');
-                    }
-
-                    if (remainingFunFacts.length > 0) {
-                        const nextFact = remainingFunFacts.pop();
-                        appendMessage(nextFact, 'System');
-                        chatInputField.value = 'another one'; 
-                    } else {
-                        appendMessage(finalFunFactMessage, 'System');
-                        chatInputField.value = ''; 
-                    }
-                } else if (currentChannel === 'group-chat') { // Updated from guest-book
+                if (currentChannel === 'group-chat') { // Updated from guest-book
                     if (!guestbookScreenName) {
                         if (userMessage) {
                             guestbookScreenName = userMessage;
@@ -1264,6 +1246,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const wallpaperMenuItem = document.getElementById('wallpaper-menu-item');
     const wallpaperDropdown = document.getElementById('wallpaper-dropdown');
     const backgroundVideo = document.getElementById('background-video'); // Get the video element
+    if (backgroundVideo) {
+        backgroundVideo.playbackRate = 0.8; // Slow down by 20%
+    }
 
     const wallpapers = [
         { name: "BabyBean", path: "VIDEO" }, // Special identifier for the video
@@ -1531,9 +1516,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const secretMessageTextarea = postSecretWindow.querySelector('.postcard-message');
 
         let secrets = [
-            "I'm secretly proud of this portfolio, even though it's a bit silly.",
-            "I still don't really know how to center a div without looking it up.",
-            "I'm worried no one will like my work."
+            { text: "I'm secretly proud of this portfolio, even though it's a bit silly.", timestamp: new Date('2023-10-26T10:00:00Z') },
+            { text: "I still don't really know how to center a div without looking it up.", timestamp: new Date('2023-10-27T14:30:00Z') },
+            { text: "I'm worried no one will like my work.", timestamp: new Date('2023-10-28T18:45:00Z') }
         ]; // Some initial secrets for demonstration
 
         let isInitialized = postSecretWindow.dataset.initialized === 'true';
@@ -1544,12 +1529,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function renderSecrets() {
             secretsFeedView.innerHTML = '';
-            secrets.forEach(secret => {
+            secrets.forEach(secretObj => {
                 const secretEntry = document.createElement('div');
                 secretEntry.className = 'secret-entry';
-                secretEntry.textContent = secret;
-                const randomRotation = Math.random() * 8 - 4; // -4 to 4 degrees
-                secretEntry.style.setProperty('--random-rotation', randomRotation);
+
+                const secretText = document.createElement('p');
+                secretText.textContent = secretObj.text;
+
+                const secretTimestamp = document.createElement('span');
+                secretTimestamp.className = 'secret-timestamp';
+                secretTimestamp.textContent = new Date(secretObj.timestamp).toLocaleString();
+
+                secretEntry.appendChild(secretText);
+                secretEntry.appendChild(secretTimestamp);
+                
                 secretsFeedView.appendChild(secretEntry);
             });
         }
@@ -1557,28 +1550,32 @@ document.addEventListener('DOMContentLoaded', () => {
         viewSecretsBtn.addEventListener('click', () => {
             renderSecrets();
             postcardView.style.display = 'none';
-            secretsFeedView.style.display = 'flex';
+            secretsFeedView.style.display = 'grid';
             viewSecretsBtn.style.display = 'none';
+            submitSecretBtn.style.display = 'none';
             submitNewBtn.style.display = 'inline-block';
         });
 
         submitNewBtn.addEventListener('click', () => {
-            postcardView.style.display = 'flex';
+            postcardView.style.display = 'grid';
             secretsFeedView.style.display = 'none';
             viewSecretsBtn.style.display = 'inline-block';
+            submitSecretBtn.style.display = 'inline-block';
             submitNewBtn.style.display = 'none';
         });
 
         submitSecretBtn.addEventListener('click', () => {
-            const newSecret = secretMessageTextarea.value.trim();
-            if (newSecret) {
+            const newSecretText = secretMessageTextarea.value.trim();
+            if (newSecretText) {
+                const newSecret = { text: newSecretText, timestamp: new Date() };
                 secrets.unshift(newSecret); // Add new secret to the beginning
                 secretMessageTextarea.value = '';
                 // Switch to the feed view to show the new secret
                 renderSecrets();
                 postcardView.style.display = 'none';
-                secretsFeedView.style.display = 'flex';
+                secretsFeedView.style.display = 'grid';
                 viewSecretsBtn.style.display = 'none';
+                submitSecretBtn.style.display = 'none';
                 submitNewBtn.style.display = 'inline-block';
 
                 // Optional: show a confirmation message

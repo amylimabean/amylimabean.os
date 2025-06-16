@@ -170,12 +170,12 @@ body {
     right: 0;
     bottom: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
-    /* pointer-events: none; */
-    pointer-events: auto;
+    padding: 30px 20px 20px 20px; /* Added right/bottom padding */
+    box-sizing: border-box;
     z-index: 2;
-    overflow: visible !important;
+    overflow: hidden; /* Can clip shadows if window is at the edge */
 }
 .desktop-icons-inner {
     position: absolute;
@@ -373,9 +373,10 @@ body {
 .window-content h2 {
     font-size: 18px;
     color: #000000;
-    margin-top: 0;
-    margin-bottom: 8px;
+    margin-top: 20px;
+    margin-bottom: 2px;
     font-weight: bold;
+    line-height: 1;
 }
 .window-content h3 {
     font-size: 18px;
@@ -959,9 +960,9 @@ textarea {
 
 /* Chat Window Specific Styles */
 #window-chat {
-    width: 700px; /* Increased width */
-    height: 500px; /* Increased height */
-    box-shadow: 5px 5px 0px #000000 !important;
+    width: 535px; /* was 486px */
+    height: 404px; /* was 425px */
+    box-shadow: 6px 6px 0px #000000;
 }
 
 .chat-body-grid {
@@ -1000,7 +1001,7 @@ textarea {
     cursor: pointer;
     border-radius: 3px;
     margin-bottom: 5px;
-    font-size: 1.1em;
+    font-size: 18px; /* was 16px */
     white-space: nowrap; /* Ensure text stays on one line */
     overflow: hidden; /* Hide overflow */
     text-overflow: ellipsis; /* Show ellipsis if text overflows */
@@ -1038,6 +1039,7 @@ textarea {
     overflow-y: auto;
     background-color: #fafafa; /* UPDATED */
     line-height: 1.6;
+    font-size: 18px; /* was 16px */
 }
 
 .chat-content-area p,
@@ -1534,7 +1536,12 @@ textarea {
 
 /* AIM Away Message Window Styles */
 #window-vacation {
-    min-height: 250px; /* Ensure enough space for controls */
+    height: 283px; /* 30% shorter than 404px chat window */
+}
+
+.view-mode {
+    flex-grow: 1; /* Allow this container to grow */
+    display: flex; /* Make it a flex container so its child can grow */
 }
 
 /* --- AIM Away Message Window --- */
@@ -1605,9 +1612,150 @@ textarea {
 }
 
 .aim-select {
-    padding: 4px;
-    width: 100%; /* Make dropdown take full width */
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Post Secret specific styles */
+.post-secret-content {
+    padding: 10px;
+    background: #F0F0F0;
+    font-family: 'Give You Glory', cursive;
+    height: calc(100% - 20px);
+}
+
+.postcard-view {
+    background: #fdfdfd;
+    border: 1px solid #000;
+    padding: 20px;
+    display: grid;
+    grid-template-areas: "message address";
+    grid-template-columns: 2.5fr 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 20px;
+    height: 290px;
     box-sizing: border-box;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.1);
+}
+
+.postcard-address {
+    grid-area: address;
+    border-left: 1px solid #ccc;
+    padding-left: 40px;
+    font-size: 16px;
+    line-height: 30px;
+    background: repeating-linear-gradient(
+        #fdfdfd,
+        #fdfdfd 29px,
+        #ccc 30px
+    );
+}
+
+.postcard-address p {
+    margin: 0 0 10px;
+}
+
+.postcard-message {
+    grid-area: message;
+    height: 100%;
+    resize: none;
+    border: none;
+    font-family: 'Give You Glory', cursive;
+    font-size: 24px;
+    padding: 0 5px;
+    box-sizing: border-box;
+}
+
+.postcard-message:focus {
+    outline: none;
+}
+
+.post-secret-toggles {
+    margin-top: 15px;
+    text-align: center;
+}
+
+#view-secrets-btn, 
+#submit-new-secret-btn,
+.submit-secret-btn {
+    font-family: 'Chicago', sans-serif;
+    padding: 8px 15px;
+    background: #C0C0C0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    cursor: pointer;
+    margin: 0 5px;
+    box-shadow: 1px 1px 0px #000;
+    transition: all 0.1s ease-in-out;
+}
+
+#view-secrets-btn:hover, 
+#submit-new-secret-btn:hover,
+.submit-secret-btn:hover {
+    background: #0000FF;
+    color: #FFFFFF;
+}
+
+#view-secrets-btn:active, 
+#submit-new-secret-btn:active,
+.submit-secret-btn:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+}
+
+.button-bar {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+.secrets-feed-view {
+    display: grid;
+    grid-template-columns: repeat(2, 250px);
+    gap: 15px;
+    max-height: 270px;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #FAFAFA;
+    justify-content: center;
+}
+
+.secret-entry {
+    background-color: #FFFFE0;
+    border: 1px solid #c8c8a8;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    padding: 15px;
+    font-family: 'Give You Glory', cursive;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 250px;
+    height: 250px;
+    box-sizing: border-box;
+}
+
+.secret-entry:last-child {
+}
+
+.secret-entry p {
+    margin: 0;
+}
+
+.secret-timestamp {
+    display: block;
+    text-align: left;
+    font-size: 16px;
+    color: #666;
+    margin-top: 5px;
+    font-family: 'R95 Sans Serif', monospace;
+}
+
+.welcome-subtitle {
+    font-size: 14px;
+    margin-top: 0;
 }
 
 

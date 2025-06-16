@@ -95,11 +95,11 @@
             </div>
             <div class="window-content">
                 <!-- <img src="https://placehold.co/100x100.png?text=Amy" alt="Amy Lima" class="profile-avatar"> -->
-                <h2>Amy Lima</h2>
-                <p><em>Product Designer, Dreamer</em></p>
                 <p>Hey, you. I'm <a href="https://www.linkedin.com/in/amylima" target="_blank">Amy</a>. I've always been obsessed with the "why" behind how people connect—with each other, with ideas, with the world around them.</p>
                 <p>I see design as a way to support human connection; tools that don't just serve users, but celebrate who they are and how they show up for each other.</p>
                 <p>I'm very grateful you showed up here, and I hope you have fun :)</p>
+                <h2>Amy Limabean</h2>
+                <p class="welcome-subtitle"><em>Product Designer, Dreamer</em></p>
             </div>
         </div>
 
@@ -128,7 +128,7 @@
         </div>
 
         <!-- Window: Away Message -->
-        <div class="window" id="window-vacation" style="display: none; width: 380px; height: auto;">
+        <div class="window" id="window-vacation" style="display: none; width: 380px;">
             <div class="title-bar">
                 <div class="title-bar-buttons">
                     <span class="button close"></span>
@@ -139,12 +139,6 @@
                 <select id="away-message-select" class="aim-select">
                     <!-- Options will be dynamically populated by script.js -->
                 </select>
-                <div class="admin-controls" style="display: none;">
-                    <button class="admin-edit-btn">Edit</button>
-                    <button class="admin-save-btn" style="display: none;">Save</button>
-                    <button class="admin-new-btn">New</button>
-                    <button class="admin-delete-btn">Delete</button>
-                </div>
                 <div class="view-mode">
                     <div class="aim-message-display" style="background-color: #FFFF00;">
                         <p class="aim-away-text">Be right back!</p>
@@ -170,6 +164,12 @@
                         </select>
                     </div>
                     <div class="edit-textarea" contenteditable="true" style="background-color: #FFFF00;">Be right back!</div>
+                </div>
+                <div class="admin-controls" style="display: none;">
+                    <button class="admin-edit-btn">Edit</button>
+                    <button class="admin-save-btn" style="display: none;">Save</button>
+                    <button class="admin-new-btn">New</button>
+                    <button class="admin-delete-btn">Delete</button>
                 </div>
             </div>
         </div>
@@ -292,7 +292,7 @@
         </div>
 
         <!-- Window: Chat -->
-        <div id="window-chat" class="window" style="display: none; width: 600px; height: 400px;">
+        <div id="window-chat" class="window" style="display: none;">
             <div class="title-bar">
                 <div class="title-bar-buttons">
                     <span class="button close"></span>
@@ -304,7 +304,7 @@
                     <div class="chat-sidebar-header">Channels</div>
                     <ul>
                         <li data-channel="about-me" class="active-channel">#about-me</li>
-                        <li data-channel="funfacts">#funfacts</li>
+                        <!-- <li data-channel="funfacts">#funfacts</li> -->
                         <li data-channel="design-philosophy">#design-philosophy</li>
                         <li data-channel="life-philosophy">#life-philosophy</li>
                         <li data-channel="group-chat">#group-chat</li>
@@ -339,13 +339,15 @@
         <div class="window-content">
             <div class="about-bean-content">
                 <img src="beanos image.jpg" alt="Amy Lima - Beanos" class="beanos-main-image">
-                <h3 class="beanos-title">BeanOS 1.0</h3>
-                <p class="copyright">© Amy Lima 2025</p>
+                <div class="beanos-title-group">
+                    <h3 class="beanos-title">BeanOS 1.0</h3>
+                    <p class="copyright">Amy Lima©</p>
+                </div>
                 <div class="beanos-description">
-                    <p>This portfolio project is a celebration of the early days of personal computing made me fall in love with the internet in the first place: unpretentious self expression, delightfully simple interactions, and joyful moments of discovery and play.</p>
-                    <p>The intentional blend of retro interfaces with contemporary metaphors serve as an homage to the pioneering patterns that taught us how to click, drag, and navigate our digital world, while honoring the design principles that influence our experiences today.</p>
-                    <p>Importantly, this site is optimized for desktop, like all experiences were when the internet was a place, a room in your house. This digital corner of mine doesn't need to follow you outside of that.</p>
-                    <p>I believe time is the most precious thing we have in this life. I'm deeply honored you're sharing a little bit of it with me, and I hope you enjoy it while you're here.</p>
+                    <p>This portfolio project is a celebration of the early days of personal computing that made me fall in love with the internet: unpretentious self expression, delightfully simple interactions, and joyful moments of discovery and play.</p>
+                    <p>An intentional blend of retro interfaces, contemporary metaphors, and AI tools brought this experience to life, serving as an homage to the pioneering patterns that taught us how to first navigate our digital world while honoring the modern design principles that influence our experiences today.</p>
+                    <p>Importantly, this site is optimized for desktop, like all experiences were when the internet was a place (likely a room in your house). This digital corner of mine doesn't need to follow you outside of that.</p>
+                    <p>I believe time is the most precious thing we have in this life. I'm deeply honored you're sharing a little bit of it with me, and I hope you have fun while you're here.</p>
                     <p>Created with love, gratitude, nostalgia, and Cursor,<br>Amy Limabean</p>
                 </div>
             </div>
@@ -353,7 +355,7 @@
     </div>
 
     <!-- Window: Post Secret -->
-    <div class="window" id="window-post-secret" style="display: none; width: 500px; height: 350px;">
+    <div class="window" id="window-post-secret" style="display: none;">
         <div class="title-bar">
             <div class="title-bar-buttons">
                 <span class="button close"></span>
@@ -362,19 +364,18 @@
         </div>
         <div class="window-content post-secret-content">
             <div class="postcard-view">
-                <div class="postcard-stamp"></div>
                 <div class="postcard-address">
                     <p>To: The Void</p>
                     <p>From: A Friend</p>
                 </div>
                 <textarea class="postcard-message" placeholder="What's your secret?"></textarea>
-                <button class="submit-secret-btn">Send to the Void</button>
             </div>
             <div class="secrets-feed-view" style="display: none;">
                 <!-- Secrets will be loaded here by JS -->
             </div>
-            <div class="post-secret-toggles">
+            <div class="post-secret-toggles button-bar">
                 <button id="view-secrets-btn">View Secrets</button>
+                <button class="submit-secret-btn">Send Secret</button>
                 <button id="submit-new-secret-btn" style="display:none;">Submit a Secret</button>
             </div>
         </div>
