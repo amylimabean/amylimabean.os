@@ -318,14 +318,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (affirmationsWindow) {
         const cardArt = affirmationsWindow.querySelector('.tarot-card-art');
         const cardTitle = affirmationsWindow.querySelector('.tarot-card-title');
-        const affirmationText = affirmationsWindow.querySelector('.affirmation-text');
+        const cardText = affirmationsWindow.querySelector('.affirmation-text');
         const nextButton = affirmationsWindow.querySelector('.next-affirmation');
         let currentAffirmationIndex = Math.floor(Math.random() * affirmations.length);
         function displayAffirmation(index) {
             const affirmation = affirmations[index];
             if (cardArt) cardArt.style.backgroundImage = `url('${affirmation.image}')`;
             if (cardTitle) cardTitle.textContent = affirmation.card;
-            if (affirmationText) affirmationText.textContent = affirmation.text;
+            if (cardText) cardText.textContent = affirmation.text;
         }
         if (nextButton) {
             nextButton.addEventListener('click', () => {
@@ -832,19 +832,60 @@ document.addEventListener('DOMContentLoaded', () => {
             link.classList.toggle('selected', link.dataset.path === tabIdentifier);
         });
     }
+
+    function resetFavoritesBar() {
+        const projectsWindow = document.getElementById('window-projects');
+        if (!projectsWindow) return;
+        const favoritesBar = projectsWindow.querySelector('.ie-favorites-bar');
+        if (!favoritesBar) return;
+
+        favoritesBar.querySelector('.back-button-favorites')?.remove();
+    }
+
     function loadUrlInExplorer(url, title) {
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
+
         const folderView = projectsWindow.querySelector('.folder-view');
         if (folderView) {
             folderView.innerHTML = `<iframe src="${url}" class="website-iframe" title="${title}"></iframe>`;
             setActiveTab('iframe-view');
         }
+        
+        const titleBarText = projectsWindow.querySelector('.title-bar-text');
+        if(titleBarText) titleBarText.textContent = `work.explorer - ${title}`;
+
+        const addressBar = projectsWindow.querySelector('#address-bar');
+        if(addressBar) addressBar.value = url;
+        
+        // Handle favorites bar for back button
+        const favoritesBar = projectsWindow.querySelector('.ie-favorites-bar');
+        if (favoritesBar) {
+            
+            favoritesBar.querySelector('.back-button-favorites')?.remove(); // Remove old one if it exists
+
+            const backButton = document.createElement('button');
+            backButton.innerHTML = '&larr; Back';
+            backButton.className = 'back-button-favorites action-button'; // Re-use styles
+            backButton.onclick = () => {
+                showHomepage();
+            };
+            favoritesBar.prepend(backButton);
+        }
+
+        // Clear the main toolbar back button
+        const backButtonContainer = projectsWindow.querySelector('#back-button-container');
+        if (backButtonContainer) {
+            backButtonContainer.innerHTML = '';
+        }
     }
+
     function renderWorkExplorer(path) {
         currentPath = path;
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
+        resetFavoritesBar();
+
         const folderView = projectsWindow.querySelector('.folder-view');
         const addressBar = projectsWindow.querySelector('#address-bar');
         const backButtonContainer = projectsWindow.querySelector('#back-button-container');
@@ -859,7 +900,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 backButton.innerHTML = '&larr; Back';
                 backButton.onclick = () => {
                     historyStack.pop();
-                    renderWorkExplorer(historyStack[historyStack.length - 1]);
+                    const previousPath = historyStack[historyStack.length - 1];
+                    if (workExplorerContent[previousPath].type === 'folder') {
+                        renderWorkExplorer(previousPath);
+                    } else {
+                        showProjectDetail(previousPath);
+                    }
                 };
                 backButtonContainer.appendChild(backButton);
             }
@@ -890,6 +936,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showHomepage() {
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
+        resetFavoritesBar();
 
         const titleBarText = projectsWindow.querySelector('.title-bar-text');
         if(titleBarText) titleBarText.textContent = "work.explorer - Amy's Profile";
@@ -900,20 +947,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const folderView = projectsWindow.querySelector('.folder-view');
         if (folderView) {
             const top8Friends = [
-                { name: 'Alan', img: 'assets/top 8 profile pics/Alan.png' },
-                { name: 'Anna', img: 'assets/top 8 profile pics/Anna.png' },
-                { name: 'Cai', img: 'assets/top 8 profile pics/Cai.png' },
-                { name: 'Catt', img: 'assets/top 8 profile pics/Catt.png' },
-                { name: 'Gui', img: 'assets/top 8 profile pics/Gui.png' },
-                { name: 'Nikita', img: 'assets/top 8 profile pics/Nikita.png' },
-                { name: 'Rich', img: 'assets/top 8 profile pics/Rich.png' },
-                { name: 'Yamilah', img: 'assets/top 8 profile pics/Yamilah.png' }
+                { name: 'Alan', img: 'assets/top 8 profile pics/Alan.png', url: 'https://alanwalkermakes.com/' },
+                { name: 'Anna', img: 'assets/top 8 profile pics/Anna.png', url: 'https://www.anna-brenner.com/' },
+                { name: 'Cai', img: 'assets/top 8 profile pics/Cai.png', url: 'https://www.caicharniga.com/' },
+                { name: 'Catt', img: 'assets/top 8 profile pics/Catt.png', url: 'https://cattsmall.com/' },
+                { name: 'Gui', img: 'assets/top 8 profile pics/Gui.png', url: 'https://seiz.design/' },
+                { name: 'Nikita', img: 'assets/top 8 profile pics/Nikita.png', url: 'http://blackuxdesigner.com/' },
+                { name: 'Rich', img: 'assets/top 8 profile pics/Rich.png', url: 'https://rich-arnold.com/' },
+                { name: 'Yamilah', img: 'assets/top 8 profile pics/Yamilah.png', url: 'https://yamilah.com/' }
             ];
 
             const friendsHTML = top8Friends.map(friend => `
                 <div class="friend-card">
-                    <a href="#"><img src="${friend.img}" alt="${friend.name}"></a>
-                    <a href="#"><span>${friend.name}</span></a>
+                    <a href="#" data-url="${friend.url}" data-name="${friend.name}">
+                        <img src="${friend.img}" alt="${friend.name}">
+                        <span>${friend.name}</span>
+                    </a>
                 </div>
             `).join('');
 
@@ -973,13 +1022,29 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             `;
+
+            folderView.querySelectorAll('.friend-card a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const url = e.currentTarget.dataset.url;
+                    const name = e.currentTarget.dataset.name;
+                    loadUrlInExplorer(url, `${name}'s Portfolio`);
+                });
+            });
+            
             setActiveTab('homepage');
             historyStack = ['C:\\Desktop\\Work'];
+
+            const backButtonContainer = projectsWindow.querySelector('#back-button-container');
+            if (backButtonContainer) {
+                backButtonContainer.innerHTML = '';
+            }
         }
     }
     function showProjectDetail(projectName) {
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
+        resetFavoritesBar();
         const mainArea = projectsWindow.querySelector('.folder-view');
         const project = workExplorerContent[projectName];
         
@@ -995,6 +1060,25 @@ document.addEventListener('DOMContentLoaded', () => {
             const viewButton = mainArea.querySelector('.view-project-btn');
             if(viewButton) {
                 viewButton.onclick = () => loadUrlInExplorer(project.url, project.name);
+            }
+
+            const backButtonContainer = projectsWindow.querySelector('#back-button-container');
+             if (backButtonContainer) {
+                backButtonContainer.innerHTML = '';
+                if (historyStack.length > 1) {
+                    const backButton = document.createElement('button');
+                    backButton.innerHTML = '&larr; Back';
+                    backButton.onclick = () => {
+                        historyStack.pop();
+                        const previousPath = historyStack[historyStack.length - 1];
+                         if (workExplorerContent[previousPath] && workExplorerContent[previousPath].type === 'folder') {
+                            renderWorkExplorer(previousPath);
+                        } else {
+                            showHomepage();
+                        }
+                    };
+                    backButtonContainer.appendChild(backButton);
+                }
             }
 
         } else {

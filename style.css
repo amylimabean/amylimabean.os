@@ -1540,6 +1540,7 @@ textarea {
 #window-projects .favorites-label {
     margin-right: 5px;
     padding-bottom: 3px;
+    display: none;
 }
 
 #window-projects .favorites-links {
@@ -1564,9 +1565,14 @@ textarea {
 }
 
 #window-projects .favorite-link.selected {
-    background: #fafafa;
-    border-color: #dfdfdf #808080 #fafafa #dfdfdf;
+    background: #0000FF;
+    color: #FFFFFF;
+    border-color: #0000FF #0000FF #fafafa #0000FF;
     z-index: 2;
+}
+
+#window-projects .favorite-link.selected img {
+    filter: brightness(0) invert(1);
 }
 
 #window-projects .favorite-link img {
@@ -1591,6 +1597,7 @@ textarea {
 #window-projects .project-detail-content {
     line-height: 1.5;
     width: 100%;
+    font-size: 18px;
 }
 
 #window-projects .project-detail-content h3 {
@@ -1615,7 +1622,7 @@ textarea {
     width: 100%;
 }
 .profile-left-col, .profile-right-col {
-    font-size: 14px;
+    font-size: 18px;
 }
 .profile-left-col h2 {
     font-size: 18px;
@@ -1631,7 +1638,7 @@ textarea {
 }
 .online-status {
     color: green;
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 10px;
 }
 .profile-links a {
@@ -1709,6 +1716,9 @@ textarea {
 .friend-card {
     text-align: center;
 }
+.friend-card a {
+    text-decoration: none;
+}
 .friend-card img {
     width: 80px;
     height: 80px;
@@ -1718,7 +1728,7 @@ textarea {
     margin: 0 auto 5px;
 }
 .friend-card span {
-    font-size: 14px;
+    font-size: 18px;
     color: #3366cc;
     text-decoration: none;
     font-weight: bold;
@@ -2152,6 +2162,18 @@ textarea {
 .welcome-subtitle {
     font-size: 14px;
     margin-top: 0;
+}
+
+#window-projects .website-iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.back-button-favorites {
+    font-size: 14px;
+    padding: 3px 8px;
+    text-transform: none;
 }
 
 
