@@ -2,6 +2,10 @@ const urlParams = new URLSearchParams(window.location.search);
 const isAdmin = urlParams.get('edit') === 'true';
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Forcefully clear any stored away messages to ensure a clean slate.
+    // This is a temporary measure to fix a persistent local storage issue.
+    localStorage.removeItem('customAwayMessages');
+
     // --- Element Selectors ---
     const adminControls = document.querySelector('.admin-controls');
     const editMode = document.querySelector('.edit-mode');
