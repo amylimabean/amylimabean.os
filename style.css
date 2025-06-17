@@ -636,6 +636,16 @@ textarea {
     cursor: pointer;
 }
 
+.channel-info a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.channel-info a:hover {
+    color: #0000FF;
+    text-decoration: underline;
+}
+
 .player-divider {
     border: none;
     border-top: 1px solid #000000;
@@ -732,26 +742,72 @@ textarea {
     border-bottom: 2px stippled #000000;
 }
 
+/* --- Photobook Styles --- */
+.polaroid {
+    background-image: url('assets/images/polaroid-frame.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: none;
+    position: absolute;
+    width: 330px;
+    height: 396px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.polaroid.active {
+    display: block;
+}
+
+.carousel-image {
+    position: absolute;
+    top: 7.5%; 
+    left: 8.5%;
+    width: 83%;
+    height: 72%;
+    object-fit: cover;
+    border: none;
+}
+
+.polaroid-caption {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-family: 'Give You Glory', cursive;
+    font-size: 24px;
+    color: #000;
+}
+
 /* Photobook Window Specific Styles */
 #window-photobook {
     width: 450px; 
-    height: auto;
+    height: 572px;
 }
 
 .photobook-content {
-    position: relative;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     height: 100%;
-    overflow: hidden;
-    padding-bottom: 50px; /* Space for controls */
+}
+
+.photobook-carousel {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    padding-bottom: 20px; /* Safety margin for controls */
 }
 
 .photobook-controls {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+    position: static;
+    transform: none;
+    padding-bottom: 10px;
+    padding-top: 8px;
 }
 
 .control-button {
@@ -812,10 +868,14 @@ textarea {
     text-align: center;
 }
 
+.trivia-option:hover {
+    background-color: #0000FF;
+    color: #FFFFFF;
+}
+
 .trivia-option:active {
     border-color: #808080 #dfdfdf #dfdfdf #808080;
     box-shadow: none;
-    transform: translate(1px, 1px);
 }
 
 .trivia-option:disabled {
@@ -896,11 +956,12 @@ textarea {
 .affirmations-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 20px;
     height: 100%;
     box-sizing: border-box;
+    gap: 20px;
 }
 
 .tarot-card {
@@ -943,19 +1004,32 @@ textarea {
 
 .affirmation-text {
     font-size: 20px;
-    line-height: 24px;
-    flex-grow: 1;
+    line-height: 1.3;
+    text-align: center;
+    margin: 0;
     display: flex;
+    flex-grow: 1;
     align-items: center;
     justify-content: center;
-    margin: 0;
 }
 
 .affirmations-content .next-affirmation {
-    padding: 10px 20px;
-    font-size: 16px;
-    width: 230px; /* Matched to tarot card width */
-    margin-top: 16px; /* Added spacing */
+    background-color: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    box-shadow: 1px 1px 0 #000;
+    padding: 5px 15px;
+    font-family: 'W95FA', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+}
+
+.affirmations-content .next-affirmation:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
 }
 
 /* Chat Window Specific Styles */
@@ -1085,6 +1159,16 @@ textarea {
     padding: 6px; /* Reduced from 8px */
     border-radius: 5px;
     line-height: 1.4;
+}
+
+.chat-message .username {
+    font-weight: bold;
+    color: #0000FF;
+}
+
+.guest-message .username,
+.guest-message .message-text {
+    color: #FC0000;
 }
 
 .user-message {
@@ -1617,42 +1701,86 @@ textarea {
 }
 
 /* Post Secret specific styles */
+#window-post-secret {
+    width: 555px;
+    height: 420px;
+}
+
 .post-secret-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     padding: 10px;
-    background: #F0F0F0;
-    font-family: 'Give You Glory', cursive;
-    height: calc(100% - 20px);
+    box-sizing: border-box;
+    background: #f0f0f0;
 }
 
 .postcard-view {
-    background: #fdfdfd;
+    flex-grow: 1;
+    background: #F9F5E8;
     border: 1px solid #000;
     padding: 20px;
     display: grid;
     grid-template-areas: "message address";
-    grid-template-columns: 2.5fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 3fr 2fr;
     column-gap: 20px;
-    height: 290px;
-    box-sizing: border-box;
-    box-shadow: 3px 3px 8px rgba(0,0,0,0.1);
+    box-shadow: 
+        inset 0 0 0 10px #F9F5E8,
+        inset 0 0 0 11px #000,
+        inset 0 0 0 12px transparent; /* Creates inner border */
+    border-image: repeating-linear-gradient(
+        45deg,
+        #d14a3b,
+        #d14a3b 10px,
+        #fff 10px,
+        #fff 20px,
+        #4a7ab5 20px,
+        #4a7ab5 30px,
+        #fff 30px,
+        #fff 40px
+    ) 12;
+    position: relative; /* For overlay */
+}
+
+.sending-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(249, 245, 232, 0.8);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sending-animation {
+    font-family: 'Give You Glory', cursive;
+    font-size: 32px;
 }
 
 .postcard-address {
     grid-area: address;
-    border-left: 1px solid #ccc;
-    padding-left: 40px;
+    border-left: 1px solid #999;
+    padding-left: 20px;
     font-size: 16px;
-    line-height: 30px;
-    background: repeating-linear-gradient(
-        #fdfdfd,
-        #fdfdfd 29px,
-        #ccc 30px
-    );
+    font-family: 'Give You Glory', cursive;
+    background-image: linear-gradient(#ccc, #ccc), linear-gradient(#ccc, #ccc);
+    background-repeat: no-repeat;
+    background-size: 90% 1px;
+    background-position: right calc(50% - 18px), right calc(50% + 18px);
+    position: relative;
 }
 
-.postcard-address p {
-    margin: 0 0 10px;
+.postcard-address::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 50px;
+    height: 60px;
+    border: 1px solid #999;
 }
 
 .postcard-message {
@@ -1661,9 +1789,10 @@ textarea {
     resize: none;
     border: none;
     font-family: 'Give You Glory', cursive;
-    font-size: 24px;
+    font-size: 36px;
     padding: 0 5px;
     box-sizing: border-box;
+    background-color: transparent;
 }
 
 .postcard-message:focus {
@@ -1712,29 +1841,45 @@ textarea {
 }
 
 .secrets-feed-view {
+    flex-grow: 1;
     display: grid;
-    grid-template-columns: repeat(2, 250px);
-    gap: 15px;
-    max-height: 270px;
+    grid-template-columns: repeat(2, 220px);
+    gap: 25px;
     overflow-y: auto;
-    padding: 10px;
-    background-color: #FAFAFA;
+    padding: 30px;
+    background-color: #d2b48c; /* Corkboard color */
+    border-radius: 5px;
     justify-content: center;
 }
 
 .secret-entry {
     background-color: #FFFFE0;
     border: 1px solid #c8c8a8;
-    box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 5px 5px 7px rgba(33,33,33,.7);
     padding: 15px;
     font-family: 'Give You Glory', cursive;
     font-size: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 250px;
-    height: 250px;
+    width: 220px;
+    height: 220px;
     box-sizing: border-box;
+    position: relative; /* For thumbtack positioning */
+}
+
+.secret-entry::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle at 65% 65%, #ff0000, #c00);
+    border-radius: 50%;
+    box-shadow: -1px -1px 3px rgba(0,0,0,0.6) inset;
+    border: 2px solid #fff;
 }
 
 .secret-entry:last-child {

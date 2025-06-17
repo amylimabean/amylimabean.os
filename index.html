@@ -12,6 +12,7 @@
     <source src="background-video.mp4" type="video/mp4">
     Your browser does not support HTML5 video.
 </video>
+<img id="background-image" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1;">
 
     <div class="menubar">
         <div class="menu-item logo-text" id="bean-menu-item">
@@ -103,26 +104,32 @@
             </div>
         </div>
 
-        <!-- Window: Projects -->
-        <div class="window" id="window-projects" style="display: none;">
+        <!-- Window: Projects / Work Explorer -->
+        <div class="window" id="window-projects" style="display: none; width: 680px; height: 500px;">
             <div class="title-bar">
                 <div class="title-bar-buttons">
                     <span class="button close"></span>
                 </div>
                 <span class="title-bar-text">work.explorer</span>
             </div>
-            <div class="window-content folder-view">
-                <div class="file-icon">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="#E0DCD3" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" stroke="#000000" stroke-width="1"/></svg>
-                    <span>Project_Alpha.pdf</span>
+            <div class="window-content ie-style">
+                <div class="ie-toolbar">
+                    <div id="back-button-container" class="ie-nav-buttons">
+                        <!-- Back button will be inserted here by JS -->
+                    </div>
+                    <div class="ie-address-bar-container">
+                        <label for="address-bar" class="ie-address-label">Address</label>
+                        <input type="text" id="address-bar" value="C:\Desktop\Work" readonly>
+                    </div>
                 </div>
-                <div class="file-icon">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="#E0DCD3" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" stroke="#000000" stroke-width="1"/></svg>
-                    <span>App_Launch_Strategy.doc</span>
+                <div class="ie-favorites-bar">
+                    <span class="favorites-label">Favorites</span>
+                    <div class="favorites-links">
+                        <!-- Favorite links will be inserted here by JS -->
+                    </div>
                 </div>
-                 <div class="file-icon">
-                    <svg width="40" height="40" viewBox="0 0 40 40" fill="#E0DCD3" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="40" stroke="#000000" stroke-width="1"/></svg>
-                    <span>Portfolio_Site_v3.url</span>
+                <div class="folder-view">
+                    <!-- Content will be rendered here by JS -->
                 </div>
             </div>
         </div>
@@ -188,7 +195,9 @@
                     <canvas id="myTunes-visualizer-canvas"></canvas>
                 </div>
                 <div class="channel-info">
-                    <span>Channel: Amy's Faves</span>
+                    <a href="https://open.spotify.com/playlist/7xIHwfDt5TlTzsT0AoeOAB?si=Ob-kKQkuSFK0ciNSgaJYfw" target="_blank" rel="noopener noreferrer">
+                        <span>Channel: Amy's Faves</span>
+                    </a>
                     <span class="dropdown-arrow">▼</span>
                 </div>
                 <hr class="player-divider">
@@ -259,15 +268,20 @@
         </div>
 
         <!-- Window: Spill the Beans Trivia -->
-        <div class="window" id="window-trivia" style="display: none; width: 400px; height: 345px;">
+        <div class="window" id="window-trivia" style="display: none; width: 400px; height: 380px;">
             <div class="title-bar">
                 <div class="title-bar-buttons">
                     <span class="button close"></span>
                 </div>
                 <span class="title-bar-text">Spill the Beans!</span>
             </div>
-            <div class="window-content" id="trivia-content">
-                
+            <div class="window-content">
+                <div id="trivia-content">
+                    <!-- Trivia questions will go here -->
+                </div>
+                <div class="trivia-final-score" style="display: none;">
+                    <!-- Final score will go here -->
+                </div>
             </div>
         </div>
 
@@ -303,11 +317,7 @@
                 <div class="chat-sidebar">
                     <div class="chat-sidebar-header">Channels</div>
                     <ul>
-                        <li data-channel="about-me" class="active-channel">#about-me</li>
-                        <!-- <li data-channel="funfacts">#funfacts</li> -->
-                        <li data-channel="design-philosophy">#design-philosophy</li>
-                        <li data-channel="life-philosophy">#life-philosophy</li>
-                        <li data-channel="group-chat">#group-chat</li>
+                        
                     </ul>
                 </div>
                 <div class="chat-main">
@@ -315,12 +325,15 @@
                         <span id="chat-current-channel">#about-me</span>
                     </div>
                     <div id="chat-content" class="chat-content-area">
-                        <!-- Content for about-me will go here -->
-                        <p>This is the about-me section. Welcome to my page!</p>
+                        <!-- Content will be populated by JS -->
                     </div>
-                    <div class="chat-input-area">
-                        <input type="text" placeholder="Type a message..." />
-                        <button>Send</button>
+                    <div class="chat-input-area" id="screen-name-input-area">
+                        <input type="text" id="screen-name-input" placeholder="Set your ScreenName to send messages" />
+                        <button id="set-screen-name-btn">Set</button>
+                    </div>
+                    <div class="chat-input-area" id="message-input-area" style="display: none;">
+                        <input type="text" id="chat-message-input" placeholder="Type a message..." />
+                        <button id="send-chat-message-btn">Send</button>
                     </div>
                 </div>
             </div>
@@ -363,10 +376,12 @@
             <span class="title-bar-text">post.secret</span>
         </div>
         <div class="window-content post-secret-content">
+            <div id="sending-overlay" class="sending-overlay" style="display: none;">
+                <div class="sending-animation">Sending...</div>
+            </div>
             <div class="postcard-view">
                 <div class="postcard-address">
-                    <p>To: The Void</p>
-                    <p>From: A Friend</p>
+                    
                 </div>
                 <textarea class="postcard-message" placeholder="What's your secret?"></textarea>
             </div>
