@@ -1,3 +1,5 @@
+alert('Test'); // Temporary diagnostic alert
+
 const urlParams = new URLSearchParams(window.location.search);
 const isAdmin = urlParams.get('edit') === 'true';
 
