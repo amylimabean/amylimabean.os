@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial State and Data ---
     let awayMessages = {
         brb: { title: 'Be Right Back', content: 'Be right back!', bgColor: '#FFFF00' },
-        afk: { title: 'Away From Keyboard', content: 'Away from keyboard', bgColor: '#FFFF00' },
+        dnttxt: { title: 'dnt txt', content: 'dnt txt', bgColor: '#FFFF00'},
         sleep: { title: 'Sleeping', content: 'Sleeping...', bgColor: '#FFFF00' },
         busy: { title: 'Busy', content: 'Busy, will respond later', bgColor: '#FFFF00' }
     };
@@ -39,7 +39,19 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadMessages() {
         const storedMessages = localStorage.getItem('customAwayMessages');
         if (storedMessages) {
-            awayMessages = JSON.parse(storedMessages);
+            const loadedMessages = JSON.parse(storedMessages);
+
+            // Force a reset if old data is detected.
+            const hasOldMessages = Object.values(loadedMessages).some(
+                msg => msg.title === 'brb crying' || msg.title === 'Away From Keyboard'
+            );
+
+            if (hasOldMessages) {
+                localStorage.removeItem('customAwayMessages');
+                // Use the default awayMessages object by not assigning loadedMessages
+            } else {
+                 awayMessages = loadedMessages;
+            }
         }
     }
     
