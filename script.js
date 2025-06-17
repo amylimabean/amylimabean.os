@@ -785,11 +785,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     const workExplorerContent = {
-        'C:\\Desktop\\Work': { type: 'folder', name: 'Work', children: ['AMP', 'Duo', 'Pinterest', 'Diversify'] },
-        'AMP': { type: 'app', name: 'AMP', description: "Led design for AMP...", icon: "assets/app icons/amp app icon.png", url: "https://www.figma.com/proto/Xp8nSBrpP00e5gNfT66b57/AMP-Case-Study" },
-        'Duo': { type: 'app', name: 'Duo', description: "As the lead designer for Duo...", icon: "assets/app icons/duo app icon.png", url: "https://www.figma.com/proto/l8WdkUTkH2DeN4tGzwqM2J/Duo-Case-Study" },
-        'Pinterest': { type: 'app', name: 'Pinterest', description: "I led a project to redesign...", icon: "assets/app icons/pinterest app icon.png", url: "https://www.figma.com/proto/zD4aNf6xZdMQt1Yp9E5C0Y/Pinterest-Case-Study" },
-        'Diversify': { type: 'app', name: 'Diversify', description: "As a passion project, I co-founded...", icon: "assets/app icons/diversify_design_logo.jpeg", url: "https://diversify.design/" }
+        'C:\\Desktop\\Work': { type: 'folder', name: 'Work', children: ['Pinterest', 'AMP', 'Duolingo', 'Diversify'] },
+        'AMP': { 
+            type: 'app', 
+            name: 'Amp', 
+            description: `<h3>AMP Search UX Case Study</h3>
+<p>After Pinterest, I worked at a startup under Amazon Music called Amp, a bold product in the otherwise safe Amazon ecosystem that aimed to reimagine radio. Creators host their own radio shows using Amazon Music's 10mm+ song catalogue, and listeners could scan the airwaves to discover new music, creators, and fans.</p>
+<p>Sitting at the intersection of live audio and music broadcasting, Amp had a lot of deep technical and legal constraints I had to design around. It was deeply challenging, as my design work spanned the entire product, but equally rewarding. Pushing such a bold vision in a behemoth like Amazon was no small task, and I learned a ton.</p>`, 
+            icon: "assets/app icons/amp app icon.png", 
+            url: "https://www.figma.com/proto/Xp8nSBrpP00e5gNfT66b57/AMP-Case-Study" 
+        },
+        'Duolingo': { 
+            type: 'app', 
+            name: 'Duolingo', 
+            description: `<h3>Duolingo Case Study</h3>
+<p>As a product designer at Duolingo, I focused on enhancing the learning experience by designing new features that were both fun and effective. My work involved gamification, social features, and improving the core learning paths to boost user engagement and motivation.</p>
+<p>It was an incredible opportunity to apply data-informed design principles and to create for a massive, global audience. I loved being part of a team so dedicated to making language education accessible to everyone.</p>`, 
+            icon: "assets/app icons/duo app icon.png", 
+            url: "https://www.figma.com/proto/l8WdkUTkH2DeN4tGzwqM2J/Duo-Case-Study" 
+        },
+        'Pinterest': { 
+            type: 'app', 
+            name: 'Pinterest', 
+            description: `<h3>Pinterest Shopping UX Case Study</h3>
+<p>At Pinterest, I led the redesign of the product tagging flow, which made it easier for creators and merchants to make their content shoppable. I also worked on features to help users discover and purchase products they love, directly from Pins.</p>
+<p>This role required a deep understanding of both creators and shoppers and involved extensive cross-functional collaboration. I'm proud of the work I did to make Pinterest a more inspiring and effective platform for e-commerce.</p>`, 
+            icon: "assets/app icons/pinterest app icon.png", 
+            url: "https://www.figma.com/proto/zD4aNf6xZdMQt1Yp9E5C0Y/Pinterest-Case-Study" 
+        },
+        'Diversify': { 
+            type: 'app', 
+            name: 'Diversify Design', 
+            description: `<h3>Diversify Design</h3>
+<p>As a passion project, I co-founded Diversify Design to build a platform that highlights and supports underrepresented designers. We feature portfolios, host events, and provide resources to help foster a more inclusive and equitable design industry.</p>
+<p>This project is incredibly meaningful to me. It's about creating the community I want to be a part of and using design as a tool for positive change.</p>`, 
+            icon: "assets/app icons/diversify_design_logo.jpeg", 
+            url: "https://diversify.design/" 
+        }
     };
     let currentPath = 'C:\\Desktop\\Work';
     let historyStack = ['C:\\Desktop\\Work'];
@@ -846,24 +878,101 @@ document.addEventListener('DOMContentLoaded', () => {
                     fileIcon.innerHTML = `<img src="${item.icon}" alt="${item.name}"><span>${item.name}</span>`;
                     fileIcon.onclick = () => {
                         historyStack.push(itemName);
-                        renderWorkExplorer(itemName);
+                        showProjectDetail(itemName);
                     };
                     folderView.appendChild(fileIcon);
                 }
             });
         } else if (content.type === 'app') {
-            setActiveTab(path);
-            folderView.innerHTML = `<h3>${content.name}</h3><p>${content.description}</p><button class="action-button view-project-btn">View Project</button>`;
-            const viewBtn = folderView.querySelector('.view-project-btn');
-            if (viewBtn) viewBtn.onclick = () => loadUrlInExplorer(content.url, content.name);
+            showProjectDetail(path);
         }
     }
     function showHomepage() {
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
+
+        const titleBarText = projectsWindow.querySelector('.title-bar-text');
+        if(titleBarText) titleBarText.textContent = "work.explorer - Amy's Profile";
+        
+        const addressBar = projectsWindow.querySelector('#address-bar');
+        if(addressBar) addressBar.value = 'C:\\Users\\Amy';
+
         const folderView = projectsWindow.querySelector('.folder-view');
         if (folderView) {
-            folderView.innerHTML = `<h2>Welcome</h2><p>Select a project.</p>`;
+            const top8Friends = [
+                { name: 'Alan', img: 'assets/top 8 profile pics/Alan.png' },
+                { name: 'Anna', img: 'assets/top 8 profile pics/Anna.png' },
+                { name: 'Cai', img: 'assets/top 8 profile pics/Cai.png' },
+                { name: 'Catt', img: 'assets/top 8 profile pics/Catt.png' },
+                { name: 'Gui', img: 'assets/top 8 profile pics/Gui.png' },
+                { name: 'Nikita', img: 'assets/top 8 profile pics/Nikita.png' },
+                { name: 'Rich', img: 'assets/top 8 profile pics/Rich.png' },
+                { name: 'Yamilah', img: 'assets/top 8 profile pics/Yamilah.png' }
+            ];
+
+            const friendsHTML = top8Friends.map(friend => `
+                <div class="friend-card">
+                    <a href="#"><img src="${friend.img}" alt="${friend.name}"></a>
+                    <a href="#"><span>${friend.name}</span></a>
+                </div>
+            `).join('');
+
+            folderView.innerHTML = `
+                <div class="myspace-container">
+                    <div class="myspace-profile-grid">
+                        <div class="profile-left-col">
+                            <div class="profile-main-info">
+                                <h2>Amy Limabean</h2>
+                                <img src="assets/myspace prof pic.png" alt="Amy's Profile Picture" class="profile-pic-main">
+                                <p class="online-status"><strong>Online!</strong></p>
+                                <p><strong>Mood:</strong> Creative</p>
+                                <p class="profile-links">
+                                    <a href="#">Blog</a> | <a href="#">Bulletins</a> | <a href="#">Forum Topics</a>
+                                </p>
+                            </div>
+
+                            <div class="profile-contact-box">
+                                <h3>Contacting Amy</h3>
+                                <ul>
+                                    <li><a href="mailto:amylima.design@gmail.com">Send Message</a></li>
+                                    <li><a href="https://www.linkedin.com/in/amylima" target="_blank">Add to Friends</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="profile-right-col">
+                            <div class="profile-blurbs">
+                                <h3>Amy's Blurbs</h3>
+                                <div class="blurb-section">
+                                    <h4>About me:</h4>
+                                    <p>I've always been obsessed with the "why" behind how people connect-with each other, with ideas, with the world around them.<br><br>As a first-generation American raised by Brazilian parents, I grew up between cultures-never fully of one world or another.<br><br>But this third-culture experience also sparked an early curiosity about belonging and identity, and it's shaped everything since.<br><br>That lens—of exploring how people find their people—has been the throughline of my life and career.<br><br>I see design as a way to support human connection—tools that don't just serve users, but celebrate who they are and how they show up for each other.</p>
+                                </div>
+                            </div>
+                            <div class="profile-interests-box">
+                                 <h3>Amy's Interests</h3>
+                                 <div class="interests-section">
+                                    <span>General</span>
+                                    <p>Human behavior, anthropology, third-culture kids, beautiful data, postmodernism, a good bodega cat.</p>
+                                 </div>
+                                  <div class="interests-section">
+                                    <span>Music</span>
+                                    <p>Funk, R&B, reggaeton, indie pop, anything I can dance to.</p>
+                                 </div>
+                                 <div class="interests-section">
+                                    <span>Movies</span>
+                                    <p>A24, psychological thrillers, coming-of-age stories, international films.</p>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-friends">
+                        <h3>Amy's Friend Space</h3>
+                        <p>Amy has ${top8Friends.length} friends.</p>
+                        <div class="top-8-grid">
+                            ${friendsHTML}
+                        </div>
+                    </div>
+                </div>
+            `;
             setActiveTab('homepage');
             historyStack = ['C:\\Desktop\\Work'];
         }
@@ -873,8 +982,21 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!projectsWindow) return;
         const mainArea = projectsWindow.querySelector('.folder-view');
         const project = workExplorerContent[projectName];
+        
+        const titleBarText = projectsWindow.querySelector('.title-bar-text');
+        const addressBar = projectsWindow.querySelector('#address-bar');
+
         if (project && project.type === 'app' && mainArea) {
-            mainArea.innerHTML = `<div class="project-detail-content"><h3>${project.name}</h3><p>${project.description}</p><button class="action-button" onclick="loadUrlInExplorer('${project.url}', '${project.name}')">View Case Study</button></div>`;
+            mainArea.innerHTML = `<div class="project-detail-content">${project.description}</div>`;
+            if(titleBarText) titleBarText.textContent = `work.explorer - ${project.name}`;
+            if(addressBar) addressBar.value = `C:\\Desktop\\Work\\${project.name}`;
+            setActiveTab(projectName);
+
+            const viewButton = mainArea.querySelector('.view-project-btn');
+            if(viewButton) {
+                viewButton.onclick = () => loadUrlInExplorer(project.url, project.name);
+            }
+
         } else {
             showHomepage();
         }
@@ -885,7 +1007,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const favoritesBar = projectsWindow.querySelector('.ie-favorites-bar .favorites-links');
         if (!favoritesBar) return;
         favoritesBar.innerHTML = ''; 
-        const favs = ['AMP', 'Duo', 'Pinterest', 'Diversify'];
+        const favs = ['Pinterest', 'AMP', 'Duolingo', 'Diversify'];
         const homeButton = document.createElement('div');
         homeButton.className = 'favorite-link';
         homeButton.dataset.path = 'homepage';
@@ -902,7 +1024,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 favLink.onclick = () => {
                     historyStack = ['C:\\Desktop\\Work', favName]; 
                     showProjectDetail(favName);
-                    setActiveTab(favName);
                 };
                 favoritesBar.appendChild(favLink);
             }

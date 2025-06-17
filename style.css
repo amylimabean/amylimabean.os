@@ -1476,6 +1476,257 @@ textarea {
     margin-bottom: 3px;
 }
 
+/* IE Style Work Explorer */
+#window-projects .window-content.ie-style {
+    background-color: #c0c0c0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+#window-projects .ie-toolbar {
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    border-bottom: 1px solid #808080;
+    flex-shrink: 0;
+}
+
+#window-projects .ie-nav-buttons button {
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    box-shadow: 1px 1px 1px #000;
+    padding: 2px 8px;
+}
+#window-projects .ie-nav-buttons button:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+}
+
+#window-projects .ie-address-bar-container {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin-left: 8px;
+    background: white;
+    border: 1px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    padding: 2px;
+}
+
+#window-projects .ie-address-label {
+    margin-right: 4px;
+    color: #808080;
+}
+
+#window-projects #address-bar {
+    background: none;
+    border: none;
+    padding: 2px 4px;
+    flex-grow: 1;
+    height: 100%;
+    outline: none;
+}
+
+#window-projects .ie-favorites-bar {
+    padding: 2px 2px 0 2px;
+    display: flex;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+
+#window-projects .favorites-label {
+    margin-right: 5px;
+    padding-bottom: 3px;
+}
+
+#window-projects .favorites-links {
+    display: flex;
+    flex-grow: 1;
+    border-bottom: 1px solid #808080;
+}
+
+#window-projects .favorite-link {
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    padding: 4px 8px;
+    margin-right: 1px;
+    margin-bottom: -1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    border-bottom-color: #808080;
+}
+
+#window-projects .favorite-link.selected {
+    background: #fafafa;
+    border-color: #dfdfdf #808080 #fafafa #dfdfdf;
+    z-index: 2;
+}
+
+#window-projects .favorite-link img {
+    width: 16px;
+    height: 16px;
+}
+
+#window-projects .folder-view {
+    background: #fafafa;
+    border: 1px solid;
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    margin: 0 2px 2px 2px;
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+    display: flex; /* For file-icon layout */
+    flex-wrap: wrap; /* For file-icon layout */
+    gap: 15px; /* For file-icon layout */
+    align-content: flex-start; /* For file-icon layout */
+}
+
+#window-projects .project-detail-content {
+    line-height: 1.5;
+    width: 100%;
+}
+
+#window-projects .project-detail-content h3 {
+    margin-top: 0;
+    font-size: 1.1em;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+#window-projects .project-detail-content p {
+    margin-bottom: 1em;
+}
+
+/* MySpace Profile Styles */
+.myspace-container {
+    width: 100%;
+}
+.myspace-profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 15px;
+    width: 100%;
+}
+.profile-left-col, .profile-right-col {
+    font-size: 14px;
+}
+.profile-left-col h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #000;
+}
+.profile-pic-main {
+    width: 100%;
+    max-width: 180px;
+    height: auto;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+.online-status {
+    color: green;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.profile-links a {
+    color: #3366cc;
+    font-weight: bold;
+}
+
+.profile-contact-box, .profile-interests-box, .profile-blurbs, .profile-friends {
+    border: 1px solid #6699cc;
+    margin-bottom: 15px;
+}
+.profile-contact-box h3, .profile-interests-box h3, .profile-blurbs h3, .profile-friends h3 {
+    background-color: #6699cc;
+    color: white;
+    padding: 5px;
+    margin: 0;
+    font-size: 14px;
+}
+.profile-contact-box ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+}
+.profile-contact-box li {
+    margin-bottom: 5px;
+}
+.profile-contact-box a {
+    color: #3366cc;
+}
+.interests-section {
+    padding: 10px;
+    border-bottom: 1px dotted #ccc;
+}
+.interests-section:last-child {
+    border-bottom: none;
+}
+.interests-section span {
+    font-weight: bold;
+    color: #000;
+    width: 80px;
+    display: inline-block;
+    vertical-align: top;
+}
+.interests-section p {
+    display: inline;
+    margin: 0;
+}
+
+.blurb-section, .profile-friends {
+    padding: 10px;
+}
+.profile-blurbs h3, .profile-friends h3 {
+    background-color: #ffcc66;
+    color: #000;
+    border-bottom: 1px solid #ff9900;
+}
+.blurb-section h4 {
+    color: #ff3300;
+    margin: 0 0 5px 0;
+    font-size: 14px;
+}
+.blurb-section p {
+    line-height: 1.4;
+    margin: 0;
+}
+.profile-friends p {
+    margin: 0 0 10px 0;
+}
+
+.top-8-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+.friend-card {
+    text-align: center;
+}
+.friend-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 0 auto 5px;
+}
+.friend-card span {
+    font-size: 14px;
+    color: #3366cc;
+    text-decoration: none;
+    font-weight: bold;
+}
+.friend-card a:hover span {
+    text-decoration: underline;
+}
+
 /* TextEdit Style Window */
 .text-edit-style-window .window-content {
     padding: 0; /* Remove default window content padding */
