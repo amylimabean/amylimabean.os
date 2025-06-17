@@ -1694,6 +1694,7 @@ textarea {
     background-color: #ffcc66;
     color: #000;
     border-bottom: 1px solid #ff9900;
+    font-size: 14px;
 }
 .blurb-section h4 {
     color: #ff3300;
@@ -1712,6 +1713,7 @@ textarea {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
+    margin-top: 10px;
 }
 .friend-card {
     text-align: center;

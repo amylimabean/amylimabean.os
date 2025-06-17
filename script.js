@@ -971,13 +971,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="myspace-profile-grid">
                         <div class="profile-left-col">
                             <div class="profile-main-info">
-                                <h2>Amy Limabean</h2>
+                                <h2>Amy Lima</h2>
                                 <img src="assets/myspace prof pic.png" alt="Amy's Profile Picture" class="profile-pic-main">
-                                <p class="online-status"><strong>Online!</strong></p>
-                                <p><strong>Mood:</strong> Creative</p>
-                                <p class="profile-links">
-                                    <a href="#">Blog</a> | <a href="#">Bulletins</a> | <a href="#">Forum Topics</a>
-                                </p>
                             </div>
 
                             <div class="profile-contact-box">
@@ -990,12 +985,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="profile-right-col">
                             <div class="profile-blurbs">
-                                <h3>Amy's Blurbs</h3>
+                                <h3>About Me</h3>
                                 <div class="blurb-section">
-                                    <h4>About me:</h4>
                                     <p>I've always been obsessed with the "why" behind how people connect-with each other, with ideas, with the world around them.<br><br>As a first-generation American raised by Brazilian parents, I grew up between cultures-never fully of one world or another.<br><br>But this third-culture experience also sparked an early curiosity about belonging and identity, and it's shaped everything since.<br><br>That lens—of exploring how people find their people—has been the throughline of my life and career.<br><br>I see design as a way to support human connection—tools that don't just serve users, but celebrate who they are and how they show up for each other.</p>
                                 </div>
                             </div>
+                            <!--
                             <div class="profile-interests-box">
                                  <h3>Amy's Interests</h3>
                                  <div class="interests-section">
@@ -1011,11 +1006,11 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <p>A24, psychological thrillers, coming-of-age stories, international films.</p>
                                  </div>
                             </div>
+                            -->
                         </div>
                     </div>
                     <div class="profile-friends">
-                        <h3>Amy's Friend Space</h3>
-                        <p>Amy has ${top8Friends.length} friends.</p>
+                        <h3>Amy's Top 8</h3>
                         <div class="top-8-grid">
                             ${friendsHTML}
                         </div>
