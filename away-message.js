@@ -39,17 +39,32 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadMessages() {
         const storedMessages = localStorage.getItem('customAwayMessages');
         if (storedMessages) {
-            const loadedMessages = JSON.parse(storedMessages);
+            let loadedMessages = {};
+            try {
+                // Ensure what's stored is valid JSON
+                loadedMessages = JSON.parse(storedMessages);
+            } catch (e) {
+                // If JSON is corrupt, it's invalid. Clear it and use defaults.
+                localStorage.removeItem('customAwayMessages');
+                return; // Exits the function, using the default awayMessages
+            }
 
-            // Force a reset if old data is detected.
+            // Check for invalid states: not an object, null, or empty.
+            if (!loadedMessages || typeof loadedMessages !== 'object' || Object.keys(loadedMessages).length === 0) {
+                localStorage.removeItem('customAwayMessages');
+                return; // Use defaults
+            }
+            
+            // Check for specific old message titles that indicate outdated data.
             const hasOldMessages = Object.values(loadedMessages).some(
-                msg => msg.title === 'brb crying' || msg.title === 'Away From Keyboard'
+                msg => msg && (msg.title === 'brb crying' || msg.title === 'Away From Keyboard')
             );
 
             if (hasOldMessages) {
                 localStorage.removeItem('customAwayMessages');
                 // Use the default awayMessages object by not assigning loadedMessages
             } else {
+                 // If data is valid and not old, use it.
                  awayMessages = loadedMessages;
             }
         }
