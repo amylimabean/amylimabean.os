@@ -55,6 +55,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     background-color: transparent; /* Allow video to show through */
     position: relative; /* Establish stacking context for video z-index */
+    cursor: url('assets/cursor.png'), auto;
 }
 
 .desktop-background {

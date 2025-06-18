@@ -37,6 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                if (clickSound) {
+                    clickSound.currentTime = 0;
+                    clickSound.play().catch(error => console.warn("Click sound failed:", error));
+                }
                 if (wp.type === 'video') {
                     if (backgroundImage) backgroundImage.style.display = 'none';
                     if (backgroundVideo) {
@@ -78,6 +82,10 @@ document.addEventListener('DOMContentLoaded', () => {
         aboutBeanLink.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
+            if (clickSound) {
+                clickSound.currentTime = 0;
+                clickSound.play().catch(error => console.warn("Click sound failed:", error));
+            }
             if (aboutBeanWindow) {
                 aboutBeanWindow.style.display = 'flex';
                 if (modalOverlay) {
