@@ -1459,13 +1459,11 @@ document.addEventListener('DOMContentLoaded', () => {
 `;
     const workExplorerContent = {
         'C:\\Desktop\\Work': { type: 'folder', name: 'Work', children: ['Pinterest', 'AMP', 'Duolingo', 'Diversify'] },
-        'AMP': { 
-            type: 'app', 
-            name: 'Amp', 
-            description: `<p>After Pinterest, I worked at a startup under Amazon Music called Amp, a bold product in the otherwise safe Amazon ecosystem that atimed to reimagine radio. Creators host their own radio shows using Amazon Music's 10mm+ song catalogue, and listeners could scan the airwaves to discover new music, creators, and fans.</p>
-            <p>Sitting at the intersection of live audio and music broadcasting, Amp had a lot of deep technical and legal constraints I had to design around. It was deeply challenging, as my design work spanned the entire product, but equally rewarding – pushing such a bold vision in a behemoth like Amazon was no small task, and I learned a ton.</p>`, 
-            icon: "assets/app icons/amp app icon.png", 
-            url: "https://www.figma.com/proto/Xp8nSBrpP00e5gNfT66b57/AMP-Case-Study" 
+        'AMP': {
+            type: 'html_file',
+            name: 'Amp',
+            filePath: 'amp_page.html',
+            icon: "assets/app icons/amp app icon.png"
         },
         'Duolingo': { 
             type: 'app', 

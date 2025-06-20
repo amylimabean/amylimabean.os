@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Amp!</title>
+    <style>
+        .amp-view {
+            background: url(http://www.fillster.com/images/backgrounds/16f.gif);
+            background-attachment: fixed;
+            background-repeat: repeat;
+            font-family: "MS Sans Serif", "Geneva", "Verdana", sans-serif;
+            font-size: 12px;
+            height: 100%;
+            overflow-y: auto;
+        }
+
+        .heart {
+            color: #FCF599;
+            font-size: 1rem;
+            position: absolute;
+            top: -1vh;
+            animation: fall 5s linear infinite;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh);
+            }
+        }
+
+        .win95-container {
+            width: 95%;
+            max-width: 780px;
+            margin: 20px auto;
+        }
+
+        .win95-window {
+            background-color: #c0c0c0;
+            border: 2px solid;
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+            border-right-color: #000000;
+            border-bottom-color: #000000;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+        }
+
+        .win95-title-bar {
+            background: linear-gradient(to right, #000080, #1084d0);
+            color: white;
+            padding: 3px 5px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .win95-title-bar-buttons {
+            display: flex;
+        }
+
+        .win95-button {
+            width: 16px;
+            height: 14px;
+            background-color: #c0c0c0;
+            border: 1px solid;
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+            border-right-color: #000000;
+            border-bottom-color: #000000;
+            margin-left: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: bold;
+            box-shadow: 1px 1px 0px #000;
+        }
+
+        .win95-content {
+            padding: 10px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 20px;
+        }
+
+        .win95-icon {
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .win95-icon img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .win95-icon p {
+            margin-top: 5px;
+            color: black;
+            font-size: 12px;
+            background-color: transparent;
+        }
+
+        .win95-ad-banner {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .win95-ad-banner img {
+            max-width: 100%;
+        }
+
+        .win95-nav-bar {
+            background-color: #c0c0c0;
+            border-top: 2px solid #ffffff;
+            border-bottom: 2px solid #000000;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+        .win95-nav-button {
+            background-color: #c0c0c0;
+            border: 2px solid;
+            border-top-color: #ffffff;
+            border-left-color: #ffffff;
+            border-right-color: #000000;
+            border-bottom-color: #000000;
+            padding: 5px 10px;
+            box-shadow: 1px 1px 2px #000;
+        }
+
+        .win95-main-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .win95-main-title sup {
+            font-size: 0.5em;
+        }
+
+        .win95-footer-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .win95-footer-links a {
+            color: #0000ff;
+            text-decoration: underline;
+            margin: 0 5px;
+        }
+        
+        .win95-copyright {
+            text-align: center;
+            font-size: 11px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .win95-text-content {
+            background-color: #301953;
+            color: #FCF599;
+            border: 2px inset;
+            padding: 15px;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+    </style>
+</head>
+<body class="win95-background">
+    <div class="amp-view">
+        <div class="win95-container">
+            <p style="text-align: center; color: white;">Amp Needs Your Help! Enter the <a href="#" style="color: white;">Amp Design Contest!</a></p>
+
+            <div class="win95-window">
+            </div>
+
+            <div class="win95-ad-banner">
+                <img src="assets/amp wordart.png" alt="Amp (by Amazon Music)" style="border: none;">
+            </div>
+
+            <h2 style="text-align: center; font-weight: normal;">Find out how to get <a href="#">Free Broadcasting</a> on Amp!</h2>
+
+            <h1 class="win95-main-title">Welcome to Amp.com<sup>TM</sup></h1>
+
+            <div class="win95-footer-links">
+                <a href="#">Startup/Usability</a> |
+                <a href="#">Connectivity</a> |
+                <a href="#">Internet Hyper-Glossary</a> |
+                <a href="#">32-bit Hardware Drivers</a> |
+                <a href="#">32-bit Shareware Collection</a> |
+                <a href="#">Shareware CD-ROM</a> |
+                <a href="#">Virtual Servers, Inc.</a> |
+                <a href="#">Advertise on Amp.com</a> |
+                <a href="#">About Amp.com</a> |
+                <a href="#">About the Author</a>
+            </div>
+            
+            <div class="win95-text-content">
+                 <p>After Pinterest, I worked at a startup under Amazon Music called Amp, a bold product in the otherwise safe Amazon ecosystem that atimed to reimagine radio. Creators host their own radio shows using Amazon Music's 10mm+ song catalogue, and listeners could scan the airwaves to discover new music, creators, and fans.</p>
+                <p>Sitting at the intersection of live audio and music broadcasting, Amp had a lot of deep technical and legal constraints I had to design around. It was deeply challenging, as my design work spanned the entire product, but equally rewarding – pushing such a bold vision in a behemoth like Amazon was no small task, and I learned a ton.</p>
+            </div>
+            
+            <div class="win95-copyright">
+                ©1996 Amp.com
+                <br>
+                All other trademarks are the sole property of their respective owners.
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
