@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Default', type: 'image', path: 'assets/wallpaper/default.webp' },
         { name: 'Bliss', type: 'image', path: 'assets/wallpaper/bliss.jpg' },
         { name: 'Cyber World', type: 'image', path: 'assets/wallpaper/cyber-world.avif' },
-        { name: 'Free Palestine', type: 'image', path: 'assets/wallpaper/free palestine.png' }
+        { name: 'Free Palestine', type: 'image', path: 'assets/wallpaper/free palestine.png' },
+        { name: 'upload', type: 'upload', path: 'UPLOAD' }
     ];
 
     function populateWallpaperMenu() {
@@ -41,7 +42,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     clickSound.currentTime = 0;
                     clickSound.play().catch(error => console.warn("Click sound failed:", error));
                 }
-                if (wp.type === 'video') {
+                if (wp.type === 'upload') {
+                    const fileInput = document.createElement('input');
+                    fileInput.type = 'file';
+                    fileInput.accept = 'image/*';
+                    fileInput.style.display = 'none';
+
+                    fileInput.addEventListener('change', (event) => {
+                        const file = event.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = (loadEvent) => {
+                                if (backgroundVideo) backgroundVideo.style.display = 'none';
+                                if (backgroundImage) {
+                                    backgroundImage.style.display = 'block';
+                                    backgroundImage.src = loadEvent.target.result;
+                                }
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                        document.body.removeChild(fileInput); // Clean up
+                    });
+
+                    document.body.appendChild(fileInput);
+                    fileInput.click();
+                } else if (wp.type === 'video') {
                     if (backgroundImage) backgroundImage.style.display = 'none';
                     if (backgroundVideo) {
                         backgroundVideo.style.display = 'block';
@@ -203,12 +228,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const clickSound = document.getElementById('click-sound');
 
+    function playClickSound() {
+        if (clickSound) {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(error => console.warn("Click sound failed:", error));
+        }
+    }
+
     icons.forEach(icon => {
         icon.addEventListener('click', () => {
-            if (clickSound) {
-                clickSound.currentTime = 0;
-                clickSound.play().catch(error => console.warn("Click sound failed:", error));
-            }
+            playClickSound();
             let windowId;
             if (icon.id && icon.id.startsWith('icon-')) {
                 const identifier = icon.id.substring('icon-'.length);
@@ -302,8 +331,14 @@ document.addEventListener('DOMContentLoaded', () => {
             currentImageIndex = index;
         }
         if (prevButton && nextButton && polaroids.length > 0) {
-            prevButton.addEventListener('click', () => showImage((currentImageIndex - 1 + polaroids.length) % polaroids.length));
-            nextButton.addEventListener('click', () => showImage((currentImageIndex + 1) % polaroids.length));
+            prevButton.addEventListener('click', () => {
+                playClickSound();
+                showImage((currentImageIndex - 1 + polaroids.length) % polaroids.length);
+            });
+            nextButton.addEventListener('click', () => {
+                playClickSound();
+                showImage((currentImageIndex + 1) % polaroids.length);
+            });
             showImage(0);
         }
     }
@@ -341,6 +376,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 do {
                     currentAffirmationIndex = Math.floor(Math.random() * affirmations.length);
                 } while (affirmations.length > 1 && currentAffirmationIndex === lastIndex);
+                playClickSound();
                 displayAffirmation(currentAffirmationIndex);
             });
         }
@@ -411,6 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (nextBtn) {
             nextBtn.addEventListener('click', () => {
                 currentTriviaQuestionIndex++;
+                playClickSound();
                 displayTriviaQuestion();
             });
         }
@@ -432,7 +469,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const optionButton = document.createElement('button');
                 optionButton.className = 'trivia-option';
                 optionButton.textContent = optionText;
-                optionButton.addEventListener('click', handleTriviaAnswer);
+                optionButton.addEventListener('click', (e) => {
+                    playClickSound();
+                    handleTriviaAnswer(e);
+                });
                 optionsContainer.appendChild(optionButton);
             });
         }
@@ -476,7 +516,12 @@ document.addEventListener('DOMContentLoaded', () => {
             finalScoreContainer.style.display = 'block';
             finalScoreContainer.innerHTML = `<p>Score: ${triviaScore}/${triviaQuestions.length}</p><button id="restart-trivia" class="control-button">Play Again</button>`;
             const restartBtn = finalScoreContainer.querySelector('#restart-trivia');
-            if (restartBtn) restartBtn.addEventListener('click', initializeTriviaGame);
+            if (restartBtn) {
+                restartBtn.addEventListener('click', () => {
+                    playClickSound();
+                    initializeTriviaGame();
+                });
+            }
         }
     }
     function shuffleArray(array) {
@@ -587,9 +632,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        setScreenNameBtn.addEventListener('click', setScreenName);
+        setScreenNameBtn.addEventListener('click', () => {
+            playClickSound();
+            setScreenName();
+        });
         screenNameInput.addEventListener('keypress', e => e.key === 'Enter' && setScreenName());
-        sendMessageBtn.addEventListener('click', handleSendMessage);
+        sendMessageBtn.addEventListener('click', () => {
+            playClickSound();
+            handleSendMessage();
+        });
         messageInput.addEventListener('keypress', e => e.key === 'Enter' && handleSendMessage());
         
         switchChannel('design-philosophy');
@@ -617,6 +668,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const sendingOverlay = document.getElementById('sending-overlay');
 
         sendBtn.addEventListener('click', () => {
+            playClickSound();
             const secretText = messageTextarea.value.trim();
             if (secretText) {
                 if (sendingOverlay) sendingOverlay.style.display = 'flex';
@@ -632,6 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         viewBtn.addEventListener('click', () => {
+            playClickSound();
             postcardView.style.display = 'none';
             secretsFeedView.style.display = 'grid';
             sendBtn.style.display = 'none';
@@ -651,6 +704,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         submitNewBtn.addEventListener('click', () => {
+            playClickSound();
             postcardView.style.display = 'grid';
             secretsFeedView.style.display = 'none';
             sendBtn.style.display = 'inline-block';
@@ -781,9 +835,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 x += barWidth + 1;
             }
         }
-        if (playBtn) playBtn.addEventListener('click', () => isPlaying ? pauseSong() : playSong());
-        if (prevBtn) prevBtn.addEventListener('click', prevSong);
-        if (nextBtn) nextBtn.addEventListener('click', nextSong);
+        if (playBtn) playBtn.addEventListener('click', () => {
+            playClickSound();
+            isPlaying ? pauseSong() : playSong();
+        });
+        if (prevBtn) prevBtn.addEventListener('click', () => {
+            playClickSound();
+            prevSong();
+        });
+        if (nextBtn) nextBtn.addEventListener('click', () => {
+            playClickSound();
+            nextSong();
+        });
         if (audioPlayer) {
             audioPlayer.addEventListener('timeupdate', updateProgress);
             audioPlayer.addEventListener('ended', nextSong);
@@ -792,47 +855,646 @@ document.addEventListener('DOMContentLoaded', () => {
         loadSong(currentTrackIndex);
     }
     
+    const pinterestHtmlContent = `
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Arial:wght@400;700&family=Verdana:wght@400;700&display=swap');
+        
+        #window-projects * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        #window-projects .folder-view {
+            background: #000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><rect width="20" height="20" fill="%23000"/><circle cx="10" cy="10" r="1" fill="%23333"/></svg>') repeat;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 11px;
+            color: #fff;
+            line-height: 1.3;
+        }
+        
+        #window-projects .myspace-header {
+            background: linear-gradient(to bottom, #1e3a8a, #1e40af);
+            padding: 8px 0;
+            border-bottom: 3px solid #fbbf24;
+        }
+        
+        #window-projects .myspace-nav {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #window-projects .myspace-logo {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        #window-projects .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        #window-projects .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 11px;
+        }
+        
+        #window-projects .nav-links a:hover {
+            text-decoration: underline;
+        }
+        
+        #window-projects .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+        }
+        
+        #window-projects .profile-header {
+            background: linear-gradient(45deg, #e91e63, #ff6b9d, #ffd93d, #ff9800);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease-in-out infinite;
+            padding: 20px;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        #window-projects .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text y="50" font-size="60" fill="%23ffffff20">✨</text></svg>') repeat;
+            animation: sparkleMove 10s linear infinite;
+        }
+        
+        @keyframes sparkleMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+        
+        #window-projects .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            position: relative;
+            z-index: 2;
+        }
+        
+        #window-projects .profile-tagline {
+            font-size: 14px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        #window-projects .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        #window-projects .stat-item {
+            text-align: center;
+        }
+        
+        #window-projects .stat-number {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        
+        #window-projects .stat-label {
+            font-size: 10px;
+        }
+        
+        #window-projects .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 0;
+            background: #fff;
+            height: 100%;
+        }
+        
+        #window-projects .sidebar {
+            background: #f0f0f0;
+            border-right: 1px solid #ccc;
+            padding: 15px;
+        }
+        
+        #window-projects .sidebar-section {
+            margin-bottom: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        #window-projects .sidebar-header {
+            background: linear-gradient(to bottom, #4facfe, #00f2fe);
+            color: #fff;
+            padding: 8px 10px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        #window-projects .sidebar-content {
+            padding: 10px;
+            color: #333;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+        
+        #window-projects .friend-space {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        #window-projects .friend-pic {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #e91e63, #ff6b9d);
+            border: 2px solid #fff;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        #window-projects .friend-pic:hover {
+            transform: scale(1.1);
+        }
+        
+        #window-projects .content-area {
+            padding: 15px;
+            color: #333;
+            overflow-y: auto;
+            height: 430px;
+        }
+        
+        #window-projects .blog-section {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        #window-projects .blog-header {
+            background: linear-gradient(to bottom, #ff6b9d, #e91e63);
+            color: #fff;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        #window-projects .blog-content {
+            padding: 15px;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        
+        #window-projects .blog-post {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ccc;
+        }
+        
+        #window-projects .blog-post:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+        }
+        
+        #window-projects .blog-date {
+            color: #666;
+            font-size: 10px;
+            margin-bottom: 8px;
+        }
+        
+        #window-projects .blog-text {
+            margin-bottom: 10px;
+        }
+        
+        #window-projects .highlight {
+            background: #ffff00;
+            padding: 1px 3px;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        #window-projects .mood-icon {
+            display: inline-block;
+            margin: 0 3px;
+        }
+        
+        #window-projects .comments-section {
+            background: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        
+        #window-projects .comments-header {
+            background: linear-gradient(to bottom, #ffd93d, #ff9800);
+            color: #333;
+            padding: 8px 10px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+        
+        #window-projects .comment {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 11px;
+        }
+        
+        #window-projects .comment:last-child {
+            border-bottom: none;
+        }
+        
+        #window-projects .comment-author {
+            font-weight: bold;
+            color: #e91e63;
+        }
+        
+        #window-projects .interests-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        
+        #window-projects .interest-tag {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: bold;
+        }
+        
+        #window-projects .music-player {
+            background: #000;
+            color: #00ff00;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            margin-top: 10px;
+        }
+        
+        #window-projects .player-controls {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+        
+        #window-projects .player-btn {
+            background: #333;
+            color: #fff;
+            border: 1px solid #666;
+            padding: 2px 6px;
+            font-size: 9px;
+            cursor: pointer;
+        }
+        
+        #window-projects .player-btn:hover {
+            background: #666;
+        }
+        
+        #window-projects .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        #window-projects .creator-tools-showcase {
+            background: linear-gradient(135deg, #e91e63, #ff6b9d);
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #window-projects .creator-tools-showcase::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s linear infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        #window-projects .showcase-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        #window-projects .showcase-subtitle {
+            font-size: 12px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        @media (max-width: 768px) {
+            #window-projects .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            #window-projects .sidebar {
+                order: 2;
+            }
+            
+            #window-projects .friend-space {
+                grid-template-columns: repeat(8, 1fr);
+            }
+        }
+        
+        #window-projects .glitter-text {
+            background: linear-gradient(45deg, #e91e63, #ff6b9d, #ffd93d, #4facfe);
+            background-size: 400% 400%;
+            animation: glitter 2s ease-in-out infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+        
+        @keyframes glitter {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+    </style>
+    <div class="myspace-header">
+        <div class="myspace-nav">
+            <a href="#" class="myspace-logo">MySpace.com</a>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Browse</a>
+                <a href="#">Search</a>
+                <a href="#">Invite</a>
+                <a href="#">Film</a>
+                <a href="#">Mail</a>
+                <a href="#">Blog</a>
+                <a href="#">Favorites</a>
+                <a href="#">Forum</a>
+                <a href="#">Groups</a>
+                <a href="#">Events</a>
+                <a href="#">Videos</a>
+                <a href="#">Music</a>
+                <a href="#">Comedy</a>
+                <a href="#">Classifieds</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="profile-header">
+            <div class="profile-name">Pinterest 📌</div>
+            <div class="profile-tagline">"From Inspiration to Creation - The Ultimate Pin Paradise!"</div>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <div class="stat-number">463,000,000</div>
+                    <div class="stat-label">Monthly Pinners</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">240 Billion</div>
+                    <div class="stat-label">Pins Saved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Inspiration</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <div class="sidebar-header">Pinterest's Details</div>
+                    <div class="sidebar-content">
+                        <strong>Status:</strong> <span class="glitter-text">Redefining Creation!</span><br>
+                        <strong>Here for:</strong> Inspiring & Empowering Creators<br>
+                        <strong>Hometown:</strong> San Francisco, CA<br>
+                        <strong>Founded:</strong> 2010<br>
+                        <strong>Mood:</strong> <span class="mood-icon">✨</span> Creative & Ambitious <span class="mood-icon">🚀</span><br>
+                        <strong>Relationship Status:</strong> In a relationship with Innovation
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-header">Pinterest's Interests</div>
+                    <div class="sidebar-content">
+                        <div class="interests-list">
+                            <span class="interest-tag">Creator Tools</span>
+                            <span class="interest-tag">0-to-1 Products</span>
+                            <span class="interest-tag">UX Design</span>
+                            <span class="interest-tag">Market Distinction</span>
+                            <span class="interest-tag">Brand Identity</span>
+                            <span class="interest-tag">User Engagement</span>
+                            <span class="interest-tag">Community Building</span>
+                            <span class="interest-tag">Native Content</span>
+                            <span class="interest-tag">Platform Evolution</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-header">Pinterest's Top 8 Friends</div>
+                    <div class="sidebar-content">
+                        <div class="friend-space">
+                            <div class="friend-pic">Creative<br>Community</div>
+                            <div class="friend-pic">Content<br>Creators</div>
+                            <div class="friend-pic">Design<br>Team</div>
+                            <div class="friend-pic">Product<br>Innovation</div>
+                            <div class="friend-pic">User<br>Experience</div>
+                            <div class="friend-pic">Brand<br>Strategy</div>
+                            <div class="friend-pic">Market<br>Research</div>
+                            <div class="friend-pic">Future<br>Vision</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-header">Now Playing ♪</div>
+                    <div class="sidebar-content">
+                        <div class="music-player">
+                            <div>♪ "Creativity Unleashed" ♪</div>
+                            <div style="margin: 5px 0;">by The Pinterest Experience</div>
+                            <div class="player-controls">
+                                <button class="player-btn">⏮</button>
+                                <button class="player-btn">▶</button>
+                                <button class="player-btn">⏸</button>
+                                <button class="player-btn">⏭</button>
+                                <button class="player-btn">🔄</button>
+                            </div>
+                            <div style="margin-top: 5px; font-size: 8px;">
+                                Status: <span class="blink">♪ VIBING ♪</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="creator-tools-showcase">
+                    <div class="showcase-title">🎨 CREATOR TOOLS REVOLUTION 🎨</div>
+                    <div class="showcase-subtitle">Transforming Pinterest from Inspiration Hub to Creation Powerhouse!</div>
+                </div>
+
+                <div class="blog-section">
+                    <div class="blog-header">Pinterest's Blog - "The Creation Chronicles"</div>
+                    <div class="blog-content">
+                        
+                        <div class="blog-post">
+                            <div class="blog-date">Posted: March 15, 2024 at 2:30 PM</div>
+                            <div class="blog-text">
+                                <strong>OMG you guys!!! 😍</strong> So I have THE most exciting news to share! A few episodes back (lol life is like a TV show sometimes), I joined Pinterest at literally the most <span class="highlight">PIVOTAL MOMENT</span> ever!!! 
+                                <br><br>
+                                Like, picture this: Pinterest was making this HUGE bet to totally reposition itself! We weren't just going to be a platform for inspiration anymore (though we're still the QUEENS of that obvi 👑), but we were diving headfirst into <span class="highlight">CREATION</span>! 
+                                <br><br>
+                                Basically, we wanted to encourage <span class="highlight">native content creation</span> right on our platform! How cool is that?! <span class="mood-icon">🤩</span>
+                            </div>
+                        </div>
+
+                        <div class="blog-post">
+                            <div class="blog-date">Posted: March 10, 2024 at 11:45 AM</div>
+                            <div class="blog-text">
+                                So Pinterest already had this AMAZING ritual (seriously, it's like muscle memory for our Pinners! 💪) where people would privately search for and save content. Like, we had that DOWN! 
+                                <br><br>
+                                But here's where it gets SUPER exciting - I got to be part of the team developing a whole <span class="highlight">suite of creator tools</span>! The goal? To push for deeper engagement with a real sense of <span class="highlight">community and creativity</span>! 
+                                <br><br>
+                                I'm literally getting goosebumps just thinking about it! <span class="mood-icon">✨</span>
+                            </div>
+                        </div>
+
+                        <div class="blog-post">
+                            <div class="blog-date">Posted: March 5, 2024 at 4:20 PM</div>
+                            <div class="blog-text">
+                                Okay, so here's the really nerdy part that I'm OBSESSED with <span class="mood-icon">🤓</span> - this involved developing <span class="highlight">0 to 1 creator features</span> inside the Pinterest ecosystem! 
+                                <br><br>
+                                The challenge was INSANE but in the best way possible: we needed to create <span class="highlight">market distinction</span> while maintaining our <span class="highlight">brand identity</span> and making sure everything was still super <span class="highlight">user comprehensive</span>!
+                                <br><br>
+                                Like, imagine trying to revolutionize something while keeping its soul intact? That's exactly what we were doing! <span class="mood-icon">🎨</span>
+                            </div>
+                        </div>
+
+                        <div class="blog-post">
+                            <div class="blog-date">Posted: February 28, 2024 at 9:15 AM</div>
+                            <div class="blog-text">
+                                Can I just say how HONORED I felt to contribute to this project?! <span class="mood-icon">🥺</span> 
+                                <br><br>
+                                This was my very first <span class="highlight">full-time design gig</span> and I got thrown into this incredible, exciting challenge! Talk about jumping into the deep end! 
+                                <br><br>
+                                Every day I woke up thinking "I can't believe I get to work on tools that will help creators bring their visions to life!" The energy was just UNMATCHED! <span class="mood-icon">⚡</span>
+                                <br><br>
+                                Shoutout to my amazing team for making this newbie feel so welcome! You guys ROCK! <span class="mood-icon">🎸</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="comments-section">
+                    <div class="comments-header">Friends' Comments (47)</div>
+                    <div class="comment">
+                        <span class="comment-author">DesignGuru2006:</span> OMG this sounds AMAZING!!! Creator tools are the future! 🚀
+                    </div>
+                    <div class="comment">
+                        <span class="comment-author">PinnerForLife:</span> Wait you worked on the new creation features?! Those are literally changing my life! ✨
+                    </div>
+                    <div class="comment">
+                        <span class="comment-author">UXQueen:</span> 0-to-1 products are SO hard! You're incredible! 👏
+                    </div>
+                    <div class="comment">
+                        <span class="comment-author">CreativeVibes:</span> The fact that this was your first full-time gig makes this even more impressive! 🔥
+                    </div>
+                    <div class="comment">
+                        <span class="comment-author">BrandStrategy:</span> Market distinction while maintaining brand identity = GENIUS! 🧠
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+`;
     const workExplorerContent = {
         'C:\\Desktop\\Work': { type: 'folder', name: 'Work', children: ['Pinterest', 'AMP', 'Duolingo', 'Diversify'] },
         'AMP': { 
             type: 'app', 
             name: 'Amp', 
-            description: `<h3>AMP Search UX Case Study</h3>
-<p>After Pinterest, I worked at a startup under Amazon Music called Amp, a bold product in the otherwise safe Amazon ecosystem that aimed to reimagine radio. Creators host their own radio shows using Amazon Music's 10mm+ song catalogue, and listeners could scan the airwaves to discover new music, creators, and fans.</p>
-<p>Sitting at the intersection of live audio and music broadcasting, Amp had a lot of deep technical and legal constraints I had to design around. It was deeply challenging, as my design work spanned the entire product, but equally rewarding. Pushing such a bold vision in a behemoth like Amazon was no small task, and I learned a ton.</p>`, 
+            description: `<p>After Pinterest, I worked at a startup under Amazon Music called Amp, a bold product in the otherwise safe Amazon ecosystem that atimed to reimagine radio. Creators host their own radio shows using Amazon Music's 10mm+ song catalogue, and listeners could scan the airwaves to discover new music, creators, and fans.</p>
+            <p>Sitting at the intersection of live audio and music broadcasting, Amp had a lot of deep technical and legal constraints I had to design around. It was deeply challenging, as my design work spanned the entire product, but equally rewarding – pushing such a bold vision in a behemoth like Amazon was no small task, and I learned a ton.</p>`, 
             icon: "assets/app icons/amp app icon.png", 
             url: "https://www.figma.com/proto/Xp8nSBrpP00e5gNfT66b57/AMP-Case-Study" 
         },
         'Duolingo': { 
             type: 'app', 
             name: 'Duolingo', 
-            description: `<h3>Duolingo Case Study</h3>
-<p>As a product designer at Duolingo, I focused on enhancing the learning experience by designing new features that were both fun and effective. My work involved gamification, social features, and improving the core learning paths to boost user engagement and motivation.</p>
-<p>It was an incredible opportunity to apply data-informed design principles and to create for a massive, global audience. I loved being part of a team so dedicated to making language education accessible to everyone.</p>`, 
+            description: `<p>Most recently, I worked at Duolingo within the core Monetization team.</p>
+            <p>We were the highest-stakes team in the org, and incredibly high-velocity and experimentation-based. This meant that on a weekly basis, I took projects from inception to our executive Product Review for CEO and Senior Leadership approval, often while interim PMing by pitching design projects and writing product specs.</p>
+            <p>Working on Monetization at such a well-oiled machine was an incredible learning experience. I got to round out my skill set by focusing on growth design and optimizations, work with the most talented folks in the industry, and craft some future-thinking projects, all while (of course) doing my lessons.</p>`, 
             icon: "assets/app icons/duo app icon.png", 
             url: "https://www.figma.com/proto/l8WdkUTkH2DeN4tGzwqM2J/Duo-Case-Study" 
         },
-        'Pinterest': { 
-            type: 'app', 
-            name: 'Pinterest', 
-            description: `<h3>Pinterest Shopping UX Case Study</h3>
-<p>At Pinterest, I led the redesign of the product tagging flow, which made it easier for creators and merchants to make their content shoppable. I also worked on features to help users discover and purchase products they love, directly from Pins.</p>
-<p>This role required a deep understanding of both creators and shoppers and involved extensive cross-functional collaboration. I'm proud of the work I did to make Pinterest a more inspiring and effective platform for e-commerce.</p>`, 
-            icon: "assets/app icons/pinterest app icon.png", 
-            url: "https://www.figma.com/proto/zD4aNf6xZdMQt1Yp9E5C0Y/Pinterest-Case-Study" 
+        'Pinterest': {
+            type: 'html_file',
+            name: 'Pinterest',
+            filePath: 'pinterest_page.html',
+            icon: "assets/app icons/pinterest app icon.png"
         },
         'Diversify': { 
             type: 'app', 
             name: 'Diversify Design', 
-            description: `<h3>Diversify Design</h3>
-<p>As a passion project, I co-founded Diversify Design to build a platform that highlights and supports underrepresented designers. We feature portfolios, host events, and provide resources to help foster a more inclusive and equitable design industry.</p>
-<p>This project is incredibly meaningful to me. It's about creating the community I want to be a part of and using design as a tool for positive change.</p>`, 
+            description: `<p>Diversify Design is a community I founded that supports designers from historically underrepresented backgrounds. It aims to provide a safe and transparent space for underrepresented folx in the design industry connect, learn, and grow together through meetups and knowledge exchanges.</p>
+            <p>I've hosted events that have ranged from a 500+ person meetup at Config to an intimate gathering of women in design for Womens History Month with the same core mission: empowering marginalized voices in our industry.</p>
+            <p>I'll keep it real tho, fam: running a community is hard work. Over the past year, I've put a pause on programming to focus on personal matters: navigating a company-wide layoff, starting a new job, and prioritizing my mental health.</p>
+            <p>But! I have some exciting ideas in the works, coming soon to a city near you</p>`, 
             icon: "assets/app icons/diversify_design_logo.jpeg", 
             url: "https://diversify.design/" 
         }
     };
     let currentPath = 'C:\\Desktop\\Work';
-    let historyStack = ['C:\\Desktop\\Work'];
+    let historyStack = [];
     function setActiveTab(tabIdentifier) {
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
@@ -851,6 +1513,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadUrlInExplorer(url, title) {
+        historyStack.push({ type: 'iframe', url, title });
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
 
@@ -866,25 +1529,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const addressBar = projectsWindow.querySelector('#address-bar');
         if(addressBar) addressBar.value = url;
         
-        // Handle favorites bar for back button
+        // Remove back button from favorites bar
         const favoritesBar = projectsWindow.querySelector('.ie-favorites-bar');
         if (favoritesBar) {
-            
-            favoritesBar.querySelector('.back-button-favorites')?.remove(); // Remove old one if it exists
-
-            const backButton = document.createElement('button');
-            backButton.innerHTML = '&larr; Back';
-            backButton.className = 'back-button-favorites action-button'; // Re-use styles
-            backButton.onclick = () => {
-                showHomepage();
-            };
-            favoritesBar.prepend(backButton);
+            favoritesBar.querySelector('.back-button-favorites')?.remove();
         }
 
-        // Clear the main toolbar back button
+        // Add back button to the main toolbar
         const backButtonContainer = projectsWindow.querySelector('#back-button-container');
         if (backButtonContainer) {
-            backButtonContainer.innerHTML = '';
+            backButtonContainer.innerHTML = ''; // Clear existing buttons
+            const backButton = document.createElement('button');
+            backButton.innerHTML = '&larr; Back';
+            backButton.onclick = goBackInExplorer;
+            backButtonContainer.appendChild(backButton);
         }
     }
 
@@ -906,15 +1564,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (historyStack.length > 1) {
                 const backButton = document.createElement('button');
                 backButton.innerHTML = '&larr; Back';
-                backButton.onclick = () => {
-                    historyStack.pop();
-                    const previousPath = historyStack[historyStack.length - 1];
-                    if (workExplorerContent[previousPath].type === 'folder') {
-                        renderWorkExplorer(previousPath);
-                    } else {
-                        showProjectDetail(previousPath);
-                    }
-                };
+                backButton.onclick = goBackInExplorer;
                 backButtonContainer.appendChild(backButton);
             }
         }
@@ -931,13 +1581,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     fileIcon.className = 'file-icon';
                     fileIcon.innerHTML = `<img src="${item.icon}" alt="${item.name}"><span>${item.name}</span>`;
                     fileIcon.onclick = () => {
+                        playClickSound();
                         historyStack.push(itemName);
                         showProjectDetail(itemName);
                     };
                     folderView.appendChild(fileIcon);
                 }
             });
-        } else if (content.type === 'app') {
+        } else if (content.type === 'app' || content.type === 'html_file') {
             showProjectDetail(path);
         }
     }
@@ -954,15 +1605,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const folderView = projectsWindow.querySelector('.folder-view');
         if (folderView) {
+            const today = new Date();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const year = today.getFullYear();
+            const lastLoginDate = `${month}/${day}/${year}`;
+
             const top8Friends = [
                 { name: 'Alan', img: 'assets/top 8 profile pics/Alan.png', url: 'https://alanwalkermakes.com/' },
-                { name: 'Anna', img: 'assets/top 8 profile pics/Anna.png', url: 'https://www.anna-brenner.com/' },
+                { name: 'Yamilah', img: 'assets/top 8 profile pics/Yamilah.png', url: 'https://yamilah.com/' },
                 { name: 'Cai', img: 'assets/top 8 profile pics/Cai.png', url: 'https://www.caicharniga.com/' },
                 { name: 'Catt', img: 'assets/top 8 profile pics/Catt.png', url: 'https://cattsmall.com/' },
                 { name: 'Gui', img: 'assets/top 8 profile pics/Gui.png', url: 'https://seiz.design/' },
                 { name: 'Nikita', img: 'assets/top 8 profile pics/Nikita.png', url: 'http://blackuxdesigner.com/' },
                 { name: 'Rich', img: 'assets/top 8 profile pics/Rich.png', url: 'https://rich-arnold.com/' },
-                { name: 'Yamilah', img: 'assets/top 8 profile pics/Yamilah.png', url: 'https://yamilah.com/' }
+                { name: 'Anna', img: 'assets/top 8 profile pics/Anna.png', url: 'https://dribbble.com/annabrenner' }
             ];
 
             const friendsHTML = top8Friends.map(friend => `
@@ -980,7 +1637,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="profile-left-col">
                             <div class="profile-main-info">
                                 <h2>Amy Lima</h2>
-                                <img src="assets/myspace prof pic.png" alt="Amy's Profile Picture" class="profile-pic-main">
+                                <div class="profile-header">
+                                    <img src="assets/myspace prof pic.png" alt="Amy's Profile Picture" class="profile-pic-main">
+                                    <div class="profile-details">
+                                        <p>she/her<br>32 years old<br>Brooklyn, NY</p>
+                                        <p class="last-login">last login:<br>${lastLoginDate}</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="profile-contact-box">
@@ -1031,12 +1694,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     e.preventDefault();
                     const url = e.currentTarget.dataset.url;
                     const name = e.currentTarget.dataset.name;
-                    loadUrlInExplorer(url, `${name}'s Portfolio`);
+                    if (name === 'Anna') {
+                        window.open(url, '_blank');
+                    } else {
+                        playClickSound();
+                        historyStack.push(name);
+                        loadUrlInExplorer(url, `${name}'s Portfolio`);
+                    }
                 });
             });
             
             setActiveTab('homepage');
-            historyStack = ['C:\\Desktop\\Work'];
 
             const backButtonContainer = projectsWindow.querySelector('#back-button-container');
             if (backButtonContainer) {
@@ -1062,7 +1730,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const viewButton = mainArea.querySelector('.view-project-btn');
             if(viewButton) {
-                viewButton.onclick = () => loadUrlInExplorer(project.url, project.name);
+                viewButton.onclick = () => {
+                    playClickSound();
+                    loadUrlInExplorer(project.url, project.name);
+                };
             }
 
             const backButtonContainer = projectsWindow.querySelector('#back-button-container');
@@ -1072,18 +1743,55 @@ document.addEventListener('DOMContentLoaded', () => {
                     const backButton = document.createElement('button');
                     backButton.innerHTML = '&larr; Back';
                     backButton.onclick = () => {
-                        historyStack.pop();
-                        const previousPath = historyStack[historyStack.length - 1];
-                         if (workExplorerContent[previousPath] && workExplorerContent[previousPath].type === 'folder') {
-                            renderWorkExplorer(previousPath);
-                        } else {
-                            showHomepage();
-                        }
+                        playClickSound();
+                        goBackInExplorer();
                     };
                     backButtonContainer.appendChild(backButton);
                 }
             }
 
+        } else if (project && project.type === 'html_file' && mainArea) {
+            if(titleBarText) titleBarText.textContent = `work.explorer - ${project.name}`;
+            if(addressBar) addressBar.value = `C:\\Desktop\\Work\\${project.name}`;
+            setActiveTab(projectName);
+
+            fetch(project.filePath)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(html => {
+                    const folderView = projectsWindow.querySelector('.folder-view');
+                    if (folderView) {
+                        folderView.innerHTML = html;
+                        const scripts = folderView.querySelectorAll('script');
+                        scripts.forEach(script => {
+                            const newScript = document.createElement('script');
+                            newScript.textContent = script.textContent;
+                            document.body.appendChild(newScript).parentNode.removeChild(newScript);
+                        });
+                    }
+                })
+                .catch(err => {
+                    console.error('Failed to load page: ', err);
+                    mainArea.innerHTML = `<p>Error loading content.</p>`;
+                });
+            
+            const backButtonContainer = projectsWindow.querySelector('#back-button-container');
+            if (backButtonContainer) {
+               backButtonContainer.innerHTML = '';
+               if (historyStack.length > 1) {
+                   const backButton = document.createElement('button');
+                   backButton.innerHTML = '&larr; Back';
+                   backButton.onclick = () => {
+                       playClickSound();
+                       goBackInExplorer();
+                   };
+                   backButtonContainer.appendChild(backButton);
+               }
+           }
         } else {
             showHomepage();
         }
@@ -1099,7 +1807,11 @@ document.addEventListener('DOMContentLoaded', () => {
         homeButton.className = 'favorite-link';
         homeButton.dataset.path = 'homepage';
         homeButton.innerHTML = `<img src="assets/desktop icons/home-folder-icon.png" alt="Home"> Home`;
-        homeButton.onclick = showHomepage;
+        homeButton.onclick = () => {
+            playClickSound();
+            historyStack.push('homepage');
+            showHomepage();
+        };
         favoritesBar.appendChild(homeButton);
         favs.forEach(favName => {
             const item = workExplorerContent[favName];
@@ -1109,19 +1821,47 @@ document.addEventListener('DOMContentLoaded', () => {
                 favLink.dataset.path = favName;
                 favLink.innerHTML = `<img src="${item.icon}" alt="${item.name}">${item.name}`;
                 favLink.onclick = () => {
-                    historyStack = ['C:\\Desktop\\Work', favName]; 
+                    playClickSound();
+                    historyStack.push(favName); 
                     showProjectDetail(favName);
                 };
                 favoritesBar.appendChild(favLink);
             }
         });
+        historyStack = ['homepage'];
         showHomepage();
+    }
+
+    function goBackInExplorer() {
+        if (historyStack.length <= 1) return;
+        historyStack.pop();
+        const destination = historyStack[historyStack.length - 1];
+
+        if (typeof destination === 'string') {
+            if (destination === 'homepage') {
+                showHomepage();
+            } else if (workExplorerContent[destination] && workExplorerContent[destination].type === 'app') {
+                showProjectDetail(destination);
+            } else if (workExplorerContent[destination] && workExplorerContent[destination].type === 'folder') {
+                renderWorkExplorer(destination);
+            } else {
+                showHomepage(); // fallback
+            }
+        } else if (typeof destination === 'object' && destination.type === 'iframe') {
+            loadUrlInExplorer(destination.url, destination.title);
+        }
     }
 
     // Initial calls
     populateWallpaperMenu();
     setInterval(updateClock, 1000);
     updateClock();
+
+    const welcomeWindow = document.getElementById('window-welcome');
+    if (welcomeWindow) {
+        welcomeWindow.style.display = 'flex';
+        bringToFront(welcomeWindow);
+    }
 });
                 
                 

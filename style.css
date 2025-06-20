@@ -1630,12 +1630,31 @@ textarea {
     margin-bottom: 10px;
     color: #000;
 }
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
 .profile-pic-main {
-    width: 100%;
-    max-width: 180px;
-    height: auto;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
     border: 1px solid #ccc;
     margin-bottom: 5px;
+    flex-shrink: 0;
+}
+.profile-details {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.4;
+    margin-top: 0;
+}
+
+.profile-details p {
+    margin: 0;
+}
+.profile-details .last-login {
+    margin-top: 15px;
 }
 .online-status {
     color: green;
@@ -1688,7 +1707,7 @@ textarea {
     margin: 0;
 }
 
-.blurb-section, .profile-friends {
+.blurb-section {
     padding: 10px;
 }
 .profile-blurbs h3, .profile-friends h3 {
@@ -1715,6 +1734,7 @@ textarea {
     grid-template-columns: repeat(4, 1fr);
     gap: 15px;
     margin-top: 10px;
+    padding: 10px;
 }
 .friend-card {
     text-align: center;
@@ -1723,8 +1743,8 @@ textarea {
     text-decoration: none;
 }
 .friend-card img {
-    width: 80px;
-    height: 80px;
+    width: 92px;
+    height: 92px;
     object-fit: cover;
     border: 1px solid #ccc;
     display: block;
@@ -2177,6 +2197,11 @@ textarea {
     font-size: 14px;
     padding: 3px 8px;
     text-transform: none;
+}
+
+.window#window-projects {
+    width: 960px;
+    height: 720px;
 }
 
 
