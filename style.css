@@ -1467,6 +1467,11 @@ textarea {
     line-height: 1; /* Ensure it doesn't increase item height */
 }
 
+#window-projects {
+    width: 960px;
+    height: 720px;
+}
+
 #window-projects .file-icon img {
     width: 40px;
     height: 40px;
@@ -1566,19 +1571,16 @@ textarea {
 }
 
 #window-projects .favorite-link.selected {
-    background: #0000FF;
-    color: #FFFFFF;
-    border-color: #0000FF #0000FF #fafafa #0000FF;
-    z-index: 2;
-}
-
-#window-projects .favorite-link.selected img {
-    filter: brightness(0) invert(1);
+    background-color: #e0e0e0;
+    border: 1px dotted #000;
+    padding: 2px 4px; /* Adjust padding to account for border */
 }
 
 #window-projects .favorite-link img {
     width: 16px;
     height: 16px;
+    margin-right: 5px;
+    vertical-align: middle;
 }
 
 #window-projects .folder-view {
@@ -2197,11 +2199,6 @@ textarea {
     font-size: 14px;
     padding: 3px 8px;
     text-transform: none;
-}
-
-.window#window-projects {
-    width: 960px;
-    height: 720px;
 }
 
 

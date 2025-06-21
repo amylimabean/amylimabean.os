@@ -1462,7 +1462,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'AMP': {
             type: 'html_file',
             name: 'Amp',
-            filePath: 'amp_page.html',
+            filePath: 'amp_tab.html',
             icon: "assets/app icons/amp app icon.png"
         },
         'Duolingo': { 
@@ -1817,7 +1817,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const favLink = document.createElement('div');
                 favLink.className = 'favorite-link';
                 favLink.dataset.path = favName;
-                favLink.innerHTML = `<img src="${item.icon}" alt="${item.name}">${item.name}`;
+                favLink.innerHTML = `<img src="${item.icon}" alt="${item.name}" class="fav-icon">${item.name}`;
                 favLink.onclick = () => {
                     playClickSound();
                     historyStack.push(favName); 
