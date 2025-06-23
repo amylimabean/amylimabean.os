@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🦉 Amy's AMAZING Duolingo Design Journey 🦉 - GeoCities</title>
+    <style>
+        body {
+            background: #00ff00 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50"><rect width="50" height="50" fill="%2300ff00"/><circle cx="25" cy="25" r="15" fill="%23ff6600" opacity="0.7"/><text x="25" y="30" text-anchor="middle" font-family="Arial" font-size="20" fill="white">🦉</text></svg>') repeat;
+            font-family: "Comic Sans MS", cursive;
+            margin: 0;
+            padding: 0;
+            color: #000;
+            animation: rainbow 3s linear infinite;
+        }
+        
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        
+        .container {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.95);
+            border: 5px solid #ff0080;
+            box-shadow: 0 0 20px #00ffff;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #ff0080, #00ffff, #ffff00, #ff0080);
+            padding: 20px;
+            text-align: center;
+            border: 3px solid #000;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: "✨";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 30px;
+            animation: spin 2s linear infinite;
+        }
+        
+        .header::after {
+            content: "✨";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            animation: spin 2s linear infinite reverse;
+        }
+        
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .title {
+            font-size: 36px;
+            color: #fff;
+            text-shadow: 3px 3px 0 #000, -3px -3px 0 #000, 3px -3px 0 #000, -3px 3px 0 #000;
+            margin: 0;
+            animation: bounce 1s ease-in-out infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            color: #000;
+            background: #ffff00;
+            padding: 5px;
+            margin: 10px 0;
+            border: 2px dashed #ff0080;
+        }
+        
+        .blink {
+            animation: blink 1s linear infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .content {
+            padding: 20px;
+            background: #ffffff;
+        }
+        
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 3px solid #00ff00;
+            background: linear-gradient(90deg, #ffff00, #ff6600, #ffff00);
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            color: #ff0080;
+            text-decoration: underline;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .section-content {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border: 2px solid #000;
+            font-family: "Times New Roman", serif;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .counter {
+            background: #000;
+            color: #00ff00;
+            padding: 10px;
+            text-align: center;
+            font-family: "Courier New", monospace;
+            border: 2px solid #00ff00;
+            margin: 20px 0;
+        }
+        
+        .marquee {
+            background: #ff0080;
+            color: #fff;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .marquee-text {
+            display: inline-block;
+            animation: scroll 15s linear infinite;
+        }
+        
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .construction {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            color: #ff0000;
+            font-weight: bold;
+        }
+        
+        .guestbook {
+            background: #e0e0e0;
+            border: 3px inset #c0c0c0;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .guestbook-title {
+            font-size: 20px;
+            color: #000080;
+            text-decoration: underline;
+            margin-bottom: 10px;
+        }
+        
+        .web-ring {
+            background: #ffff00;
+            border: 3px solid #ff0080;
+            padding: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .footer {
+            background: #000080;
+            color: #ffff00;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+        }
+        
+        .footer a {
+            color: #00ffff;
+            text-decoration: none;
+        }
+        
+        .owl-gif {
+            display: inline-block;
+            font-size: 30px;
+            animation: bounce 0.5s ease-in-out infinite alternate;
+        }
+        
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .stats-table td {
+            border: 2px solid #000;
+            padding: 8px;
+            text-align: center;
+            background: #ffff00;
+            font-weight: bold;
+        }
+        
+        .stats-table td:nth-child(even) {
+            background: #00ffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🦉 AMY'S DUOLINGO DESIGN SANCTUARY 🦉</h1>
+            <div class="subtitle">
+                <span class="blink">★ UNDER CONSTRUCTION ★</span> 
+                Welcome to my AWESOME Product Design Portfolio! 
+                <span class="blink">★ LAST UPDATED: March 2024 ★</span>
+            </div>
+        </div>
+        
+        <div class="marquee">
+            <div class="marquee-text">
+                🦉 NEW! Check out my latest Duolingo Monetization case study! 🦉 Best viewed in Netscape Navigator 4.0! 🦉 Don't forget to sign my guestbook! 🦉
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="construction">
+                <span class="blink">🚧 SITE UNDER CONSTRUCTION 🚧</span>
+            </div>
+            
+            <div class="counter">
+                <div>🦉 VISITOR COUNTER 🦉</div>
+                <div style="font-size: 20px;">000,042,069</div>
+                <div>You are visitor #42,070!</div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">🎯 MY EPIC DUOLINGO ADVENTURE! 🎯</div>
+                <div class="section-content">
+                    <span class="owl-gif">🦉</span> 
+                    Most recently, I worked at Duolingo within the core <strong>Monetization team</strong>. 
+                    We were the highest-stakes team in the org, and incredibly high-velocity and experimentation-based. 
+                    This meant that on a weekly basis, I took projects from inception to our executive Product Review 
+                    for CEO and Senior Leadership approval, often while interim PMing by pitching design projects 
+                    and writing product specs.
+                    <span class="owl-gif">🦉</span>
+                </div>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">⚡ WHAT I LEARNED (SO COOL!) ⚡</div>
+                <div class="section-content">
+                    Working on Monetization at such a well-oiled machine was an <em>incredible</em> learning experience. 
+                    I got to round out my skill set by focusing on growth design and optimizations, work with the 
+                    most talented folks in the industry, and craft some future-thinking projects, all while 
+                    (of course) doing my lessons. <span class="blink">📚✨</span>
+                </div>
+            </div>
+            
+            <table class="stats-table">
+                <tr>
+                    <td>🏆 PROJECTS SHIPPED</td>
+                    <td>∞ (TOO MANY TO COUNT!)</td>
+                </tr>
+                <tr>
+                    <td>⚡ VELOCITY LEVEL</td>
+                    <td>MAXIMUM OVERDRIVE</td>
+                </tr>
+                <tr>
+                    <td>🦉 DUOLINGO STREAK</td>
+                    <td>365+ DAYS!</td>
+                </tr>
+                <tr>
+                    <td>💰 MONETIZATION IMPACT</td>
+                    <td>STONKS 📈</td>
+                </tr>
+            </table>
+            
+            <div class="guestbook">
+                <div class="guestbook-title">📝 SIGN MY GUESTBOOK! 📝</div>
+                <div style="font-size: 12px; font-family: 'Courier New', monospace;">
+                    <strong>DuolingoOwl2003:</strong> Great work on those A/B tests! 🦉<br>
+                    <strong>PMBestie:</strong> Amy's designs are fire! 🔥🔥🔥<br>
+                    <strong>RandomUser1999:</strong> This site needs more blink tags<br>
+                    <strong>CEOFan:</strong> Loved the executive presentation! ⭐⭐⭐⭐⭐
+                </div>
+            </div>
+            
+            <div class="web-ring">
+                <strong>🌐 AMY'S DESIGN WEB RING 🌐</strong><br>
+                <a href="#" style="color: #ff0080;">← Previous</a> | 
+                <a href="#" style="color: #ff0080;">Random</a> | 
+                <a href="#" style="color: #ff0080;">Next →</a><br>
+                <small>Join the ring of amazing designers!</small>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div>© 2024 Amy's Design Empire | Best viewed at 800x600 resolution</div>
+            <div>
+                <a href="mailto:amy@example.com">📧 Email Me!</a> | 
+                <a href="#">🏠 Home</a> | 
+                <a href="#">📊 Stats</a> | 
+                <a href="#">🎨 Other Projects</a>
+            </div>
+            <div style="margin-top: 10px;">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='15' viewBox='0 0 80 15'><rect width='80' height='15' fill='%23000'/><text x='40' y='10' text-anchor='middle' font-family='Arial' font-size='8' fill='%2300ff00'>Made with Notepad</text></svg>" alt="Made with Notepad">
+                <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='15' viewBox='0 0 80 15'><rect width='80' height='15' fill='%23ff0080'/><text x='40' y='10' text-anchor='middle' font-family='Arial' font-size='8' fill='white'>GeoCities</text></svg>" alt="Hosted by GeoCities">
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -168,10 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     modalOverlay.style.display = 'none';
                 }
                 win.style.display = 'none';
-                if (clickSound) { 
-                    clickSound.currentTime = 0;
-                    clickSound.play().catch(error => console.warn("Click sound failed:", error));
-                }
+                playCloseSound();
             });
         }
 
@@ -226,13 +223,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    const clickSound = document.getElementById('click-sound');
+    const clickSound = new Audio('input click.mp3');
+    const closeSound = new Audio('click-sound.mp3');
 
     function playClickSound() {
-        if (clickSound) {
-            clickSound.currentTime = 0;
-            clickSound.play().catch(error => console.warn("Click sound failed:", error));
-        }
+        clickSound.currentTime = 0;
+        clickSound.play().catch(error => console.warn("Click sound failed:", error));
+    }
+
+    function playCloseSound() {
+        closeSound.currentTime = 0;
+        closeSound.play().catch(error => console.warn("Click sound failed:", error));
     }
 
     icons.forEach(icon => {
@@ -257,6 +258,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (awayWindow) {
                         awayWindow.style.display = 'flex';
                         bringToFront(awayWindow);
+                        const chatRect = win.getBoundingClientRect();
+                        awayWindow.style.left = `${chatRect.right + 10}px`;
+                        awayWindow.style.top = `${chatRect.top}px`;
                     }
                 }
 
@@ -1465,14 +1469,11 @@ document.addEventListener('DOMContentLoaded', () => {
             filePath: 'amp_tab.html',
             icon: "assets/app icons/amp app icon.png"
         },
-        'Duolingo': { 
-            type: 'app', 
-            name: 'Duolingo', 
-            description: `<p>Most recently, I worked at Duolingo within the core Monetization team.</p>
-            <p>We were the highest-stakes team in the org, and incredibly high-velocity and experimentation-based. This meant that on a weekly basis, I took projects from inception to our executive Product Review for CEO and Senior Leadership approval, often while interim PMing by pitching design projects and writing product specs.</p>
-            <p>Working on Monetization at such a well-oiled machine was an incredible learning experience. I got to round out my skill set by focusing on growth design and optimizations, work with the most talented folks in the industry, and craft some future-thinking projects, all while (of course) doing my lessons.</p>`, 
-            icon: "assets/app icons/duo app icon.png", 
-            url: "https://www.figma.com/proto/l8WdkUTkH2DeN4tGzwqM2J/Duo-Case-Study" 
+        'Duolingo': {
+            type: 'html_file',
+            name: 'Duolingo',
+            filePath: 'duolingo_tab.html',
+            icon: "assets/app icons/duo app icon.png"
         },
         'Pinterest': {
             type: 'html_file',
@@ -1763,8 +1764,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(html => {
                     const folderView = projectsWindow.querySelector('.folder-view');
                     if (folderView) {
-                        folderView.innerHTML = html;
-                        const scripts = folderView.querySelectorAll('script');
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+                        
+                        const styleElement = doc.head.querySelector('style');
+                        let cssText = styleElement ? styleElement.textContent : '';
+                        
+                        const container = doc.querySelector('.container');
+                        if (container) {
+                            container.style.width = '100%';
+                            container.style.maxWidth = '100%';
+                            container.style.margin = '0';
+                            container.style.boxSizing = 'border-box';
+                        }
+                        
+                        const bodyContent = doc.body.innerHTML;
+                        const scripts = doc.body.querySelectorAll('script');
+
+                        const scopeClass = `scoped-content-${project.name.replace(/\s/g, '-').toLowerCase()}`;
+                        const scopedCss = cssText.replace(/body/g, `.${scopeClass}`);
+
+                        folderView.innerHTML = `
+                            <div class="html-tab-wrapper">
+                                <style>${scopedCss}</style>
+                                <div class="${scopeClass}">${bodyContent}</div>
+                            </div>
+                        `;
+                        
                         scripts.forEach(script => {
                             const newScript = document.createElement('script');
                             newScript.textContent = script.textContent;
@@ -1790,6 +1816,7 @@ document.addEventListener('DOMContentLoaded', () => {
                    backButtonContainer.appendChild(backButton);
                }
            }
+           return;
         } else {
             showHomepage();
         }
@@ -1838,7 +1865,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof destination === 'string') {
             if (destination === 'homepage') {
                 showHomepage();
-            } else if (workExplorerContent[destination] && workExplorerContent[destination].type === 'app') {
+            } else if (workExplorerContent[destination] && (workExplorerContent[destination].type === 'app' || workExplorerContent[destination].type === 'html_file')) {
                 showProjectDetail(destination);
             } else if (workExplorerContent[destination] && workExplorerContent[destination].type === 'folder') {
                 renderWorkExplorer(destination);
