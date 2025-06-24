@@ -15,6 +15,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const backgroundVideo = document.querySelector('#background-video');
     const backgroundImage = document.getElementById('background-image');
     
+    let highestZIndex = 0;
+    document.querySelectorAll('*').forEach(el => {
+        const z = parseInt(window.getComputedStyle(el).zIndex, 10);
+        if (!isNaN(z) && z > highestZIndex) {
+            highestZIndex = z;
+        }
+    });
+    
     if (backgroundVideo) {
         backgroundVideo.playbackRate = 0.8;
     }
@@ -133,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    let highestZIndex = 100;
     let nextSlotIndex = 0;
     let photobookInitialized = false;
 
@@ -147,14 +154,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function bringToFront(windowElement) {
         if (!windowElement) return;
-        let maxZ = 100;
-        document.querySelectorAll('.window').forEach(win => {
-            const z = parseInt(window.getComputedStyle(win).zIndex, 10);
-            if (!isNaN(z) && z > maxZ) {
-                maxZ = z;
-            }
-        });
-        windowElement.style.zIndex = maxZ + 1;
+        highestZIndex++;
+        windowElement.style.zIndex = highestZIndex;
     }
 
     windows.forEach(win => {
@@ -250,6 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     bringToFront(win);
                     return;
                 }
+                
                 win.style.display = 'flex';
                 bringToFront(win);
 
@@ -280,6 +282,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     win.style.left = '50%';
                     win.style.top = '50%';
                     win.style.transform = 'translate(-50%, -50%)';
+                    // Also remove any absolute positioning from desktop mode
+                    win.style.position = 'absolute'; 
                 } else {
                     // On desktop, use the slot positioning
                     const currentPos = win.getBoundingClientRect();

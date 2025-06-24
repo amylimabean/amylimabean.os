@@ -127,6 +127,11 @@ body {
     background-color: #CEC8BF; /* This can be a slightly darker shade of #CECECE if preferred, e.g., #C0C0C0 */
 }
 
+.menubar .menu-left {
+    display: flex;
+    align-items: center;
+}
+
 .menubar .menu-right {
     margin-left: auto;
     display: flex;
@@ -518,9 +523,21 @@ textarea {
         padding-top: 40px;
         justify-content: space-around; /* Distribute icons more evenly */
     }
+    .desktop-icons-inner {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        gap: 20px;
+        width: 100%;
+        height: auto;
+        max-height: none;
+        direction: ltr;
+        padding: 20px 0;
+        box-sizing: border-box;
+    }
     .desktop-icon {
-        width: 60px;
-        margin: 5px;
+        width: auto;
+        margin: 0;
     }
     .desktop-icon img {
         width: 40px;
@@ -532,8 +549,6 @@ textarea {
     .window {
         min-width: calc(100% - 20px); /* Full width minus padding */
         max-width: calc(100% - 20px);
-        left: 10px !important;
-        top: 50px !important;
         margin-bottom: 10px;
         box-shadow: 3px 3px 0px rgba(0,0,0,0.4);
     }
@@ -541,23 +556,29 @@ textarea {
         width: auto; /* Let it be full width */
         position: relative; /* Flow in document */
         margin: 0 auto 10px auto;
-        left: auto !important;
-        top: auto !important;
     }
     .menubar .menu-item strong, .menubar .dropdown span {
         font-size: 11px;
     }
     .menubar .menu-right {
-        font-size: 11px;
+        /* font-size: 11px; */ /* Removed for consistency */
     }
     #menu-time {
-        font-size: 10px;
+        /* font-size: 10px; */ /* Removed for consistency */
     }
     #window-welcome {
         display: none !important;
     }
     #background-video {
         object-fit: cover;
+    }
+    .menubar .menu-item {
+        margin-right: 2px;
+        padding: 2px 2px;
+        font-size: 14px; /* Consistent font size */
+    }
+    .menubar .menu-right {
+        width: auto;
     }
 }
 
@@ -569,15 +590,18 @@ textarea {
         padding: 3px 8px;
         height: auto; /* Allow wrapping if needed */
         flex-wrap: wrap;
+        justify-content: space-between;
     }
     .menubar .menu-item {
         margin-right: 5px;
         padding: 2px 4px;
+        font-size: 14px; /* Consistent font size */
     }
     .menubar .menu-right {
-        width: 100%;
+        width: auto;
         justify-content: flex-end;
-        padding-top: 3px;
+        padding-top: 0;
+        margin-left: 0;
     }
     .title-bar-text {
         font-size: 18px;
