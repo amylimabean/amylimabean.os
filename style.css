@@ -1637,6 +1637,8 @@ textarea {
 /* MySpace Profile Styles */
 .myspace-container {
     width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
 }
 .myspace-profile-grid {
     display: grid;
@@ -2231,6 +2233,144 @@ textarea {
 #window-projects .file-icon {
     display: flex;
     flex-direction: column;
+}
+
+/* Xanga Page Styles */
+.xanga-page {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #fff;
+    color: #000;
+}
+
+#xanga-container {
+    width: 960px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+#xanga-header {
+    background-color: #E5E5E5;
+    padding: 10px;
+    border: 1px solid #000;
+}
+
+#xanga-header .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#xanga-header .logo {
+    display: flex;
+    align-items: center;
+}
+
+#xanga-header .logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+#xanga-header .logo h1 {
+    font-size: 24px;
+    color: #000080; /* Navy blue */
+    margin: 0;
+}
+
+#xanga-header .header-nav a {
+    margin-left: 15px;
+    text-decoration: none;
+    color: #0000FF; /* Blue */
+}
+
+#xanga-header .header-bottom {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+#xanga-header .search-bar {
+    margin-left: auto;
+}
+
+#xanga-header .search-bar input {
+    border: 1px solid #000;
+}
+
+#xanga-header .search-bar button {
+    border: 1px solid #000;
+    background-color: #D3D3D3;
+    margin-left: 5px;
+}
+
+#xanga-main {
+    display: flex;
+    margin-top: 10px;
+    border: 1px solid #000;
+}
+
+.left-column {
+    width: 200px;
+    padding: 10px;
+    border-right: 1px solid #000;
+}
+
+.right-column {
+    flex-grow: 1;
+    padding: 10px;
+}
+
+/* Box Styles */
+.xanga-page .box {
+    border: 1px solid #000;
+    margin-bottom: 10px;
+}
+
+.xanga-page .box-header {
+    background-color: #D3D3D3;
+    padding: 5px;
+    font-weight: bold;
+    border-bottom: 1px solid #000;
+}
+
+.xanga-page .blue-header {
+    background-color: #3B5998; /* Facebook blue, close to xanga's */
+    color: #fff;
+}
+
+.xanga-page .box-content {
+    padding: 10px;
+}
+
+/* Signin Box */
+.xanga-page .signin-box form label {
+    display: block;
+    margin-top: 5px;
+}
+
+.xanga-page .signin-box form input[type="text"],
+.xanga-page .signin-box form input[type="password"] {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+.xanga-page .signin-box form input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.xanga-page .signin-box form button {
+    display: block;
+    margin-top: 10px;
+}
+
+.xanga-page .signin-box .box-content a {
+    display: block;
+    margin-top: 5px;
+}
+
+/* Info Box */
+.xanga-page .info-box .box-content p {
+    margin: 0 0 10px;
 }
 
 

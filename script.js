@@ -1494,19 +1494,15 @@ document.addEventListener('DOMContentLoaded', () => {
             filePath: 'pinterest_page.html',
             icon: "assets/app icons/pinterest app icon.png"
         },
-        'Diversify': { 
-            type: 'app', 
-            name: 'Diversify Design', 
-            description: `<p>Diversify Design is a community I founded that supports designers from historically underrepresented backgrounds. It aims to provide a safe and transparent space for underrepresented folx in the design industry connect, learn, and grow together through meetups and knowledge exchanges.</p>
-            <p>I've hosted events that have ranged from a 500+ person meetup at Config to an intimate gathering of women in design for Womens History Month with the same core mission: empowering marginalized voices in our industry.</p>
-            <p>I'll keep it real tho, fam: running a community is hard work. Over the past year, I've put a pause on programming to focus on personal matters: navigating a company-wide layoff, starting a new job, and prioritizing my mental health.</p>
-            <p>But! I have some exciting ideas in the works, coming soon to a city near you</p>`, 
-            icon: "assets/app icons/diversify_design_logo.jpeg", 
-            url: "https://diversify.design/" 
+        'Diversify': {
+            type: 'html_file',
+            name: 'Diversify Design',
+            filePath: 'diversify_design.html',
+            icon: 'assets/app icons/diversify_design_logo.jpeg'
         }
     };
-    let currentPath = 'C:\\Desktop\\Work';
-    let historyStack = [];
+    let explorerHistory = ['C:\\Desktop\\Work'];
+    let currentExplorerPath = 'C:\\Desktop\\Work';
     function setActiveTab(tabIdentifier) {
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
@@ -1525,7 +1521,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadUrlInExplorer(url, title) {
-        historyStack.push({ type: 'iframe', url, title });
+        explorerHistory.push(url);
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
 
@@ -1559,7 +1555,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderWorkExplorer(path) {
-        currentPath = path;
+        currentExplorerPath = path;
         const projectsWindow = document.getElementById('window-projects');
         if (!projectsWindow) return;
         resetFavoritesBar();
@@ -1573,7 +1569,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const content = workExplorerContent[path];
         if (backButtonContainer) {
             backButtonContainer.innerHTML = '';
-            if (historyStack.length > 1) {
+            if (explorerHistory.length > 1) {
                 const backButton = document.createElement('button');
                 backButton.innerHTML = '&larr; Back';
                 backButton.onclick = goBackInExplorer;
@@ -1594,7 +1590,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     fileIcon.innerHTML = `<img src="${item.icon}" alt="${item.name}"><span>${item.name}</span>`;
                     fileIcon.onclick = () => {
                         playClickSound();
-                        historyStack.push(itemName);
+                        explorerHistory.push(itemName);
                         showProjectDetail(itemName);
                     };
                     folderView.appendChild(fileIcon);
@@ -1710,7 +1706,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         window.open(url, '_blank');
                     } else {
                         playClickSound();
-                        historyStack.push(name);
+                        explorerHistory.push(name);
                         loadUrlInExplorer(url, `${name}'s Portfolio`);
                     }
                 });
@@ -1751,7 +1747,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const backButtonContainer = projectsWindow.querySelector('#back-button-container');
              if (backButtonContainer) {
                 backButtonContainer.innerHTML = '';
-                if (historyStack.length > 1) {
+                if (explorerHistory.length > 1) {
                     const backButton = document.createElement('button');
                     backButton.innerHTML = '&larr; Back';
                     backButton.onclick = () => {
@@ -1767,59 +1763,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if(addressBar) addressBar.value = `C:\\Desktop\\Work\\${project.name}`;
             setActiveTab(projectName);
 
-            fetch(project.filePath)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(html => {
-                    const folderView = projectsWindow.querySelector('.folder-view');
-                    if (folderView) {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-                        
-                        const styleElement = doc.head.querySelector('style');
-                        let cssText = styleElement ? styleElement.textContent : '';
-                        
-                        const container = doc.querySelector('.container');
-                        if (container) {
-                            container.style.width = '100%';
-                            container.style.maxWidth = '100%';
-                            container.style.margin = '0';
-                            container.style.boxSizing = 'border-box';
-                        }
-                        
-                        const bodyContent = doc.body.innerHTML;
-                        const scripts = doc.body.querySelectorAll('script');
-
-                        const scopeClass = `scoped-content-${project.name.replace(/\s/g, '-').toLowerCase()}`;
-                        const scopedCss = cssText.replace(/body/g, `.${scopeClass}`);
-
-                        folderView.innerHTML = `
-                            <div class="html-tab-wrapper">
-                                <style>${scopedCss}</style>
-                                <div class="${scopeClass}">${bodyContent}</div>
-                            </div>
-                        `;
-                        
-                        scripts.forEach(script => {
-                            const newScript = document.createElement('script');
-                            newScript.textContent = script.textContent;
-                            document.body.appendChild(newScript).parentNode.removeChild(newScript);
-                        });
-                    }
-                })
-                .catch(err => {
-                    console.error('Failed to load page: ', err);
-                    mainArea.innerHTML = `<p>Error loading content.</p>`;
-                });
+            mainArea.innerHTML = `<iframe src="${project.filePath}" class="website-iframe" title="${project.name}"></iframe>`;
             
             const backButtonContainer = projectsWindow.querySelector('#back-button-container');
             if (backButtonContainer) {
                backButtonContainer.innerHTML = '';
-               if (historyStack.length > 1) {
+               if (explorerHistory.length > 1) {
                    const backButton = document.createElement('button');
                    backButton.innerHTML = '&larr; Back';
                    backButton.onclick = () => {
@@ -1847,7 +1796,7 @@ document.addEventListener('DOMContentLoaded', () => {
         homeButton.innerHTML = `<img src="assets/desktop icons/home-folder-icon.png" alt="Home"> Home`;
         homeButton.onclick = () => {
             playClickSound();
-            historyStack.push('homepage');
+            explorerHistory.push('homepage');
             showHomepage();
         };
         favoritesBar.appendChild(homeButton);
@@ -1860,20 +1809,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 favLink.innerHTML = `<img src="${item.icon}" alt="${item.name}" class="fav-icon">${item.name}`;
                 favLink.onclick = () => {
                     playClickSound();
-                    historyStack.push(favName); 
+                    explorerHistory.push(favName); 
                     showProjectDetail(favName);
                 };
                 favoritesBar.appendChild(favLink);
             }
         });
-        historyStack = ['homepage'];
+        explorerHistory = ['homepage'];
         showHomepage();
     }
 
     function goBackInExplorer() {
-        if (historyStack.length <= 1) return;
-        historyStack.pop();
-        const destination = historyStack[historyStack.length - 1];
+        if (explorerHistory.length <= 1) return;
+        explorerHistory.pop();
+        const destination = explorerHistory[explorerHistory.length - 1];
 
         if (typeof destination === 'string') {
             if (destination === 'homepage') {
