@@ -274,12 +274,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (windowId === 'window-projects') {
                     initializeWorkExplorer();
                 }
-                const currentPos = win.getBoundingClientRect();
-                if (currentPos.left < 0 || currentPos.top < 0 || (win.style.left === '' && win.style.top === '')) {
-                    const slot = windowSlots[nextSlotIndex % windowSlots.length];
-                    win.style.left = `${slot.x}px`;
-                    win.style.top = `${slot.y}px`;
-                    nextSlotIndex++;
+
+                if (window.innerWidth <= 768) {
+                    // On mobile, center the window
+                    win.style.left = '50%';
+                    win.style.top = '50%';
+                    win.style.transform = 'translate(-50%, -50%)';
+                } else {
+                    // On desktop, use the slot positioning
+                    const currentPos = win.getBoundingClientRect();
+                    if (currentPos.left < 0 || currentPos.top < 0 || (win.style.left === '' && win.style.top === '')) {
+                        const slot = windowSlots[nextSlotIndex % windowSlots.length];
+                        win.style.left = `${slot.x}px`;
+                        win.style.top = `${slot.y}px`;
+                        nextSlotIndex++;
+                    }
                 }
             }
         });

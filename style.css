@@ -553,6 +553,12 @@ textarea {
     #menu-time {
         font-size: 10px;
     }
+    #window-welcome {
+        display: none !important;
+    }
+    #background-video {
+        object-fit: cover;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1473,13 +1479,9 @@ textarea {
 }
 
 #window-projects .file-icon img {
-    width: 40px;
-    height: 40px;
-    object-fit: contain;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 3px;
+    width: 32px;
+    height: 32px;
+    margin-bottom: 5px;
 }
 
 /* IE Style Work Explorer */
