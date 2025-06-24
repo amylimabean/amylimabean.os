@@ -1,0 +1,24 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "main": "away-message.js",
+  "scripts": {
+    "start": "live-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://amylimabean@github.com/amylimabean/amylimabean.os.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amylimabean/amylimabean.os/issues"
+  },
+  "homepage": "https://github.com/amylimabean/amylimabean.os#readme",
+  "description": "",
+  "dependencies": {
+    "live-server": "^1.2.2"
+  }
+}

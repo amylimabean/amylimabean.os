@@ -6,406 +6,229 @@
     <title>Diversify Design</title>
     <style>
         body.xanga-page {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #fff;
-            color: #000;
-            /* Reset some global styles that might interfere */
-            overflow: auto; 
+            font-family: 'Verdana', sans-serif;
+            background-color: #F0F8FF; /* AliceBlue, a stand-in for the sky background */
+            font-size: 12px;
         }
 
-        #xanga-container {
+        .new-xanga-container {
+            display: flex;
             width: 100%;
-            margin: 0;
-            padding: 10px;
-            box-sizing: border-box;
-            background-color: #fff;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #FFF0F5; /* LavenderBlush, for the main content area */
+            border: 1px solid #FFC0CB; /* Pink */
         }
 
-        #xanga-header {
-            background-color: #E5E5E5;
-            padding: 10px;
-            border: 1px solid #999;
-        }
-
-        #xanga-header .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-            margin-bottom: 10px;
-        }
-
-        #xanga-header .logo {
-            display: flex;
-            align-items: center;
-        }
-
-        #xanga-header .logo img {
-            height: 30px; /* Adjusted size */
-            margin-right: 15px;
-        }
-
-        #xanga-header .logo h1 {
-            font-size: 28px;
-            font-weight: bold;
-            color: #000080; /* Navy blue */
-            margin: 0;
-            font-style: italic;
-        }
-
-        #xanga-header .header-nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        #xanga-header .header-nav a {
-            text-decoration: none;
-            color: #0000FF; /* Blue */
-            font-size: 14px;
-            padding: 5px 10px;
-            border: 1px solid transparent;
-        }
-         #xanga-header .header-nav a:hover {
-            border: 1px solid #0000FF;
-            background-color: #f0f8ff;
-        }
-
-        #xanga-header .header-bottom {
-            display: flex;
-            justify-content: flex-end; /* Align to the right */
-            align-items: center;
-        }
-
-        #xanga-header .search-bar input {
-            border: 1px solid #777;
-            padding: 4px;
-        }
-
-        #xanga-header .search-bar button {
-            border: 1px solid #777;
-            background-color: #D3D3D3;
-            margin-left: 5px;
-            padding: 4px 8px;
-            cursor: pointer;
-        }
-
-        #xanga-main {
-            display: grid;
-            grid-template-columns: 220px 1fr;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .left-column {
-            padding-right: 15px;
-            border-right: 1px solid #ccc;
-        }
-
-        .right-column {
-            flex-grow: 1;
-        }
-
-        /* Box Styles */
-        .box {
-            border: 1px solid #999;
-            margin-bottom: 15px;
-        }
-
-        .box-header {
-            padding: 5px 8px;
-            font-weight: bold;
-            border-bottom: 1px solid #999;
-            background-color: #eee;
-        }
-
-        .blue-header {
-            background-color: #4A70A5;
-            color: #fff;
-        }
-         .orange-header {
-            background-color: #FFA500;
-            color: #fff;
-        }
-
-        .box-content {
-            padding: 10px;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        /* Signin Box */
-        .signin-box form label {
-            display: block;
-            margin: 8px 0 2px;
-            font-weight: bold;
-        }
-
-        .signin-box form input[type="text"],
-        .signin-box form input[type="password"] {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 4px;
-            border: 1px solid #999;
-        }
-
-        .signin-box form input[type="checkbox"] {
-            margin-right: 5px;
-            vertical-align: middle;
-        }
-
-        .signin-box form button {
-            margin-top: 10px;
-            padding: 4px 10px;
-            border: 1px solid #999;
-            background-color: #eee;
-            cursor: pointer;
-        }
-
-        .signin-box .box-content a {
-            display: block;
-            margin-top: 8px;
-            color: #0000FF;
-        }
-
-        /* Info Box */
-        .info-box .box-content p {
-            margin: 0 0 10px;
-        }
-        .info-box .box-content strong {
-            color: #C60;
-        }
-         .info-box .box-content a {
-            color: #0000FF;
-        }
-
-        /* Right Column */
-        .right-column {
-            display: flex;
-            gap: 15px;
-        }
-
-        .main-content-right {
-            flex-grow: 1;
-        }
-
-        .sidebar-right {
-            width: 200px;
+        .left-sidebar {
+            width: 150px;
             flex-shrink: 0;
-        }
-
-        .welcome-bar {
-            border: 1px solid #999;
-            padding: 5px 8px;
-            margin-bottom: 15px;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .welcome-links a {
-            font-size: 12px;
-            margin-left: 10px;
-            color: #0000FF;
-        }
-
-        .get-started-box {
-            border: 1px solid #4A70A5;
-            background-color: #DDEEFF;
+            background-color: #D8BFD8; /* Thistle */
             padding: 10px;
-            margin-bottom: 15px;
-        }
-        .get-started-box h2 {
-            margin: 0 0 10px;
-            font-size: 18px;
-            color: #4A70A5;
+            border-right: 1px solid #FFC0CB;
         }
 
-        .get-started-content {
-            display: flex;
-            gap: 20px;
+        .sidebar-header {
+            text-align: center;
         }
 
-        .get-started-item h3 {
-            margin: 0 0 5px;
-            font-size: 14px;
+        .sidebar-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
         }
-        .get-started-item h3 a {
-            color: #0000FF;
+        .sidebar-header h3 {
+            color: #8A2BE2; /* BlueViolet */
+            margin: 5px 0;
         }
-        .get-started-item p {
-            margin: 0;
-            font-size: 12px;
+         .sidebar-header p {
+            font-size: 11px;
         }
 
-        .blog-post {
-            margin-bottom: 15px;
+        .sidebar-images img {
+            width: 100%;
+            margin-bottom: 10px;
+            border: 2px solid white;
         }
-        .blog-post h4 {
-            margin: 0 0 5px;
-            font-size: 16px;
+
+        .main-content-area {
+            flex-grow: 1;
+            position: relative; /* Needed for absolute positioning of info boxes */
+        }
+
+        .header-banner {
+            position: relative;
+        }
+        .header-banner img {
+            width: 100%;
+            display: block;
+        }
+
+        .xanga-url {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0,0,0,0.3);
+            color: white;
+            padding: 2px 5px;
+            font-size: 10px;
+        }
+
+        .info-boxes-container {
+            position: absolute;
+            bottom: 20px;
+            left: 15px;
+            right: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            padding: 0;
+            background-color: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .info-box-item {
+            font-size: 11px;
+            color: #000;
+        }
+
+        .info-box-item h4 {
+            color: #000;
+            margin: 0 0 8px;
+            border-bottom: 2px solid #FFD700;
+            display: inline-block;
+            padding-bottom: 2px;
             font-weight: bold;
         }
-        .blog-post p {
+         .info-box-item ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .info-box-item ul li {
+            margin-bottom: 3px;
+        }
+        .info-box-item a {
+            text-decoration: none;
+            color: #0000CD; /* MediumBlue */
+        }
+         .info-box-item a:hover {
+            text-decoration: underline;
+        }
+
+        .info-box-item p {
             margin: 0 0 5px;
-            font-size: 13px;
-            line-height: 1.5;
         }
-        .blog-post p a {
-            color: #0000FF;
+
+        /* Applying specific colors from reference */
+        .info-box-item .name {
+            color: #e50000; /* Red */
+            font-weight: bold;
         }
-        .post-meta {
-            font-size: 11px;
+
+        .info-box-item .site-name a {
+            color: #ff007f; /* Pink */
+            font-weight: bold;
+        }
+
+        .info-box-item .personal-links a {
+            color: #e50000; /* Red */
+        }
+         .info-box-item .visited-links a {
+            color: #663399; /* RebeccaPurple */
+        }
+
+        .blog-posts-area {
+            padding: 20px;
+        }
+
+        .blog-posts-area .blog-post {
+            margin-bottom: 20px;
+        }
+
+        .blog-posts-area .blog-post h4 {
+            font-size: 14px;
+            color: #000;
+        }
+        .blog-posts-area .blog-post p {
+            line-height: 1.6;
+        }
+
+        .blog-posts-area .post-meta {
+            font-size: 10px;
             color: #777;
         }
-        .post-meta a {
-            color: #0000FF;
+         .blog-posts-area .post-meta a {
+            color: #DA70D6;
         }
-        .side-box.orange-box .box-header {
-            background-color: #FF9900;
-            color: white;
-        }
-        .side-box a {
-            display: block;
-            margin-top: 5px;
-            color: #0000FF;
-        }
+
     </style>
 </head>
 <body class="xanga-page">
-    <div id="xanga-container">
-        <header id="xanga-header">
-            <div class="header-top">
-                <div class="logo">
-                    <img src="assets/app icons/diversify_design_logo.jpeg" alt="Diversify Design Logo">
-                    <h1>diversify.design</h1>
-                </div>
-                <div class="header-nav">
-                    <a href="#">Weblogs</a>
-                    <a href="#">Photos</a>
-                    <a href="#">Videos</a>
-                    <a href="#">Metros</a>
-                    <a href="#">Blogrings</a>
-                    <a href="#">Profiles</a>
-                </div>
+    <div class="new-xanga-container">
+        <div class="left-sidebar">
+            <div class="sidebar-header">
+                <img src="assets/app icons/diversify_design_logo.jpeg" alt="Panda Icon">
+                <h3>YummyEats</h3>
+                <p>Love it?! Gotta Have It?! There's more where that came from, visit YummyEats.com.</p>
             </div>
-            <div class="header-bottom">
-                <div class="search-bar">
-                    <input type="text">
-                    <button>Search</button>
-                </div>
+            <div class="sidebar-images">
+                <img src="assets/images/baking experiments.jpg" alt="Earrings 1">
+                <img src="assets/images/birthday.jpg" alt="Earrings 2">
+                <img src="assets/images/christmas sky.jpg" alt="Earrings 3">
+                <img src="assets/images/coluna 13.jpg" alt="Earrings 4">
+                <img src="assets/images/cartagena.jpg" alt="Earrings 5">
             </div>
-        </header>
-        <main id="xanga-main">
-            <div class="left-column">
-                <div class="signin-box box">
-                    <div class="box-header blue-header">
-                        Please Sign In
+        </div>
+        <div class="main-content-area">
+            <div class="header-banner">
+                <img src="assets/xanga image.png?v=18" alt="Xanga Header">
+                <div class="xanga-url">xanga.com/your-username</div>
+                <div class="info-boxes-container">
+                    <div class="info-box-item">
+                        <h4>About Me</h4>
+                        <p><strong>Name:</strong> <span class="name">Amy</span></p>
+                        <p><strong>Birthday:</strong> 01/20</p>
+                        <p><strong>Very Proud Owner of:</strong></p>
+                        <p class="site-name"><a href="#">Diversify.Design</a></p>
                     </div>
-                    <div class="box-content">
-                        <form>
-                            <label for="username">Username</label>
-                            <input type="text" id="username">
-                            <label for="password">Password</label>
-                            <input type="password" id="password">
-                            <input type="checkbox" id="remember">
-                            <label for="remember">Remember password</label>
-                            <button type="submit">Sign In</button>
-                        </form>
-                        <a href="#">Get a Xanga Site!</a>
-                        <a href="#">Sign into Safe Mode</a>
+                    <div class="info-box-item">
+                        <h4>Contact Me</h4>
+                        <p><strong>AIM:</strong> Not telling</p>
+                        <p><a href="#">Add to Buddylist</a></p>
+                        <p>-----------------</p>
+                        <p><strong>Email:</strong> <a href="#">email me</a></p>
                     </div>
-                </div>
-
-                <div class="info-box box">
-                    <div class="box-header">
-                        Infect truth®
-                    </div>
-                    <div class="box-content">
-                        <p><strong>Sodium Hydroxide</strong><br>'Think cigarettes are just tobacco rolled in paper? Think again. ...</p>
-                        <p><strong>Singing Cowboy</strong><br>There are over 8.5 million Americans living with tobacco-related illnesses. ...</p>
-                        <a href="#">More truths...</a>
+                    <div class="info-box-item">
+                        <h4>Links! Links! Links!</h4>
+                        <p><strong>Personal Websites</strong></p>
+                        <ul class="personal-links">
+                            <li><a href="https://www.linkedin.com/in/amylima">LinkedIn</a></li>
+                            <li><a href="https://diversify.design/">Diversify Design</a></li>
+                        </ul>
+                        <p><strong>Often Visited Sites</strong></p>
+                         <ul class="visited-links">
+                            <li><a href="#">Site 1</a></li>
+                            <li><a href="#">Site 2</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
-            <div class="right-column">
-                <div class="main-content-right">
-                    <div class="welcome-bar">
-                        Welcome to Xanga!
-                        <div class="welcome-links">
-                            <a href="#">» xanga</a>
-                            <a href="#">» join</a>
-                            <a href="#">» sign in</a>
-                        </div>
-                    </div>
-
-                    <div class="get-started-box">
-                        <h2>GET STARTED!</h2>
-                        <div class="get-started-content">
-                            <div class="get-started-item">
-                                <h3><a href="#">Xanga Classic - FREE!</a></h3>
-                                <p>get classic | learn more</p>
-                            </div>
-                            <div class="get-started-item">
-                                <h3><a href="#">Xanga Premium - Upgrade</a></h3>
-                                <p>get premium | learn more</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="blog-post">
-                        <h4>Friday, October 20, 2006</h4>
-                        <p>Today <a href="#">Adam</a>, <a href="#">Dave</a>, and <a href="#">Janet</a> are launching Friends Lock - a quick and easy way to limit access to your *entire site* with just a few simple clicks. <a href="#">more from john</a></p>
-                        <div class="post-meta">
-                            <a href="#">TheXangaTeam</a> | 6:55 PM | <a href="#">email it</a>
-                        </div>
-                    </div>
-
-                    <div class="blog-post">
-                        <h4>Wednesday, October 11, 2006</h4>
-                        <p>It was a lot of work, but <a href="#">Adam</a> and <a href="#">Mary</a> just finished launching Photo/Video uploading from cell phones, camera phones, and email. You can find out all the details in the <a href="#">Premium features list</a>.</p>
-                        <div class="post-meta">
-                            <a href="#">TheXangaTeam</a> | 5:10 PM | <a href="#">email it</a>
-                        </div>
-                    </div>
-
-                    <div class="blog-post">
-                        <h4>A Note from the Founder</h4>
-                        <p>Diversify Design is a community I founded that supports designers from historically underrepresented backgrounds. It aims to provide a safe and transparent space for underrepresented folx in the design industry connect, learn, and grow together through meetups and knowledge exchanges.</p>
-                        <p>I've hosted events that have ranged from a 500+ person meetup at Config to an intimate gathering of women in design for Womens History Month with the same core mission: empowering marginalized voices in our industry.</p>
-                        <p>I'll keep it real tho, fam: running a community is hard work. Over the past year, I've put a pause on programming to focus on personal matters: navigating a company-wide layoff, starting a new job, and prioritizing my mental health.</p>
-                        <p>But! I have some exciting ideas in the works, coming soon to a city near you</p>
-                        <div class="post-meta">
-                            <a href="#">Amy Lima</a> | 12:00 PM
-                        </div>
-                    </div>
-                </div>
-
-                <div class="sidebar-right">
-                    <div class="side-box box">
-                        <div class="box-header orange-header">
-                            Xanga Uploader!
-                        </div>
-                        <div class="box-content">
-                            <p>Ever want to upload a bunch of photos all at once?</p>
-                            <p>Just download and install the Xanga Uploader, and you can drag and drop photos straight to your Xanga site. Download here:</p>
-                            <a href="#">For Windows XP</a>
-                            <a href="#">For Windows 2000</a>
-                        </div>
-                    </div>
-
-                    <div class="side-box box">
-                        <div class="box-header orange-header">
-                            What is Xanga?
-                        </div>
-                        <div class="box-content">
-                            <p>Xanga is a community of online diaries and journals. You can easily <a href="#">start your own free journal</a>, share thoughts with your friends and meet new friends, too!</p>
-                        </div>
+            <div class="blog-posts-area">
+                 <div class="blog-post">
+                    <h4>A Note from the Founder</h4>
+                    <p>Diversify Design is a community I founded that supports designers from historically underrepresented backgrounds. It aims to provide a safe and transparent space for underrepresented folx in the design industry connect, learn, and grow together through meetups and knowledge exchanges.</p>
+                    <p>I've hosted events that have ranged from a 500+ person meetup at Config to an intimate gathering of women in design for Womens History Month with the same core mission: empowering marginalized voices in our industry.</p>
+                    <p>I'll keep it real tho, fam: running a community is hard work. Over the past year, I've put a pause on programming to focus on personal matters: navigating a company-wide layoff, starting a new job, and prioritizing my mental health.</p>
+                    <p>But! I have some exciting ideas in the works, coming soon to a city near you</p>
+                    <div class="post-meta">
+                        <a href="#">Amy Lima</a> | 12:00 PM
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
 </body>
 </html> 

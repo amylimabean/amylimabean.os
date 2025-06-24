@@ -1763,7 +1763,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if(addressBar) addressBar.value = `C:\\Desktop\\Work\\${project.name}`;
             setActiveTab(projectName);
 
-            mainArea.innerHTML = `<iframe src="${project.filePath}" class="website-iframe" title="${project.name}"></iframe>`;
+            const cacheBust = new Date().getTime();
+            mainArea.innerHTML = `<iframe src="${project.filePath}?v=${cacheBust}" class="website-iframe" title="${project.name}"></iframe>`;
             
             const backButtonContainer = projectsWindow.querySelector('#back-button-container');
             if (backButtonContainer) {
