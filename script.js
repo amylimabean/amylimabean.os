@@ -570,6 +570,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let guestbookMessages = [];
         let activeChannel = 'design-philosophy';
         let userScreenName = '';
+        const guestbookBinId = '667a4e8d363a0405141203b5'; // A unique ID for your guestbook bin
 
         function appendMessage(html, isGuest) {
             const div = document.createElement('div');
@@ -596,10 +597,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (channelName === 'group-chat') {
-                guestbookMessages.forEach(msg => {
-                    const innerHtml = `<span class="username">${msg.sender}:</span> <span class="message-text">${msg.text}</span>`;
-                    appendMessage(innerHtml, true);
-                });
+                fetch(`https://api.jsonbin.io/v3/b/${guestbookBinId}/latest`)
+                    .then(response => response.json())
+                    .then(data => {
+                        guestbookMessages = data.record;
+                        guestbookMessages.forEach(msg => {
+                            const innerHtml = `<span class="username">${msg.sender}:</span> <span class="message-text">${msg.text}</span>`;
+                            appendMessage(innerHtml, true);
+                        });
+                    })
+                    .catch(err => console.error('Error fetching guestbook messages:', err));
             }
             
             chatContentArea.scrollTop = 0;
@@ -634,9 +641,20 @@ document.addEventListener('DOMContentLoaded', () => {
         function handleSendMessage() {
             if (!messageInput || messageInput.value.trim() === '') return;
             const messageText = messageInput.value.trim();
-            guestbookMessages.push({ sender: userScreenName, text: messageText });
+            const newMessage = { sender: userScreenName, text: messageText };
+
+            guestbookMessages.push(newMessage);
             appendMessage(`<span class="username">${userScreenName}:</span> <span class="message-text">${messageText}</span>`, true);
             messageInput.value = '';
+
+            // Save the updated messages to JSONBin
+            fetch(`https://api.jsonbin.io/v3/b/${guestbookBinId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(guestbookMessages),
+            }).catch(err => console.error('Error saving guestbook message:', err));
         }
 
         if (channelList) {
