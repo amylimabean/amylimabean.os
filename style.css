@@ -1928,39 +1928,31 @@ textarea {
 
 /* AIM Away Message Window Styles */
 #window-vacation {
-    height: 283px; /* 30% shorter than 404px chat window */
+    height: auto !important; /* Allow height to be determined by content */
+    width: 380px; /* Maintain a fixed width */
 }
 
 .view-mode {
-    flex-grow: 1; /* Allow this container to grow */
-    display: flex; /* Make it a flex container so its child can grow */
+    flex-grow: 1;
+    display: flex;
 }
 
 /* --- AIM Away Message Window --- */
 .aim-away-message-content {
-    padding: 10px;
     display: flex;
     flex-direction: column;
-    background-color: #f0f0f0; /* Classic AIM-like background */
     height: 100%;
     box-sizing: border-box;
-    gap: 10px; /* Adds space between elements */
-    overflow: hidden; /* Prevent content from spilling out */
 }
 
 .aim-message-display {
     flex-grow: 1;
-    border: 1px solid #999;
-    padding: 15px;
-    background-color: #FFFF00; /* Default yellow */
-    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
-    font-size: 16px;
-    line-height: 1.6;
-    text-align: center;
-    overflow-y: auto; /* Add scroll if content is too long */
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    border: 1px solid #999;
+    padding: 10px;
+    background-color: transparent;
 }
 
 .aim-away-text {
