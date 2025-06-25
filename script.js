@@ -571,6 +571,9 @@ document.addEventListener('DOMContentLoaded', () => {
         let activeChannel = 'design-philosophy';
         let userScreenName = '';
         const guestbookBinId = '667a4e8d363a0405141203b5'; // A unique ID for your guestbook bin
+        // IMPORTANT: Replace with your JSONBin Access Key.
+        // Create a key with 'Update' permissions for your bin. Do NOT use your master key here.
+        const jsonBinAccessKey = 'REPLACE_WITH_YOUR_JSONBIN_ACCESS_KEY';
 
         function appendMessage(html, isGuest) {
             const div = document.createElement('div');
@@ -592,7 +595,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             chatContentArea.innerHTML = '';
             channel.messages.forEach(msg => {
-                const innerHtml = `<span class="username">${msg.sender}:</span> <span class="message-text">${msg.text}</span>`;
+                const innerHtml = `<span class="username ${msg.sender === 'amylimabean' ? 'admin-username' : ''}">${msg.sender}:</span> <span class="message-text">${msg.text}</span>${msg.timestamp ? `<span class="timestamp">(${msg.timestamp})</span>` : ''}`;
                 appendMessage(innerHtml, false);
             });
 
@@ -602,7 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     .then(data => {
                         guestbookMessages = data.record;
                         guestbookMessages.forEach(msg => {
-                            const innerHtml = `<span class="username">${msg.sender}:</span> <span class="message-text">${msg.text}</span>`;
+                            const innerHtml = `<span class="username ${msg.sender === 'amylimabean' ? 'admin-username' : ''}">${msg.sender}:</span> <span class="message-text">${msg.text}</span><span class="timestamp">(${msg.timestamp})</span>`;
                             appendMessage(innerHtml, true);
                         });
                     })
@@ -641,10 +644,10 @@ document.addEventListener('DOMContentLoaded', () => {
         function handleSendMessage() {
             if (!messageInput || messageInput.value.trim() === '') return;
             const messageText = messageInput.value.trim();
-            const newMessage = { sender: userScreenName, text: messageText };
+            const newMessage = { sender: userScreenName, text: messageText, timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) };
 
             guestbookMessages.push(newMessage);
-            appendMessage(`<span class="username">${userScreenName}:</span> <span class="message-text">${messageText}</span>`, true);
+            appendMessage(`<span class="username ${userScreenName === 'amylimabean' ? 'admin-username' : ''}">${userScreenName}:</span> <span class="message-text">${messageText}</span><span class="timestamp">(${newMessage.timestamp})</span>`, true);
             messageInput.value = '';
 
             // Save the updated messages to JSONBin
@@ -652,9 +655,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
+                    'X-Access-Key': jsonBinAccessKey
                 },
                 body: JSON.stringify(guestbookMessages),
-            }).catch(err => console.error('Error saving guestbook message:', err));
+            }).catch(err => {
+                console.error('Error saving guestbook message:', err);
+                alert('Sorry, your message could not be sent. Please check the console for more details.');
+            });
         }
 
         if (channelList) {
@@ -1298,6 +1305,18 @@ document.addEventListener('DOMContentLoaded', () => {
         @keyframes glitter {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
+        }
+        
+        #window-projects .message-text {
+            color: black;
+        }
+        
+        #window-projects .timestamp {
+            color: red;
+        }
+        
+        #window-projects .admin-username {
+            color: red;
         }
     </style>
     <div class="myspace-header">

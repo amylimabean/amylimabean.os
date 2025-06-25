@@ -1194,19 +1194,23 @@ textarea {
 
 .chat-message .username {
     font-weight: bold;
-    color: #0000FF;
+}
+
+.chat-message .timestamp {
+    color: red;
 }
 
 .guest-message .username,
 .guest-message .message-text {
-    color: #FC0000;
+    color: red;
+}
+
+.guest-message .message-text {
+    color: black;
 }
 
 .user-message {
-    /* background-color: #e1f5fe; */ /* Light blue for user messages - REMOVED */
-    text-align: right;
-    margin-left: auto; /* Push to the right */
-    max-width: 90%; /* Increased from 70% */
+    color: #000000;
 }
 
 .user-message strong {
@@ -2363,6 +2367,10 @@ textarea {
 /* Info Box */
 .xanga-page .info-box .box-content p {
     margin: 0 0 10px;
+}
+
+.admin-username {
+    color: red;
 }
 
 
