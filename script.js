@@ -573,7 +573,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const guestbookBinId = '667a4e8d363a0405141203b5'; // A unique ID for your guestbook bin
         // IMPORTANT: Replace with your JSONBin Access Key.
         // Create a key with 'Update' permissions for your bin. Do NOT use your master key here.
-        const jsonBinAccessKey = 'REPLACE_WITH_YOUR_JSONBIN_ACCESS_KEY';
+        const jsonBinAccessKey = $2a$10$F4qldsZCQI4soQho6opOL.Aw/dml2UwtSaCDJ9epYG7t5.dH3HOH2
+        ;
 
         function appendMessage(html, isGuest) {
             const div = document.createElement('div');
