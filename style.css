@@ -555,6 +555,13 @@ textarea {
         margin-bottom: 10px;
         box-shadow: 3px 3px 0px rgba(0,0,0,0.4);
     }
+    #window-welcome {
+        width: 90vw;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: fixed;
+    }
     #window-profile {
         width: auto; /* Let it be full width */
         position: relative; /* Flow in document */
@@ -567,7 +574,7 @@ textarea {
         width: auto;
     }
     #menu-time {
-        /* font-size: 10px; */ /* Removed for consistency */
+        display: flex;
     }
     #background-video {
         object-fit: cover;

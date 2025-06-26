@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (backgroundVideo) {
         backgroundVideo.playbackRate = 0.8;
+        backgroundVideo.addEventListener('ended', () => {
+            backgroundVideo.play();
+        });
     }
     
     const wallpapers = [
