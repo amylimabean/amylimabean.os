@@ -4,8 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio FM - Amy Lima</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.1">
     <link rel="icon" href="bean icon.png">
+    <style>
+        .window {
+            resize: both !important;
+            overflow: auto !important;
+        }
+        #window-normie-mode .window-content {
+            padding: 0 !important;
+            overflow: hidden !important;
+        }
+    </style>
 </head>
 <body class="desktop-background">
 
@@ -83,6 +93,12 @@
                     <img src="assets/desktop icons/post.secret.png" alt="Post Secret">
                 </div>
                 <span>post.secret</span>
+            </div>
+            <div class="desktop-icon" id="icon-normie-mode">
+                <div class="win95-icon">
+                    <img src="assets/desktop icons/normie.mode.png" alt="Normie Mode">
+                </div>
+                <span>normie.mode</span>
             </div>
         </div>
 
@@ -395,6 +411,19 @@
                 <button class="submit-secret-btn">Send Secret</button>
                 <button id="submit-new-secret-btn" style="display:none;">Submit a Secret</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Window: Normie Mode -->
+    <div class="window" id="window-normie-mode" style="display: none; width: 800px; height: 550px;">
+        <div class="title-bar">
+            <div class="title-bar-buttons">
+                <span class="button close"></span>
+            </div>
+            <span class="title-bar-text">normie.mode</span>
+        </div>
+        <div class="window-content">
+            <iframe style="border: none !important; width: 100% !important; height: 100% !important;" src="https://embed.figma.com/proto/MyC6AX5zoFdRDWKHjknsws/Work-Samples-2025-playground?node-id=663-701167&p=f&scaling=scale-down&content-scaling=fixed&page-id=663%3A701166&starting-point-node-id=663%3A701167&embed-host=share" allowfullscreen></iframe>
         </div>
     </div>
 

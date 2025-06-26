@@ -283,6 +283,8 @@ body {
     z-index: 100;
     cursor: default;
     display: none; /* Initially hidden */
+    resize: both;
+    overflow: auto;
 }
 
 /* Default positioning for the initially visible window */
@@ -2366,6 +2368,11 @@ textarea {
 
 .admin-username {
     color: red;
+}
+
+#window-normie-mode .window-content {
+    padding: 0;
+    overflow: hidden;
 }
 
 
