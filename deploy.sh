@@ -23,7 +23,7 @@ git push origin main
 
 echo "✅ 4/5: Deploying to GitHub Pages..."
 git checkout gh-pages
-git merge main
+git merge main --no-edit
 git push origin gh-pages
 
 echo "✅ 5/5: Returning to main branch..."
