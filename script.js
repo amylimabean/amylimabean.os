@@ -1885,7 +1885,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const welcomeWindow = document.getElementById('window-welcome');
     if (welcomeWindow) {
-        welcomeWindow.style.display = 'flex';
         bringToFront(welcomeWindow);
     }
 });

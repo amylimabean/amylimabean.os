@@ -296,6 +296,7 @@ body {
 }
 
 #window-welcome {
+    display: flex;
     top: 60px;
     left: 80px;
     width: 370px; /* Reduced from 400px */
@@ -561,13 +562,10 @@ textarea {
         font-size: 11px;
     }
     .menubar .menu-right {
-        /* font-size: 11px; */ /* Removed for consistency */
+        width: auto;
     }
     #menu-time {
         /* font-size: 10px; */ /* Removed for consistency */
-    }
-    #window-welcome {
-        display: none !important;
     }
     #background-video {
         object-fit: cover;
@@ -576,9 +574,6 @@ textarea {
         margin-right: 2px;
         padding: 2px 2px;
         font-size: 14px; /* Consistent font size */
-    }
-    .menubar .menu-right {
-        width: auto;
     }
 }
 
