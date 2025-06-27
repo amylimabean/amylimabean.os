@@ -15,13 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backgroundVideo = document.querySelector('#background-video');
     const backgroundImage = document.getElementById('background-image');
     
-    let highestZIndex = 0;
-    document.querySelectorAll('*').forEach(el => {
-        const z = parseInt(window.getComputedStyle(el).zIndex, 10);
-        if (!isNaN(z) && z > highestZIndex) {
-            highestZIndex = z;
-        }
-    });
+    let highestZIndex = 2001; // Start z-index stack above all other fixed elements
     
     if (backgroundVideo) {
         backgroundVideo.playbackRate = 0.8;
@@ -123,11 +117,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 clickSound.play().catch(error => console.warn("Click sound failed:", error));
             }
             if (aboutBeanWindow) {
-                aboutBeanWindow.style.display = 'flex';
+                openWindow(aboutBeanWindow);
                 if (modalOverlay) {
                     modalOverlay.style.display = 'block';
                 }
-                bringToFront(aboutBeanWindow);
             }
             if (beanDropdown) {
                 beanDropdown.style.display = 'none';
@@ -161,7 +154,68 @@ document.addEventListener('DOMContentLoaded', () => {
         windowElement.style.zIndex = highestZIndex;
     }
 
+    function openWindow(win) {
+        if (!win) return;
+    
+        const isAlreadyOpen = win.style.display === 'flex';
+        
+        // Always bring to front, whether opening new or focusing
+        bringToFront(win);
+    
+        // If it's not open, display it and set its position
+        if (!isAlreadyOpen) {
+            win.style.display = 'flex';
+    
+            // Special initialization for certain windows
+            const windowId = win.id;
+            if (windowId === 'window-photobook' && !photobookInitialized) {
+                initializePhotobook();
+                photobookInitialized = true;
+            }
+            if (windowId === 'window-trivia') {
+                initializeTriviaGame();
+            }
+            if (windowId === 'window-projects') {
+                initializeWorkExplorer();
+            }
+    
+            // Position the window
+            if (window.innerWidth <= 768) {
+                // On mobile, center the window
+                win.style.left = '50%';
+                win.style.top = '50%';
+                win.style.transform = 'translate(-50%, -50%)';
+                win.style.position = 'absolute'; 
+            } else {
+                // On desktop, use the slot positioning if not already positioned
+                if (win.id !== 'window-about-bean') {
+                    const currentPos = win.getBoundingClientRect();
+                    if (currentPos.left < 0 || currentPos.top < 0 || (win.style.left === '' && win.style.top === '')) {
+                        const slot = windowSlots[nextSlotIndex % windowSlots.length];
+                        win.style.left = `${slot.x}px`;
+                        win.style.top = `${slot.y}px`;
+                        nextSlotIndex++;
+                    }
+                }
+            }
+        }
+    
+        // Special logic for chat window opening away message window
+        if (win.id === 'window-chat' && !isAlreadyOpen) {
+            const awayWindow = document.getElementById('window-vacation');
+            if (awayWindow) {
+                openWindow(awayWindow); // Use the new function to open it
+                const chatRect = win.getBoundingClientRect();
+                awayWindow.style.left = `${chatRect.right + 10}px`;
+                awayWindow.style.top = `${chatRect.top}px`;
+            }
+        }
+    }
+
     windows.forEach(win => {
+        // Bring window to front on any click
+        win.addEventListener('mousedown', () => bringToFront(win));
+
         const titleBar = win.querySelector('.title-bar');
         const closeButton = win.querySelector('.title-bar-buttons .close');
 
@@ -276,53 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             const win = document.getElementById(windowId);
             if (win) {
-                if (win.style.display !== 'none' && win.style.display !== '') {
-                    bringToFront(win);
-                    return;
-                }
-                
-                win.style.display = 'flex';
-                bringToFront(win);
-
-                if (windowId === 'window-chat') {
-                    const awayWindow = document.getElementById('window-vacation');
-                    if (awayWindow) {
-                        awayWindow.style.display = 'flex';
-                        bringToFront(awayWindow);
-                        const chatRect = win.getBoundingClientRect();
-                        awayWindow.style.left = `${chatRect.right + 10}px`;
-                        awayWindow.style.top = `${chatRect.top}px`;
-                    }
-                }
-
-                if (windowId === 'window-photobook' && !photobookInitialized) {
-                    initializePhotobook();
-                    photobookInitialized = true;
-                }
-                if (windowId === 'window-trivia') {
-                    initializeTriviaGame();
-                }
-                if (windowId === 'window-projects') {
-                    initializeWorkExplorer();
-                }
-
-                if (window.innerWidth <= 768) {
-                    // On mobile, center the window
-                    win.style.left = '50%';
-                    win.style.top = '50%';
-                    win.style.transform = 'translate(-50%, -50%)';
-                    // Also remove any absolute positioning from desktop mode
-                    win.style.position = 'absolute'; 
-                } else {
-                    // On desktop, use the slot positioning
-                    const currentPos = win.getBoundingClientRect();
-                    if (currentPos.left < 0 || currentPos.top < 0 || (win.style.left === '' && win.style.top === '')) {
-                        const slot = windowSlots[nextSlotIndex % windowSlots.length];
-                        win.style.left = `${slot.x}px`;
-                        win.style.top = `${slot.y}px`;
-                        nextSlotIndex++;
-                    }
-                }
+                openWindow(win);
             }
         });
     });
