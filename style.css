@@ -283,8 +283,6 @@ body {
     z-index: 100;
     cursor: default;
     display: none; /* Initially hidden */
-    resize: both;
-    overflow: auto;
 }
 
 /* Default positioning for the initially visible window */
@@ -1506,8 +1504,9 @@ textarea {
 }
 
 #window-projects {
-    width: 960px;
-    height: 720px;
+    width: 714px;
+    height: 525px;
+    overflow: auto;
 }
 
 #window-projects .file-icon img {
@@ -1936,7 +1935,7 @@ textarea {
 
 /* AIM Away Message Window Styles */
 #window-vacation {
-    height: auto !important; /* Allow height to be determined by content */
+    height: auto; /* Allow height to be determined by content */
     width: 380px; /* Maintain a fixed width */
 }
 
@@ -2377,9 +2376,24 @@ textarea {
     color: red;
 }
 
+#window-normie-mode {
+    width: 800px;
+    height: 550px;
+    overflow: auto;
+}
+
 #window-normie-mode .window-content {
     padding: 0;
-    overflow: hidden;
+}
+
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: url('assets/resizing cursor.png'), nwse-resize;
+    z-index: 10;
 }
 
 

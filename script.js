@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (titleBar) {
-            win.addEventListener('mousedown', (e) => {
+            titleBar.addEventListener('mousedown', (e) => {
                 bringToFront(win);
                 const nonDraggableTags = ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'];
                 if (nonDraggableTags.includes(e.target.tagName) || e.target.closest('button, a, input, select, textarea')) {
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 win.isDragging = true;
                 win.offsetX = e.clientX - win.getBoundingClientRect().left;
                 win.offsetY = e.clientY - win.getBoundingClientRect().top;
-                win.style.cursor = 'grabbing';
+                win.style.cursor = 'grab';
             });
         }
     });
@@ -226,6 +226,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    document.querySelectorAll('.resize-handle').forEach(handle => {
+        handle.addEventListener('mousedown', initResize, false);
+    });
+
+    function initResize(e) {
+        e.stopPropagation(); 
+        const window = e.target.parentElement;
+        const startX = e.clientX;
+        const startY = e.clientY;
+        const startWidth = parseInt(document.defaultView.getComputedStyle(window).width, 10);
+        const startHeight = parseInt(document.defaultView.getComputedStyle(window).height, 10);
+
+        function doResize(e) {
+            window.style.width = (startWidth + e.clientX - startX) + 'px';
+            window.style.height = (startHeight + e.clientY - startY) + 'px';
+        }
+
+        function stopResize(e) {
+            document.documentElement.removeEventListener('mousemove', doResize, false);
+            document.documentElement.removeEventListener('mouseup', stopResize, false);
+        }
+
+        document.documentElement.addEventListener('mousemove', doResize, false);
+        document.documentElement.addEventListener('mouseup', stopResize, false);
+    }
 
     const clickSound = new Audio('input click.mp3');
     const closeSound = new Audio('click-sound.mp3');
@@ -576,7 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const guestbookBinId = '667a4e8d363a0405141203b5'; // A unique ID for your guestbook bin
         // IMPORTANT: Replace with your JSONBin Access Key.
         // Create a key with 'Update' permissions for your bin. Do NOT use your master key here.
-        const jsonBinAccessKey = "$2a$10$F4qldsZCQI4soQho6opOL.Aw/dml2UwtSaCDJ9epYG7t5.dH3HOH2";
+        const jsonBinAccessKey = "\x242a\x2410\x24F4qldsZCQI4soQho6opOL.Aw/dml2UwtSaCDJ9epYG7t5.dH3HOH2";
 
         function appendMessage(html, isGuest) {
             const div = document.createElement('div');
