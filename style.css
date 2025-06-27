@@ -576,6 +576,7 @@ textarea {
     }
     #background-video {
         object-fit: cover;
+        transform: scale(1.15);
     }
     .menubar .menu-item {
         margin-right: 2px;

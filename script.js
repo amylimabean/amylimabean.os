@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let highestZIndex = 2001; // Start z-index stack above all other fixed elements
     
     if (backgroundVideo) {
-        backgroundVideo.playbackRate = 0.8;
+        backgroundVideo.playbackRate = 0.65;
         backgroundVideo.addEventListener('ended', () => {
             backgroundVideo.play();
         });
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             backgroundVideo.load();
                         }
                         if (wp.name === 'BabyBean') {
-                            backgroundVideo.playbackRate = 0.8;
+                            backgroundVideo.playbackRate = 0.65;
                         } else {
                             backgroundVideo.playbackRate = 1.0;
                         }
