@@ -792,6 +792,54 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Y2K Popup Logic ---
+    const y2kPopup = document.getElementById('y2k-popup');
+    const closePopupButton = document.getElementById('y2k-popup-close');
+    const okButton = document.getElementById('y2k-popup-ok');
+    const cancelButton = document.getElementById('y2k-popup-cancel');
+    const caseStudiesLink = document.getElementById('popup-case-studies-link');
+    const caseStudiesIcon = document.getElementById('icon-case-studies');
+    const caseStudiesWindow = document.getElementById('window-case-studies');
+
+    if (y2kPopup && closePopupButton && okButton && cancelButton && caseStudiesLink && caseStudiesIcon && caseStudiesWindow) {
+        
+        function closePopup() {
+            y2kPopup.style.display = 'none';
+            playClickSound();
+        }
+
+        function openCaseStudies(e) {
+            e.preventDefault();
+            playClickSound();
+            openWindow(caseStudiesWindow);
+            closePopup();
+            
+            // Optional: highlight the icon
+            const span = caseStudiesIcon.querySelector('span');
+            if (span) {
+                const originalBg = span.style.backgroundColor;
+                span.style.backgroundColor = 'rgba(0, 255, 0, 0.3)';
+                setTimeout(() => {
+                    span.style.backgroundColor = originalBg;
+                }, 2000);
+            }
+        }
+
+        // Show the popup after 10 seconds
+        setTimeout(() => {
+            y2kPopup.style.display = 'block';
+            okButton.focus();
+        }, 10000);
+
+        // Close button functionality
+        closePopupButton.addEventListener('click', closePopup);
+        cancelButton.addEventListener('click', closePopup);
+
+        // OK button and link functionality
+        okButton.addEventListener('click', openCaseStudies);
+        caseStudiesLink.addEventListener('click', openCaseStudies);
+    }
+
     const myTunesWindow = document.getElementById('window-earbuds');
     if (myTunesWindow) {
         const audioPlayer = document.getElementById('myTunes-audio-player');

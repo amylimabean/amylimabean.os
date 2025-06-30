@@ -93,11 +93,11 @@
                 </div>
                 <span>post.secret</span>
             </div>
-            <div class="desktop-icon" id="icon-normie-mode">
+            <div class="desktop-icon" id="icon-case-studies">
                 <div class="win95-icon">
-                    <img src="assets/desktop icons/normie.mode.png" alt="Normie Mode">
+                    <img src="assets/desktop icons/normie.mode.png" alt="Case Studies">
                 </div>
-                <span>normie.mode</span>
+                <span>case.studies</span>
             </div>
         </div>
 
@@ -415,18 +415,36 @@
         </div>
     </div>
 
-    <!-- Window: Normie Mode -->
-    <div class="window" id="window-normie-mode" style="display: none;">
+    <!-- Window: Case Studies -->
+    <div class="window" id="window-case-studies" style="display: none;">
         <div class="title-bar">
             <div class="title-bar-buttons">
                 <span class="button close"></span>
             </div>
-            <span class="title-bar-text">normie.mode</span>
+            <span class="title-bar-text">case.studies</span>
         </div>
         <div class="window-content">
             <iframe style="border: none; width: 100%; height: 100%;" src="https://embed.figma.com/proto/MyC6AX5zoFdRDWKHjknsws/Work-Samples-2025-playground?node-id=663-701167&p=f&scaling=cover&page-id=663%3A701166&starting-point-node-id=663%3A701167&embed-host=share" allowfullscreen></iframe>
         </div>
         <div class="resize-handle"></div>
+    </div>
+
+    <!-- Y2K Popup -->
+    <div id="y2k-popup" class="y2k-popup" style="display: none;">
+        <div class="y2k-popup-header">
+            <span class="y2k-popup-title">Friendly Tip</span>
+            <button id="y2k-popup-close" class="y2k-popup-close">x</button>
+        </div>
+        <div class="y2k-popup-body">
+            <div class="y2k-popup-content">
+                <img src="assets/desktop icons/normie.mode.png" alt="case studies icon">
+                <p>Psst! Check out my <a href="#" id="popup-case-studies-link">case studies</a> for a more traditional portfolio view.</p>
+            </div>
+            <div class="y2k-popup-buttons">
+                <button id="y2k-popup-ok" class="y2k-popup-button">OK</button>
+                <button id="y2k-popup-cancel" class="y2k-popup-button">Cancel</button>
+            </div>
+        </div>
     </div>
 
     <div id="modal-overlay" style="display: none;"></div>
