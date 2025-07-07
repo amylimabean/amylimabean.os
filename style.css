@@ -56,6 +56,31 @@ body {
     background-color: transparent; /* Allow video to show through */
     position: relative; /* Establish stacking context for video z-index */
     cursor: url('assets/cursor.png'), auto;
+    /* Prevent text selection during dragging */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Re-enable text selection for content areas where it's needed */
+.window-content,
+.chat-content-area,
+.chat-message,
+.aim-message-display,
+.guestbook-message,
+.text-edit-main-area,
+.about-bean-content,
+input,
+textarea,
+select,
+.postcard-message,
+p,
+a {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
 }
 
 .desktop-background {
