@@ -646,6 +646,7 @@ textarea {
         left: 50% !important;
         top: 50% !important;
         transform: translate(-50%, -50%) !important;
+        z-index: 101 !important; /* Below away message window */
     }
     
     /* Hide sidebar on mobile */
@@ -738,6 +739,13 @@ textarea {
         background-color: #000000;
         color: #ffffff;
         font-weight: bold;
+    }
+    
+    /* Mobile Away Message Window Positioning */
+    #window-vacation {
+        width: 85vw !important;
+        max-width: 350px !important;
+        z-index: 102 !important; /* Always on top of chat on mobile */
     }
 }
 

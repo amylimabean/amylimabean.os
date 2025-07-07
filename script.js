@@ -205,9 +205,24 @@ document.addEventListener('DOMContentLoaded', () => {
             const awayWindow = document.getElementById('window-vacation');
             if (awayWindow) {
                 openWindow(awayWindow); // Use the new function to open it
-                const chatRect = win.getBoundingClientRect();
-                awayWindow.style.left = `${chatRect.right + 10}px`;
-                awayWindow.style.top = `${chatRect.top}px`;
+                
+                // Check if we're on mobile
+                const isMobile = window.innerWidth <= 768;
+                
+                if (isMobile) {
+                    // Mobile positioning: place away message slightly offset from chat center
+                    awayWindow.style.left = '50%';
+                    awayWindow.style.top = '45%';
+                    awayWindow.style.transform = 'translate(-50%, -50%)';
+                    awayWindow.style.zIndex = '102'; // Higher than chat window
+                } else {
+                    // Desktop positioning: place to the right of chat window
+                    const chatRect = win.getBoundingClientRect();
+                    awayWindow.style.left = `${chatRect.right + 10}px`;
+                    awayWindow.style.top = `${chatRect.top}px`;
+                    awayWindow.style.transform = 'none';
+                    awayWindow.style.zIndex = '100';
+                }
             }
         }
     }
