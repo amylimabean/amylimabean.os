@@ -63,6 +63,151 @@ body {
     user-select: none;
 }
 
+/* Startup Screen Styles */
+#startup-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    background-color: #000000;
+}
+
+#startup-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+}
+
+.startup-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.startup-content {
+    text-align: center;
+    color: #000000;
+    font-family: 'Chicago', sans-serif;
+    max-width: 500px;
+    padding: 40px;
+}
+
+.startup-logo {
+    margin-bottom: 60px;
+}
+
+.startup-bean-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.8));
+}
+
+.startup-title {
+    font-size: 48px;
+    font-weight: normal;
+    margin: 0 0 10px 0;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.9);
+    font-family: 'Chicago', sans-serif;
+}
+
+.startup-subtitle {
+    font-size: 18px;
+    margin: 0;
+    opacity: 0.9;
+    font-family: 'R95 Sans Serif', monospace;
+}
+
+.startup-progress-container {
+    margin-top: 40px;
+}
+
+.startup-progress-bar {
+    width: 100%;
+    height: 40px;
+    background-color: #c0c0c0;
+    border: 2px solid #000000;
+    border-style: inset;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.startup-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #000080, #0000ff);
+    width: 0%;
+    transition: width 0.8s ease-out;
+    animation: progress-shimmer 2s infinite;
+}
+
+@keyframes progress-shimmer {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+}
+
+.startup-status {
+    font-size: 18px;
+    margin: 0;
+    opacity: 0.9;
+    font-family: 'R95 Sans Serif', monospace;
+    animation: fade-pulse 1.5s infinite;
+    font-weight: normal;
+}
+
+@keyframes fade-pulse {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+}
+
+.startup-enter-button-container {
+    margin-top: 40px;
+}
+
+.startup-enter-button {
+    width: 100%;
+    height: 40px;
+    background-color: #c0c0c0;
+    border: 2px solid;
+    border-color: #dfdfdf #808080 #808080 #dfdfdf;
+    box-shadow: 1px 1px 0 #000;
+    font-family: 'Chicago', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+    cursor: pointer;
+    text-transform: uppercase;
+    animation: button-glow 2s ease-in-out infinite alternate;
+    margin-bottom: 15px;
+}
+
+.startup-enter-button:hover {
+    background-color: #d0d0d0;
+}
+
+.startup-enter-button:active {
+    border-color: #808080 #dfdfdf #dfdfdf #808080;
+    box-shadow: none;
+    transform: translate(1px, 1px);
+}
+
+@keyframes button-glow {
+    0% { box-shadow: 1px 1px 0 #000; }
+    100% { box-shadow: 1px 1px 0 #000, 0 0 10px rgba(255,255,255,0.3); }
+}
+
 /* Re-enable text selection for content areas where it's needed */
 .window-content,
 .chat-content-area,

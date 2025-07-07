@@ -5,6 +5,155 @@ document.addEventListener('DOMContentLoaded', () => {
     const windows = document.querySelectorAll('.window');
     const modalOverlay = document.getElementById('modal-overlay');
     
+    // Startup sequence elements
+    const startupScreen = document.getElementById('startup-screen');
+    const startupVideo = document.getElementById('startup-video');
+    const progressFill = document.querySelector('.startup-progress-fill');
+    const statusText = document.querySelector('.startup-status');
+    const menubar = document.querySelector('.menubar');
+    const startupWelcomeWindow = document.getElementById('window-welcome');
+    
+    // Startup sound function
+    function playStartupSound() {
+        try {
+            const startupSound = new Audio('./startup sound.mp3');
+            startupSound.volume = 0.6;
+            startupSound.preload = 'auto';
+            
+            const playPromise = startupSound.play();
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        console.log('Startup sound playing');
+                    })
+                    .catch(error => {
+                        console.warn("Startup sound failed:", error);
+                    });
+            }
+        } catch (error) {
+            console.warn("Error creating startup sound:", error);
+        }
+    }
+
+    // Startup sequence
+    function runStartupSequence() {
+        if (!startupScreen || !progressFill || !statusText) return;
+        
+        // Startup phases with timing
+        const phases = [
+            { progress: 20, status: 'Initializing systems...', duration: 1000 },
+            { progress: 45, status: 'Loading vibes...', duration: 1500 },
+            { progress: 70, status: 'Starting services...', duration: 1500 },
+            { progress: 90, status: 'Preparing desktop...', duration: 1500 },
+            { progress: 100, status: '', duration: 500 } // Empty status, show button instead
+        ];
+        
+        let currentPhase = 0;
+        
+        function nextPhase() {
+            if (currentPhase >= phases.length) {
+                showEnterButton();
+                return;
+            }
+            
+            const phase = phases[currentPhase];
+            progressFill.style.width = phase.progress + '%';
+            statusText.textContent = phase.status;
+            
+            currentPhase++;
+            setTimeout(nextPhase, phase.duration);
+        }
+        
+        function showEnterButton() {
+            // Hide status text
+            statusText.style.display = 'none';
+            
+            // Transform progress bar into ENTER button
+            const progressContainer = document.querySelector('.startup-progress-container');
+            if (progressContainer) {
+                progressContainer.className = 'startup-enter-button-container';
+                progressContainer.innerHTML = '<button class="startup-enter-button">ENTER</button>';
+                
+                const enterButton = progressContainer.querySelector('.startup-enter-button');
+                enterButton.addEventListener('click', () => {
+                    playStartupSound();
+                    completeStartup();
+                });
+            }
+        }
+        
+        function completeStartup() {
+            // Fade out startup screen
+            startupScreen.style.transition = 'opacity 0.8s ease';
+            startupScreen.style.opacity = '0';
+            
+            setTimeout(() => {
+                // Hide startup screen
+                startupScreen.style.display = 'none';
+                
+                // Show desktop elements
+                if (menubar) {
+                    menubar.style.display = 'flex';
+                    menubar.style.opacity = '0';
+                    menubar.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => menubar.style.opacity = '1', 100);
+                }
+                
+                if (desktopArea) {
+                    desktopArea.style.display = 'block';
+                    desktopArea.style.opacity = '0';
+                    desktopArea.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => desktopArea.style.opacity = '1', 200);
+                }
+                
+                // Switch to Bliss background
+                switchToBlissBackground();
+                
+                        // Show welcome window after a brief delay
+        setTimeout(() => {
+            if (startupWelcomeWindow) {
+                startupWelcomeWindow.style.display = 'flex';
+                startupWelcomeWindow.style.opacity = '0';
+                startupWelcomeWindow.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => startupWelcomeWindow.style.opacity = '1', 100);
+                bringToFront(startupWelcomeWindow);
+                
+                // Trigger Y2K popup after welcome window is fully shown and user has time to get oriented
+                setTimeout(() => {
+                    showY2KPopup();
+                }, 3000); // 3 seconds after welcome window appears
+            }
+        }, 500);
+                
+            }, 800);
+        }
+        
+        function switchToBlissBackground() {
+            const backgroundVideo = document.querySelector('#background-video');
+            const backgroundImage = document.getElementById('background-image');
+            
+            if (backgroundVideo) backgroundVideo.style.display = 'none';
+            if (backgroundImage) {
+                backgroundImage.style.display = 'block';
+                backgroundImage.src = 'assets/wallpaper/bliss.jpg';
+            }
+        }
+        
+        // Start the sequence
+        nextPhase();
+    }
+    
+    // Initialize startup sequence
+    if (startupVideo) {
+        startupVideo.playbackRate = 0.65; // Match babybean speed
+        startupVideo.addEventListener('loadeddata', () => {
+            setTimeout(runStartupSequence, 500); // Small delay for smooth start
+        });
+        
+        // Fallback in case video doesn't load
+        setTimeout(runStartupSequence, 1000);
+    }
+    
     // --- Wallpaper and Bean Menu Dropdown Logic ---
     const wallpaperMenu = document.getElementById('wallpaper-menu-item');
     const wallpaperDropdown = document.getElementById('wallpaper-dropdown');
@@ -905,11 +1054,14 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Show the popup after 10 seconds
-        setTimeout(() => {
+        // Function to show Y2K popup - called after startup completion
+        function showY2KPopup() {
             y2kPopup.style.display = 'block';
             okButton.focus();
-        }, 10000);
+        }
+
+        // Make showY2KPopup available globally so it can be called from completeStartup()
+        window.showY2KPopup = showY2KPopup;
 
         // Close button functionality
         closePopupButton.addEventListener('click', closePopup);
@@ -2046,11 +2198,8 @@ document.addEventListener('DOMContentLoaded', () => {
     populateWallpaperMenu();
     setInterval(updateClock, 1000);
     updateClock();
-
-    const welcomeWindow = document.getElementById('window-welcome');
-    if (welcomeWindow) {
-        bringToFront(welcomeWindow);
-    }
+    
+    // Note: welcomeWindow is now shown by the startup sequence
 });
                 
                 

@@ -18,13 +18,35 @@
 </head>
 <body class="desktop-background">
 
-<video autoplay muted loop playsinline id="background-video">
+<!-- Startup Screen -->
+<div id="startup-screen">
+    <video autoplay muted loop playsinline id="startup-video">
+        <source src="background-video.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+    <div class="startup-overlay">
+        <div class="startup-content">
+            <div class="startup-logo">
+                <img src="assets/webclip.png" alt="limabeanOS" class="startup-bean-logo">
+                <h1 class="startup-title">limabeanOS</h1>
+            </div>
+            <div class="startup-progress-container">
+                <div class="startup-progress-bar">
+                    <div class="startup-progress-fill"></div>
+                </div>
+                <p class="startup-status">Loading system files...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<video autoplay muted loop playsinline id="background-video" style="display: none;">
     <source src="background-video.mp4" type="video/mp4">
     Your browser does not support HTML5 video.
 </video>
 <img id="background-image" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1;">
 
-    <div class="menubar">
+    <div class="menubar" style="display: none;">
         <div class="menu-left">
             <div class="menu-item logo-text" id="bean-menu-item">
                 <img src="assets/webclip.png" alt="Menu" class="bean-logo">
@@ -49,7 +71,7 @@
         </div>
     </div>
 
-    <div class="desktop-area">
+    <div class="desktop-area" style="display: none;">
         <div class="desktop-icons-inner">
             <div class="desktop-icon" id="icon-affirmations">
                 <div class="win95-icon">
@@ -102,7 +124,7 @@
         </div>
 
         <!-- Window: Welcome Friend (Formerly Profile) -->
-        <div class="window" id="window-welcome">
+        <div class="window" id="window-welcome" style="display: none;">
             <div class="title-bar">
                 <div class="title-bar-buttons">
                     <span class="button close"></span>
