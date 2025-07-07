@@ -592,6 +592,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const chatHeader = chatWindow.querySelector('#chat-current-channel');
         const chatContentArea = chatWindow.querySelector('#chat-content');
         
+        // Mobile dropdown elements
+        const mobileDropdown = chatWindow.querySelector('.mobile-channel-dropdown');
+        const mobileButton = chatWindow.querySelector('.mobile-channel-button');
+        const mobileChannelText = chatWindow.querySelector('.mobile-channel-text');
+        const mobileMenu = chatWindow.querySelector('.mobile-channel-menu');
+        
         const screenNameInputArea = document.getElementById('screen-name-input-area');
         const messageInputArea = document.getElementById('message-input-area');
         const screenNameInput = document.getElementById('screen-name-input');
@@ -630,6 +636,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (chatHeader) chatHeader.textContent = channel.topic;
             Array.from(channelList.children).forEach(li => li.classList.toggle('active-channel', li.dataset.channel === channelName));
             
+            // Update mobile dropdown text and active states
+            if (mobileChannelText) {
+                mobileChannelText.textContent = channel.topic;
+            }
+            if (mobileMenu) {
+                Array.from(mobileMenu.children).forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.channel === channelName);
+                });
+            }
+            
             chatContentArea.innerHTML = '';
             channel.messages.forEach(msg => {
                 const innerHtml = `<span class="username ${msg.sender === 'amylimabean' ? 'admin-username' : ''}">${msg.sender}:</span> <span class="message-text">${msg.text}</span>${msg.timestamp ? `<span class="timestamp">(${msg.timestamp})</span>` : ''}`;
@@ -651,6 +667,36 @@ document.addEventListener('DOMContentLoaded', () => {
             
             chatContentArea.scrollTop = 0;
             updateChatInputVisibility();
+        }
+
+        // Mobile dropdown functions
+        function populateMobileDropdown() {
+            if (!mobileMenu) return;
+            
+            mobileMenu.innerHTML = '';
+            Object.keys(channels).forEach(name => {
+                const btn = document.createElement('button');
+                btn.dataset.channel = name;
+                btn.textContent = `#${name.replace(/-/g, ' ')}`;
+                btn.addEventListener('click', () => {
+                    switchChannel(name);
+                    hideMobileDropdown();
+                    playClickSound();
+                });
+                mobileMenu.appendChild(btn);
+            });
+        }
+
+        function toggleMobileDropdown() {
+            if (mobileMenu) {
+                mobileMenu.classList.toggle('show');
+            }
+        }
+
+        function hideMobileDropdown() {
+            if (mobileMenu) {
+                mobileMenu.classList.remove('show');
+            }
         }
 
         function updateChatInputVisibility() {
@@ -710,6 +756,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 channelList.appendChild(li);
             });
         }
+        
+        // Setup mobile dropdown
+        populateMobileDropdown();
+        
+        // Mobile dropdown event listeners
+        if (mobileButton) {
+            mobileButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMobileDropdown();
+                playClickSound();
+            });
+        }
+        
+        // Close mobile dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (mobileDropdown && !mobileDropdown.contains(e.target)) {
+                hideMobileDropdown();
+            }
+        });
         
         setScreenNameBtn.addEventListener('click', () => {
             playClickSound();
