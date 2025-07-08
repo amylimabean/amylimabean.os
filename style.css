@@ -2735,6 +2735,14 @@ textarea {
 #window-case-studies .window-content {
     padding: 0;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+#window-case-studies iframe {
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
 }
 
 .resize-handle {

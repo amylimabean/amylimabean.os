@@ -301,6 +301,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!windowElement) return;
         highestZIndex++;
         windowElement.style.zIndex = highestZIndex;
+        
+        // Ensure proper positioning for all windows
+        if (!windowElement.style.position || windowElement.style.position === 'static') {
+            windowElement.style.position = 'absolute';
+        }
+        
+        // Special handling for case studies window with iframe
+        if (windowElement.id === 'window-case-studies') {
+            // Add isolation to prevent iframe stacking context issues
+            windowElement.style.isolation = 'isolate';
+            const windowContent = windowElement.querySelector('.window-content');
+            if (windowContent) {
+                windowContent.style.isolation = 'isolate';
+            }
+        }
+        
+        // Force reflow to ensure z-index change takes effect
+        windowElement.offsetHeight;
     }
 
     function openWindow(win) {
