@@ -194,7 +194,8 @@ body {
 }
 
 .startup-enter-button:hover {
-    background-color: #d0d0d0;
+    background-color: #0000FF;
+    color: white;
 }
 
 .startup-enter-button:active {
