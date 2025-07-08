@@ -353,7 +353,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (win.id === 'window-chat' && !isAlreadyOpen) {
             const awayWindow = document.getElementById('window-vacation');
             if (awayWindow) {
-                openWindow(awayWindow); // Use the new function to open it
+                openWindow(awayWindow); // This will handle z-index via bringToFront()
                 
                 // Check if we're on mobile
                 const isMobile = window.innerWidth <= 768;
@@ -363,22 +363,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     awayWindow.style.left = '50%';
                     awayWindow.style.top = '45%';
                     awayWindow.style.transform = 'translate(-50%, -50%)';
-                    awayWindow.style.zIndex = '102'; // Higher than chat window
                 } else {
                     // Desktop positioning: place to the right of chat window
                     const chatRect = win.getBoundingClientRect();
                     awayWindow.style.left = `${chatRect.right + 10}px`;
                     awayWindow.style.top = `${chatRect.top}px`;
                     awayWindow.style.transform = 'none';
-                    awayWindow.style.zIndex = '100';
                 }
+                
+                // Ensure away window is on top after positioning
+                bringToFront(awayWindow);
             }
         }
     }
 
     windows.forEach(win => {
-        // Bring window to front on any click
+        // Bring window to front on any click or interaction
         win.addEventListener('mousedown', () => bringToFront(win));
+        win.addEventListener('click', () => bringToFront(win));
+        
+        // Also ensure window content brings window to front
+        const windowContent = win.querySelector('.window-content');
+        if (windowContent) {
+            windowContent.addEventListener('click', () => bringToFront(win));
+        }
 
         const titleBar = win.querySelector('.title-bar');
         const closeButton = win.querySelector('.title-bar-buttons .close');
