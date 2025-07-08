@@ -2755,22 +2755,22 @@ textarea {
     z-index: 1; /* Below content but available */
 }
 
-/* Window z-index management classes */
-.window-layer-1 { z-index: 1000 !important; }
-.window-layer-2 { z-index: 1001 !important; }
-.window-layer-3 { z-index: 1002 !important; }
-.window-layer-4 { z-index: 1003 !important; }
-.window-layer-5 { z-index: 1004 !important; }
-.window-layer-6 { z-index: 1005 !important; }
-.window-layer-7 { z-index: 1006 !important; }
-.window-layer-8 { z-index: 1007 !important; }
-.window-layer-9 { z-index: 1008 !important; }
-.window-layer-10 { z-index: 1009 !important; }
-.window-layer-11 { z-index: 1010 !important; }
-.window-layer-12 { z-index: 1011 !important; }
-.window-layer-13 { z-index: 1012 !important; }
-.window-layer-14 { z-index: 1013 !important; }
-.window-layer-15 { z-index: 1014 !important; }
+/* Window z-index management classes - maximum specificity */
+.window.window-layer-1 { z-index: 1000 !important; position: absolute !important; }
+.window.window-layer-2 { z-index: 1001 !important; position: absolute !important; }
+.window.window-layer-3 { z-index: 1002 !important; position: absolute !important; }
+.window.window-layer-4 { z-index: 1003 !important; position: absolute !important; }
+.window.window-layer-5 { z-index: 1004 !important; position: absolute !important; }
+.window.window-layer-6 { z-index: 1005 !important; position: absolute !important; }
+.window.window-layer-7 { z-index: 1006 !important; position: absolute !important; }
+.window.window-layer-8 { z-index: 1007 !important; position: absolute !important; }
+.window.window-layer-9 { z-index: 1008 !important; position: absolute !important; }
+.window.window-layer-10 { z-index: 1009 !important; position: absolute !important; }
+.window.window-layer-11 { z-index: 1010 !important; position: absolute !important; }
+.window.window-layer-12 { z-index: 1011 !important; position: absolute !important; }
+.window.window-layer-13 { z-index: 1012 !important; position: absolute !important; }
+.window.window-layer-14 { z-index: 1013 !important; position: absolute !important; }
+.window.window-layer-15 { z-index: 1014 !important; position: absolute !important; }
 
 /* Y2K Popup */
 .y2k-popup {
