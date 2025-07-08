@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backgroundVideo = document.querySelector('#background-video');
     const backgroundImage = document.getElementById('background-image');
     
-    let highestZIndex = 3000; // Start z-index stack above all CSS fixed elements
+    let highestZIndex = 10000; // Start z-index stack WAY above all possible interference
     
     if (backgroundVideo) {
         backgroundVideo.playbackRate = 0.65;
@@ -300,31 +300,35 @@ document.addEventListener('DOMContentLoaded', () => {
     function bringToFront(windowElement) {
         if (!windowElement) return;
         highestZIndex++;
-        windowElement.style.zIndex = highestZIndex;
         
-        // Ensure proper positioning for all windows
-        if (!windowElement.style.position || windowElement.style.position === 'static') {
-            windowElement.style.position = 'absolute';
-        }
+        // Completely override any CSS with maximum specificity
+        windowElement.style.setProperty('z-index', highestZIndex, 'important');
+        windowElement.style.setProperty('position', 'absolute', 'important');
+        windowElement.style.setProperty('isolation', 'isolate', 'important');
         
-        // Special handling for case studies window with iframe
-        if (windowElement.id === 'window-case-studies') {
-            // Add isolation to prevent iframe stacking context issues
-            windowElement.style.isolation = 'isolate';
-            const windowContent = windowElement.querySelector('.window-content');
-            if (windowContent) {
-                windowContent.style.isolation = 'isolate';
-            }
-        }
+        // Debug logging
+        console.log(`Setting ${windowElement.id} to z-index: ${highestZIndex}`);
         
-        // Force reflow to ensure z-index change takes effect
+        // Force multiple reflows to ensure changes stick
         windowElement.offsetHeight;
+        windowElement.style.display = windowElement.style.display; // Force style recalc
+        
+        // Double-check the z-index was applied
+        setTimeout(() => {
+            const computedStyle = getComputedStyle(windowElement);
+            console.log(`${windowElement.id} actual z-index: ${computedStyle.zIndex}`);
+        }, 100);
     }
 
     function openWindow(win) {
         if (!win) return;
     
         const isAlreadyOpen = win.style.display === 'flex';
+        
+        // Force initial high z-index before bringing to front
+        if (!isAlreadyOpen) {
+            win.style.setProperty('z-index', highestZIndex + 1, 'important');
+        }
         
         // Always bring to front, whether opening new or focusing
         bringToFront(win);
