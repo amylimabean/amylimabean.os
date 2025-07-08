@@ -957,10 +957,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const postSecretWindow = document.getElementById('window-post-secret');
     if (postSecretWindow) {
         let secrets = JSON.parse(localStorage.getItem('secrets')) || [
-            { text: "I'm terrified that I'm not living up to my potential.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3) },
-            { text: "I tell people I've read books when I've only seen the movie.", timestamp: new Date(Date.now() - 1000 * 60 * 60 * 12) },
-            { text: "Sometimes I pretend I'm in a music video when I'm walking down the street.", timestamp: new Date(Date.now() - 1000 * 60 * 30) },
-            { text: "I still think about my high school crush.", timestamp: new Date(Date.now() - 1000 * 60 * 5) }
+            { text: "I don't know how to keep it together while the world is falling apart.", timestamp: new Date(2024, 5, 8, 14, 32) },
+            { text: "I tell people I've read books when I've only seen the movie.", timestamp: new Date(2024, 5, 15, 9, 47) },
+            { text: "Sometimes I pretend I'm in a music video when I'm walking down the street.", timestamp: new Date(2024, 5, 23, 16, 18) },
+            { text: "I still think about my high school crush.", timestamp: new Date(2024, 6, 4, 11, 25) }
         ];
 
         function saveSecrets() {
@@ -1976,7 +1976,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const top8Friends = [
                 { name: 'Alan', img: 'assets/top 8 profile pics/Alan.png', url: 'https://alanwalkermakes.com/' },
                 { name: 'Yamilah', img: 'assets/top 8 profile pics/Yamilah.png', url: 'https://yamilah.com/' },
-                { name: 'Cai', img: 'assets/top 8 profile pics/Cai.png', url: 'https://www.caicharniga.com/' },
+                { name: 'MDS', img: 'assets/top 8 profile pics/mds.jpg', url: 'https://mds.is/' },
                 { name: 'Catt', img: 'assets/top 8 profile pics/Catt.png', url: 'https://cattsmall.com/' },
                 { name: 'Gui', img: 'assets/top 8 profile pics/Gui.png', url: 'https://seiz.design/' },
                 { name: 'Nikita', img: 'assets/top 8 profile pics/Nikita.png', url: 'http://blackuxdesigner.com/' },
@@ -2002,7 +2002,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 <div class="profile-header">
                                     <img src="assets/myspace prof pic.png" alt="Amy's Profile Picture" class="profile-pic-main">
                                     <div class="profile-details">
-                                        <p>she/her<br>32 years old<br>Brooklyn, NY</p>
+                                        <p>she/her • 32 years old<br>Brooklyn</p>
                                         <p class="last-login">last login:<br>${lastLoginDate}</p>
                                     </div>
                                 </div>
@@ -2015,12 +2015,21 @@ document.addEventListener('DOMContentLoaded', () => {
                                     <li><a href="https://www.linkedin.com/in/amylima" target="_blank">Add to Friends</a></li>
                                 </ul>
                             </div>
+
+                            <div class="profile-contact-box">
+                                <h3>Links</h3>
+                                <ul>
+                                    <li><a href="https://www.youtube.com/watch?v=elAzAHDPXx8" target="_blank">How to go from a layoff to your dream role: Dive Club</a></li>
+                                    <li><a href="https://www.linkedin.com/posts/amylima_metalayoffs-techlayoffs-activity-6996934673507459072-kIzM/?utm_source=share&utm_medium=member_desktop" target="_blank">The Art of the Pivot: Pinterest Offsite</a></li>
+                                    <li><a href="https://spaces.is/loversmagazine/interviews/amy-lima" target="_blank">Lovers Interview: Lovers Mag</a></li>
+                                </ul>
+                            </div>
                         </div>
                         <div class="profile-right-col">
                             <div class="profile-blurbs">
                                 <h3>About Me</h3>
                                 <div class="blurb-section">
-                                    <p>I've always been obsessed with the "why" behind how people connect-with each other, with ideas, with the world around them.<br><br>As a first-generation American raised by Brazilian parents, I grew up between cultures-never fully of one world or another.<br><br>But this third-culture experience also sparked an early curiosity about belonging and identity, and it's shaped everything since.<br><br>That lens—of exploring how people find their people—has been the throughline of my life and career.<br><br>I see design as a way to support human connection—tools that don't just serve users, but celebrate who they are and how they show up for each other.</p>
+                                    <p>I've always been obsessed with the "why" behind how people connect-with each other, with ideas, with the world around them.<br><br>As a first-generation American raised by Brazilian parents, I grew up between cultures-never fully of one world or another.<br><br>But this third-culture experience also sparked an early curiosity about belonging and identity, and it's shaped everything since.<br><br>That lens—of exploring how people find their people—has been the throughline of my life and career.<br><br>I see design as a way to support human connection—tools that don't just serve users, but celebrate who they are and how they show up for each other.<br><br>I'm grateful you showed up here, and I hope you have fun <3333</p>
                                 </div>
                             </div>
                             <!--
