@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backgroundVideo = document.querySelector('#background-video');
     const backgroundImage = document.getElementById('background-image');
     
-    let highestZIndex = 10000; // Start z-index stack WAY above all possible interference
+    let currentWindowLayer = 0; // Track current highest layer
     
     if (backgroundVideo) {
         backgroundVideo.playbackRate = 0.65;
@@ -299,25 +299,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function bringToFront(windowElement) {
         if (!windowElement) return;
-        highestZIndex++;
         
-        // Completely override any CSS with maximum specificity
-        windowElement.style.setProperty('z-index', highestZIndex, 'important');
+        // Remove all existing layer classes from all windows
+        windows.forEach(win => {
+            for (let i = 1; i <= 15; i++) {
+                win.classList.remove(`window-layer-${i}`);
+            }
+        });
+        
+        // Increment layer counter and apply to this window
+        currentWindowLayer = (currentWindowLayer % 15) + 1;
+        windowElement.classList.add(`window-layer-${currentWindowLayer}`);
+        
+        // Ensure proper positioning
         windowElement.style.setProperty('position', 'absolute', 'important');
-        windowElement.style.setProperty('isolation', 'isolate', 'important');
         
-        // Debug logging
-        console.log(`Setting ${windowElement.id} to z-index: ${highestZIndex}`);
-        
-        // Force multiple reflows to ensure changes stick
-        windowElement.offsetHeight;
-        windowElement.style.display = windowElement.style.display; // Force style recalc
-        
-        // Double-check the z-index was applied
-        setTimeout(() => {
-            const computedStyle = getComputedStyle(windowElement);
-            console.log(`${windowElement.id} actual z-index: ${computedStyle.zIndex}`);
-        }, 100);
+        console.log(`Setting ${windowElement.id} to layer: window-layer-${currentWindowLayer}`);
     }
 
     function openWindow(win) {
@@ -325,10 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const isAlreadyOpen = win.style.display === 'flex';
         
-        // Force initial high z-index before bringing to front
-        if (!isAlreadyOpen) {
-            win.style.setProperty('z-index', highestZIndex + 1, 'important');
-        }
+        // Removed inline z-index manipulation - using CSS classes now
         
         // Always bring to front, whether opening new or focusing
         bringToFront(win);
