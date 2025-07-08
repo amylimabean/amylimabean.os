@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const backgroundVideo = document.querySelector('#background-video');
     const backgroundImage = document.getElementById('background-image');
     
-    let highestZIndex = 2001; // Start z-index stack above all other fixed elements
+    let highestZIndex = 3000; // Start z-index stack above all CSS fixed elements
     
     if (backgroundVideo) {
         backgroundVideo.playbackRate = 0.65;
