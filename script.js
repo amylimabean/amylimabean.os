@@ -298,7 +298,14 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     function bringToFront(windowElement) {
-        if (!windowElement) return;
+        console.log('🔥 bringToFront called for:', windowElement?.id);
+        if (!windowElement) {
+            console.log('❌ No windowElement provided to bringToFront');
+            return;
+        }
+        
+        console.log('📋 Total windows found:', windows.length);
+        console.log('📋 Windows array:', windows.map(w => w.id));
         
         // Remove all existing layer classes from all windows
         windows.forEach(win => {
@@ -314,7 +321,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Ensure proper positioning
         windowElement.style.setProperty('position', 'absolute', 'important');
         
-        console.log(`Setting ${windowElement.id} to layer: window-layer-${currentWindowLayer}`);
+        console.log(`✅ Set ${windowElement.id} to layer: window-layer-${currentWindowLayer}`);
+        console.log('🎯 Window classes:', windowElement.className);
+        
+        // Verify the z-index was applied
+        setTimeout(() => {
+            const computedStyle = getComputedStyle(windowElement);
+            console.log(`🔍 Computed z-index for ${windowElement.id}:`, computedStyle.zIndex);
+        }, 100);
     }
 
     function openWindow(win) {
@@ -394,14 +408,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     windows.forEach(win => {
+        console.log('🔧 Setting up event listeners for window:', win.id);
+        
         // Bring window to front on any click or interaction
-        win.addEventListener('mousedown', () => bringToFront(win));
-        win.addEventListener('click', () => bringToFront(win));
+        win.addEventListener('mousedown', () => {
+            console.log('🖱️ mousedown on:', win.id);
+            bringToFront(win);
+        });
+        win.addEventListener('click', () => {
+            console.log('🖱️ click on:', win.id);
+            bringToFront(win);
+        });
         
         // Also ensure window content brings window to front
         const windowContent = win.querySelector('.window-content');
         if (windowContent) {
-            windowContent.addEventListener('click', () => bringToFront(win));
+            windowContent.addEventListener('click', () => {
+                console.log('🖱️ click on content of:', win.id);
+                bringToFront(win);
+            });
         }
 
         const titleBar = win.querySelector('.title-bar');
