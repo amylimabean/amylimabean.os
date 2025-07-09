@@ -820,7 +820,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetch(`https://api.jsonbin.io/v3/b/${guestbookBinId}/latest`)
                     .then(response => response.json())
                     .then(data => {
-                        guestbookMessages = data.record;
+                        guestbookMessages = data.record.messages || [];
                         guestbookMessages.forEach(msg => {
                             const innerHtml = `<span class="username ${msg.sender === 'amylimabean' ? 'admin-username' : ''}">${msg.sender}:</span> <span class="message-text">${msg.text}</span><span class="timestamp">(${msg.timestamp})</span>`;
                             appendMessage(innerHtml, true);
@@ -904,7 +904,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Content-Type': 'application/json',
                     'X-Access-Key': jsonBinAccessKey
                 },
-                body: JSON.stringify(guestbookMessages),
+                body: JSON.stringify({ "messages": guestbookMessages }),
             }).catch(err => {
                 console.error('Error saving guestbook message:', err);
                 alert('Sorry, your message could not be sent. Please check the console for more details.');
