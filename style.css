@@ -2122,6 +2122,9 @@ textarea {
     .myspace-profile-grid {
         grid-template-columns: 1fr;
     }
+    .top-8-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .friend-card {
